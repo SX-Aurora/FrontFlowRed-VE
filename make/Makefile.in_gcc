@@ -9,7 +9,7 @@ OS = VEOS
 ### Fortran compiler related macros
 F90 = nfort
 F90LINKER = nfort
-FOPTIONS = -fextend-source
+FOPTIONS = -fextend-source -fpp -DSX_TUNE
 
 
 ### C compiler related macros

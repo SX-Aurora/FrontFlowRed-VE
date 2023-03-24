@@ -2338,7 +2338,7 @@
         enddo
        endif
       elseif(kd==kdintr) then
-!CDIR NODEP
+!NEC$ ivdep
         do 1300 IBFL=IBFS,IBFE
           ICFL=LBC_SSF(IBFL)
           ICV=LVEDGE(1,ICFL)
@@ -2532,7 +2532,7 @@
             pp0(IDC)=prsbnd(IBFL) !max(prs(ICV),prsbnd(IBFL))  !prsbnd(IBFL)
             enddo
           else
-!CDIR NODEP 
+!NEC$ ivdep
             do IBFL=IBFS,IBFE
             ICFL=LBC_SSF(IBFL)
             ICV=LVEDGE(1,ICFL)
@@ -2632,7 +2632,7 @@
               pp0(IDC)=pp0(ICV)
               enddo
             else
-!CDIR NODEP
+!NEC$ ivdep
               IF(ical_vect) then
                 do IBFL=IBFS,IBFE
                 tmpfac(IBFL,1)=prs(LVEDGE(1,LBC_SSF(IBFL)))
@@ -2681,7 +2681,7 @@
      &              kdv==kvrogf.or.kdv==kvmodl.or.
      &              kdv==kvEWF.or.kdv==kvsataW
             if(lkdwall) then
-!CDIR NODEP 
+!NEC$ ivdep
               do IBFL=IBFS,IBFE
               ICFL=LBC_SSF(IBFL)
               ICV=LVEDGE(1,ICFL)
@@ -2695,7 +2695,7 @@
               pp0(IDC)=pp0(ICV)!+dum1*dum2
               enddo
             else
-!CDIR NODEP
+!NEC$ ivdep
               do IBFL=IBFS,IBFE
               ICFL=LBC_SSF(IBFL)
               ICV=LVEDGE(1,ICFL)

@@ -350,7 +350,7 @@
       enddo
 
       do ii= 1,NN-1
-!CDIR NOVECTOR
+!NEC$ novector
       do jj= 1,NN-ii
         if (STEM(INUM(jj)) .lt. STEM(INUM(jj+1))) then
           ITEM      = INUM(jj+1)
@@ -871,6 +871,11 @@
       integer :: IIMAT,ICVS,ICVE,ICVL,NCVINN
       real*8  :: RMAXS,rmaxs0 ! Added by Y.Takahashi, 2021/11/13
       !
+#ifdef SX_TUNE
+      integer,dimension(MXCV) :: I_
+      integer,dimension(MXCV,2) :: iitmp
+      integer :: ILEN,icnt,I2
+#endif /** SX_TUNE **/
 !      if(calsld.and.(ical_sld==1.or.
 !     &   ical_sld==2.or.ical_sld==4)) then
         IW2K_VECT(:,:)=0
@@ -921,6 +926,55 @@
 !
       KMIN=NCVINN
       KMAX=1
+#ifdef SX_TUNE
+      icnt = 0
+      do J = 1,KC
+        JC = IT(KCT0 + J)
+        JN = IU(JC)
+        if(JN.ge.1) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 1
+        endif
+        if(JN.ge.2) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 2
+        endif
+        if(JN.ge.3) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 3
+        endif
+        if(JN.ge.4) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 4
+        endif
+        if(JN.ge.5) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 5
+        endif
+        if(JN.ge.6) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 6
+        endif
+        if(JN.ge.7) then
+          icnt = icnt + 1
+          iitmp(icnt,1) = JC
+          iitmp(icnt,2) = 7
+        endif
+      enddo
+!NEC$ list_vector
+      do I2 = 1, icnt
+        II=LU(iitmp(I2,1),iitmp(I2,2))
+        IW(II)=IW(II)+1
+        KMIN=MIN0(II,KMIN)
+        KMAX=MAX0(II,KMAX)
+      enddo
+#else
       DO J=1,KC
         JC=IT(KCT0+J)
         JN=IU(JC)
@@ -932,10 +986,29 @@
           KMAX=MAX0(II,KMAX)
         ENDDO
       ENDDO
+#endif /** SX_TUNE **/
 !
       NO=NO+1
       KCT0=KCT
 !
+#ifdef SX_TUNE
+      ILEN=0
+      I_=0
+      DO  I=KMIN,MIN(KMAX,NCVINN)
+        IF(IW(I)==IL(I).and.IL(I)/=0) THEN
+          ILEN=ILEN+1
+          I_(ILEN)=I
+        ENDIF
+      ENDDO
+
+!NEC$ ivdep
+      DO 60 I=1,ILEN
+        KCT=KCT+1
+        IW(I_(I))=-1
+        IT(KCT)=I_(I)
+        IW2K_VECT(I_(I),2)=1
+ 60   ENDDO
+#else
       DO 60 I=KMIN,MIN(KMAX,NCVINN)
 !        IF(IW(I)==IL(I).and.IL(I)/=0.and.IW2K_VECT(I,1)==1) THEN
         IF(IW(I)==IL(I).and.IL(I)/=0) THEN
@@ -945,6 +1018,7 @@
           IW2K_VECT(I,2)=1
         ENDIF
  60   ENDDO
+#endif /** SX_TUNE **/
       KC=KCT-KCT0
       INO(NO)=KCT
       IF (KC.NE.0.AND.NO.LE.NCVINN) GO TO 100
@@ -1008,7 +1082,7 @@
 ! --- ---------------------------
 !
       DO J=1,NL
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         IF (LL(I,J).EQ.0) THEN
           LL(I,J)=IW(I)
@@ -1019,7 +1093,7 @@
       enddo
 !
       DO J=1,NU
-!CDIR NODEP
+!NEC$ ivdep
         DO 260 I=1,N
         IF (LU(I,J).EQ.0) THEN
          LU(I,J)=IW(I)
@@ -1032,22 +1106,22 @@
 ! --- ---------------------------
 !
       DO 110 J=1,NL
-!CDIR NODEP
+!NEC$ ivdep
         DO 90 I=1,N
           IW(I)=LL(IT(I),J)
  90     enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
           LL(I,J) = IW(I)
         enddo
  110  enddo
 !
       DO 140 J=1,NU
-!CDIR NODEP
+!NEC$ ivdep
         DO 120 I=1,N
           IW(I) = LU(IT(I),J)
  120    enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO 130 I=1,N
           LU(I,J) = IW(I)
  130    enddo
@@ -1055,21 +1129,21 @@
 !
 ! --- ---------------------------
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO 150 I=1,N
         IW(I) = IL(IT(I))
  150  enddo
-!CDIR NODEP
+!NEC$ ivdep
       DO 160 I=1,N
         IL(I) = IW(I)
  160  enddo
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
         IW(I) = IU(IT(I))
       enddo
 	  RMAXS  = 0.     ! add debag  OSHIMA 2021.10.25 by NuFD
 	  rmaxs0 = 0.     ! add debag  OSHIMA 2021.10.25 by NuFD
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
         IU(I) = IW(I)
       enddo
@@ -1183,7 +1257,7 @@
 !--------------------
 C  Change B,X,D 
 !--------------------
-!CDIR NODEP
+!NEC$ ivdep
       if(NCOLOR<0) then 
         DO I=1,N
         W(I,1)=B(IT(I))
@@ -1191,7 +1265,7 @@ C  Change B,X,D
         W(I,3)=D(IT(I))
         W(I,4)=dble(IW(IT(I)))
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         B(I)=W(I,1)
         X(I)=W(I,2)
@@ -1204,7 +1278,7 @@ C  Change B,X,D
         W(I,1)=B(IT(I))
         W(I,4)=dble(IW(IT(I)))
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         B(I)=W(I,1)
         IW(I)=INT(W(I,4))  !IW(IT(I))
@@ -1216,22 +1290,22 @@ C  Change AL,AU
 !
       if(NCOLOR<0) then 
         DO 10 J=1,NLmax
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
           W(I,1)=AL(IT(I),J)
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
           AL(I,J)=W(I,1)
         enddo
    10   enddo
 !
         DO 16 J=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
           W(I,1)=AU(IT(I),J)
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
           AU(I,J)=W(I,1)
         enddo
@@ -1242,12 +1316,12 @@ C  Change AL,AU
 !      X(N+1:)=0.d0
 !-------------------------------------
 !
-!CDIR NODEP
+!NEC$ ivdep
       W(1:N,ID)=D(1:N)
-!CDIR NODEP
+!NEC$ ivdep
 !!!        D(:)=0.d0    !7777
       W(N+1:MXCV+N2,ID)=0.0D0
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       W(I,ID)=1.d0/dsqrt(SML+W(I,ID))
       Z(I)=W(I,ID)
@@ -1255,40 +1329,40 @@ C  Change AL,AU
 !
       IF(IMODE1==1) THEN
         DO L=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
         do I=1,N
         AU(I,L)=AU(I,L)*W(I,ID)*W(LU(I,L),ID)
         enddo
         ENDDO
         DO L=1,NLmax
-!CDIR NODEP
+!NEC$ ivdep
         do I=1,N
         AL(I,L)=AL(I,L)*W(I,ID)*W(LL(I,L),ID)
         enddo
         ENDDO
 !
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         B(I)=B(I)*W(I,ID)
         W(I,ID)=1.D0
         ENDDO
       ELSE
         DO L=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
         do I=1,N
         AU(I,L)=AU(I,L)*W(I,ID)*W(LU(I,L),ID)
      &         *sign(1.d0,D(I))
         enddo
         ENDDO
         DO L=1,NLmax
-!CDIR NODEP
+!NEC$ ivdep
         do I=1,N
         AL(I,L)=AL(I,L)*W(I,ID)*W(LL(I,L),ID)
      &         *sign(1.d0,D(I))
         enddo
         ENDDO
 !
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         B(I)=B(I)*W(I,ID)*sign(1.d0,D(I))
         W(I,ID)=1.D0
@@ -1296,7 +1370,7 @@ C  Change AL,AU
       ENDIF
 !
 !-------------------------------------
-!CDIR NODEP  !1
+!NEC$ ivdep
       DO I=1,MXCV+N2
         X(I)   =0.0D0
         W(I,IR)=0.0D0
@@ -1343,7 +1417,7 @@ C  R=A*X
 !      IF(NPE.gt.1) call hpcrmax(RMAXS)
 !      rmaxs0=rmaxs
 !--------------------------------
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
         W(I,IR)=(B(I)-W(I,IR))!*dble(IW2K_VECT(I,1))
       enddo
@@ -1392,7 +1466,7 @@ C  Q= A*P
 !
       ALP=R1/R2
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
         X(I)   =(X(I)   +ALP*W(I,IP))!*dble(IW2K_VECT(I,1))
         W(I,IR)=(W(I,IR)-ALP*W(I,IQ))!*dble(IW2K_VECT(I,1))
@@ -1441,7 +1515,7 @@ C  Q=(LU)**(-1)*R
 !
         BETA=R3/R1
         R1=R3
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N  !import
         W(I,IP)=(W(I,IQ)+BETA*W(I,IP))!*dble(IW2K_VECT(I,1))
         enddo
@@ -1464,11 +1538,11 @@ C  Q=(LU)**(-1)*R
 !
  900  CONTINUE
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       W(I,3)=X(IJT(I))*Z(IJT(I))
       enddo
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       X(I)=W(I,3)
       enddo
@@ -1523,28 +1597,89 @@ CSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 C  Q= D*P + AL*P
 !--------------------
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
         Q(I)=(P(I)+AL(I,1)*P(LL(I,1)))*dble(IW(I))
       enddo
 !
+#ifdef SX_TUNE
+      IF(NLmax.EQ.6) THEN
+!NEC$ ivdep
+        DO I=1,N
+          Q(I)=((Q(I)+AL(I,2)*P(LL(I,2)))
+     &         +(AL(I,3)*P(LL(I,3)))
+     &         +(AL(I,4)*P(LL(I,4)))
+     &         +(AL(I,5)*P(LL(I,5)))
+     &         +(AL(I,6)*P(LL(I,6))))*dble(IW(I))
+        ENDDO
+      ELSE
+        DO J=2,NLmax
+!NEC$ ivdep
+          DO I=1,N
+            Q(I)=(Q(I)+AL(I,J)*P(LL(I,J)))*dble(IW(I))
+          ENDDO
+        ENDDO
+      END IF
+#else
       DO 80 J=2,NLmax 
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
           Q(I)=(Q(I)+AL(I,J)*P(LL(I,J)))*dble(IW(I))
         enddo
    80 enddo
+#endif /** SX_TUNE **/
 !
 !--------------------
 C  Q=Q + AU*P 
 !--------------------
 !
+#ifdef SX_TUNE
+      IF(NUmax.EQ.5) THEN
+!NEC$ ivdep
+        DO I=1,N
+          Q(I)=((Q(I)+AU(I,1)*P(LU(I,1)))
+     &         +(AU(I,2)*P(LU(I,2)))
+     &         +(AU(I,3)*P(LU(I,3)))
+     &         +(AU(I,4)*P(LU(I,4)))
+     &         +(AU(I,5)*P(LU(I,5))))*dble(IW(I))
+        ENDDO
+      ELSE IF(NUmax.EQ.6) THEN
+!NEC$ ivdep
+        DO I=1,N
+          Q(I)=((Q(I)+AU(I,1)*P(LU(I,1)))
+     &         +(AU(I,2)*P(LU(I,2)))
+     &         +(AU(I,3)*P(LU(I,3)))
+     &         +(AU(I,4)*P(LU(I,4)))
+     &         +(AU(I,5)*P(LU(I,5)))
+     &         +(AU(I,6)*P(LU(I,6))))*dble(IW(I))
+        ENDDO
+      ELSE IF(NUmax.EQ.7) THEN
+!NEC$ ivdep
+        DO I=1,N
+          Q(I)=((Q(I)+AU(I,1)*P(LU(I,1)))
+     &         +(AU(I,2)*P(LU(I,2)))
+     &         +(AU(I,3)*P(LU(I,3)))
+     &         +(AU(I,4)*P(LU(I,4)))
+     &         +(AU(I,5)*P(LU(I,5)))
+     &         +(AU(I,6)*P(LU(I,6)))
+     &         +(AU(I,7)*P(LU(I,7))))*dble(IW(I))
+        ENDDO
+      ELSE
+        DO J=1,NUmax
+!NEC$ ivdep
+          DO I=1,N
+            Q(I)=(Q(I)+AU(I,J)*P(LU(I,J)))*dble(IW(I))
+          ENDDO
+        ENDDO
+      END IF
+#else
       DO 100 J=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         Q(I)=(Q(I)+AU(I,J)*P(LU(I,J)))*dble(IW(I))
         enddo
   100 enddo
+#endif /** SX_TUNE **/
 !
 !-----------------------------------------------------------
       RETURN
@@ -1609,19 +1744,19 @@ C
 !
 !----------------------------------------
 !
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
           DD(I)=1.D0-AL(I,1)**2*DD(LL(I,1))!*dble(IW(I))
           enddo
 !
           DO 60 K=2,NLmax-1
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
           DD(I)=DD(I)-AL(I,K)**2*DD(LL(I,K))!*dble(IW(I))
           enddo
    60     enddo
 !
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
           DW=DD(I)-AL(I,NLmax)**2*DD(LL(I,NLmax))!*dble(IW(I))
           IF (DABS(DW).LT.EPS1) THEN
@@ -1635,17 +1770,17 @@ C
 !
 !----------------------------------------
 !
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
           DD(I)=1.D0-AL(I,1)**2*DD(LL(I,1))
           enddo
           DO K=2,NLmax-1
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
             DD(I)=DD(I)-AL(I,K)**2*DD(LL(I,K))
           enddo
           enddo
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
           DW=DD(I)-AL(I,NLmax)**2*DD(LL(I,NLmax))
           IF (DABS(DW).LT.EPS1) THEN
@@ -1735,7 +1870,7 @@ C
 !
 !----------------------------------------
 !
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
 !          DD(I)=1.D0-AL(I,1)**2*DD(LL(I,1))
           DD(I)=1.D0-AL(I,1)*AU(I,1)
@@ -1743,7 +1878,7 @@ C
           enddo
 !
           DO 60 K=2,NLmax-1
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
 !          DD(I)=DD(I)-AL(I,K)**2*DD(LL(I,K))
           DD(I)=DD(I)-AL(I,K)*AU(I,K)
@@ -1752,7 +1887,7 @@ C
 
    60     enddo
 !
-!CDIR NODEP
+!NEC$ ivdep
 !
           DO I=IS,IE
 !          DW=DD(I)-AL(I,NLmax)**2*DD(LL(I,NLmax))
@@ -1809,70 +1944,170 @@ CCCCSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
 !-----------------
 C  Q=(L)**(-1)*R
 !-----------------
+#ifdef SX_TUNE
       DO 100 J=1,NO
         IS=LN(J-1)+1
         IE=LN(J)
         IF((IE-IS+1)>0) then
-!CDIR NODEP
+!NEC$ ivdep
           DO 20 I=IS,IE
           Q(I)=(R(I)-AL(I,1)*Q(LL(I,1)))*dble(IW(I))
  20       enddo
 !
-          DO 60 K=2,NLmax-1
-!CDIR NODEP
-          DO I=IS,IE
-          Q(I)=(Q(I)-AL(I,K)*Q(LL(I,K)))*dble(IW(I))
-          enddo
-   60     enddo
+          IF(NLmax.EQ.6) THEN
+!NEC$ ivdep
+            DO I=IS,IE
+              Q(I)=(Q(I)-(AL(I,2)*Q(LL(I,2)))
+     &                  -(AL(I,3)*Q(LL(I,3)))
+     &                  -(AL(I,4)*Q(LL(I,4)))
+     &                  -(AL(I,5)*Q(LL(I,5))))*dble(IW(I))
+            ENDDO
+          ELSE
+            DO K=2,NLmax-1
+!NEC$ ivdep
+              DO I=IS,IE
+                Q(I)=(Q(I)-AL(I,K)*Q(LL(I,K)))*dble(IW(I))
+              ENDDO
+            ENDDO
+          END IF
 !
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
           Q(I)=(DD(I)*(Q(I)-AL(I,NLmax)*Q(LL(I,NLmax))))
      &         *dble(IW(I))
           enddo
         elseif(.false.) then
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
           Q(I)=(R(I)-AL(I,1)*Q(LL(I,1)))!*dble(IW2K_VECT(I,1))!*dble(IW(I))
           enddo
 !
           DO K=2,NLmax-1
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
           Q(I)=(Q(I)-AL(I,K)*Q(LL(I,K)))!*dble(IW2K_VECT(I,1))!*dble(IW(I))
           enddo
           enddo
 !
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
           Q(I)=(DD(I)*(Q(I)-AL(I,NLmax)*Q(LL(I,NLmax))))
      &        !*dble(IW2K_VECT(I,1))!*dble(IW(I))
           enddo
         endif
   100 enddo
+#else
+      DO 100 J=1,NO
+        IS=LN(J-1)+1
+        IE=LN(J)
+        IF((IE-IS+1)>0) then
+!NEC$ ivdep
+          DO 20 I=IS,IE
+          Q(I)=(R(I)-AL(I,1)*Q(LL(I,1)))*dble(IW(I))
+ 20       enddo
+!
+          DO 60 K=2,NLmax-1
+!NEC$ ivdep
+          DO I=IS,IE
+          Q(I)=(Q(I)-AL(I,K)*Q(LL(I,K)))*dble(IW(I))
+          enddo
+   60     enddo
+!
+!NEC$ ivdep
+          DO I=IS,IE
+          Q(I)=(DD(I)*(Q(I)-AL(I,NLmax)*Q(LL(I,NLmax))))
+     &         *dble(IW(I))
+          enddo
+        elseif(.false.) then
+!NEC$ novector
+          DO I=IS,IE
+          Q(I)=(R(I)-AL(I,1)*Q(LL(I,1)))!*dble(IW2K_VECT(I,1))!*dble(IW(I))
+          enddo
+!
+          DO K=2,NLmax-1
+!NEC$ novector
+          DO I=IS,IE
+          Q(I)=(Q(I)-AL(I,K)*Q(LL(I,K)))!*dble(IW2K_VECT(I,1))!*dble(IW(I))
+          enddo
+          enddo
+!
+!NEC$ novector
+          DO I=IS,IE
+          Q(I)=(DD(I)*(Q(I)-AL(I,NLmax)*Q(LL(I,NLmax))))
+     &        !*dble(IW2K_VECT(I,1))!*dble(IW(I))
+          enddo
+        endif
+  100 enddo
+#endif /** SX_TUNE **/
 !-----------------
 C  Q= (U)**(-1)*Q 
 !-----------------
       CALL SEND_RECIVE(calsld,ical_sld,
      & IW2K_VECT,TEMP,MXCV,N,1,MXCV+N2,IT,IJT,Q)
 !------------------------------------------------------
+#ifdef SX_TUNE
+      DO 200 J=NO,1,-1         !NO-1,1,-1
+        IS=LN(J-1)+1
+        IE=LN(J)
+
+        IF(NUmax.EQ.5) THEN
+!NEC$ ivdep
+          DO I=IS,IE
+            Q(I)=(Q(I)-(DD(I)*AU(I,1)*Q(LU(I,1)))
+     &                -(DD(I)*AU(I,2)*Q(LU(I,2)))
+     &                -(DD(I)*AU(I,3)*Q(LU(I,3)))
+     &                -(DD(I)*AU(I,4)*Q(LU(I,4)))
+     &                -(DD(I)*AU(I,5)*Q(LU(I,5))))*dble(IW(I))
+          ENDDO
+        ELSE IF(NUmax.EQ.6) THEN
+!NEC$ ivdep
+          DO I=IS,IE
+            Q(I)=(Q(I)-(DD(I)*AU(I,1)*Q(LU(I,1)))
+     &                -(DD(I)*AU(I,2)*Q(LU(I,2)))
+     &                -(DD(I)*AU(I,3)*Q(LU(I,3)))
+     &                -(DD(I)*AU(I,4)*Q(LU(I,4)))
+     &                -(DD(I)*AU(I,5)*Q(LU(I,5)))
+     &                -(DD(I)*AU(I,6)*Q(LU(I,6))))*dble(IW(I))
+          ENDDO
+        ELSE IF(NUmax.EQ.7) THEN
+!NEC$ ivdep
+          DO I=IS,IE
+            Q(I)=(Q(I)-(DD(I)*AU(I,1)*Q(LU(I,1)))
+     &                -(DD(I)*AU(I,2)*Q(LU(I,2)))
+     &                -(DD(I)*AU(I,3)*Q(LU(I,3)))
+     &                -(DD(I)*AU(I,4)*Q(LU(I,4)))
+     &                -(DD(I)*AU(I,5)*Q(LU(I,5)))
+     &                -(DD(I)*AU(I,6)*Q(LU(I,6)))
+     &                -(DD(I)*AU(I,7)*Q(LU(I,7))))*dble(IW(I))
+          ENDDO
+        ELSE
+          DO K=1,NUmax
+!NEC$ ivdep
+            DO I=IS,IE
+              Q(I)=(Q(I)-DD(I)*AU(I,K)*Q(LU(I,K)))*dble(IW(I))
+            ENDDO
+          ENDDO
+        END IF
+  200 enddo
+#else
       DO 200 J=NO,1,-1         !NO-1,1,-1
         IS=LN(J-1)+1
         IE=LN(J)
         DO 140 K=1,NUmax
         IF((IE-IS+1)>0) then
-!CDIR NODEP
+!NEC$ ivdep
           DO 120 I=IS,IE
           Q(I)=(Q(I)-DD(I)*AU(I,K)*Q(LU(I,K)))*dble(IW(I))
  120      enddo
         elseif(.false.) then
-!CDIR NOVECTOR
+!NEC$ novector
           DO I=IS,IE
           Q(I)=(Q(I)-DD(I)*AU(I,K)*Q(LU(I,K)))*dble(IW(I))
           enddo
         endif
  140    enddo
   200 enddo
+#endif /** SX_TUNE **/
 !------------------------------------------------------
       CALL SEND_RECIVE(calsld,ical_sld,
      & IW2K_VECT,TEMP,MXCV,N,1,MXCV+N2,IT,IJT,Q)
@@ -2009,7 +2244,7 @@ C  Q= (U)**(-1)*Q
 !--------------------
 C  Change B,X,D 
 !--------------------
-!CDIR NODEP
+!NEC$ ivdep
       if(m==1.or.ndiag>1) then
         DO I=1,N
         W(I,1)=B(IT(I))
@@ -2017,7 +2252,7 @@ C  Change B,X,D
         W(I,3)=D(IT(I))
         W(I,4)=dble(IW(IT(I)))
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         B(I)=W(I,1)
         X(I)=W(I,2)
@@ -2029,7 +2264,7 @@ C  Change B,X,D
         W(I,1)=B(IT(I))
 !!!!!!!!!!!!        W(I,4)=dble(IW(IT(I)))
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         B(I)=W(I,1)
 !!!!!!!!!!!!        IW(I)=INT(W(I,4))  !IW(IT(I))
@@ -2040,22 +2275,22 @@ C  Change AL,AU
 !-------------------
       if(m==1) then
         DO 10 J=1,NLmax
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         W(I,1)=AL(IT(I),J)
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         AL(I,J)=W(I,1)
         enddo
    10   enddo
 !
         DO 16 J=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         W(I,1)=AU(IT(I),J)
         enddo
-!CDIR NODEP
+!NEC$ ivdep
         DO I=1,N
         AU(I,J)=W(I,1)
         enddo
@@ -2064,11 +2299,11 @@ C  Change AL,AU
 !-------------------------------------
       X(N+1:)=0.d0 
 !-------------------------------------
-!CDIR NODEP
+!NEC$ ivdep
       W(1:N,ID)=D(1:N)
-!CDIR NODEP
+!NEC$ ivdep
       W(N+1:MXCV+N2,ID)=0.D0
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       W(I,ID)=1.d0/dsqrt(W(I,ID))
       Z(I)=W(I,ID)
@@ -2078,28 +2313,28 @@ C  Change AL,AU
 !--------------------------
       if(m==1) then
         DO L=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
         do I=1,N
         AU(I,L)=AU(I,L)*W(I,ID)*W(LU(I,L),ID)*sign(1.d0,D(I))
         enddo
         ENDDO
 !
         DO L=1,NLmax
-!CDIR NODEP
+!NEC$ ivdep
         do I=1,N
         AL(I,L)=AL(I,L)*W(I,ID)*W(LL(I,L),ID)*sign(1.d0,D(I))
         enddo
         ENDDO
       endif
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       B(I)=B(I)*W(I,ID)*sign(1.d0,D(I))         !D(I)
       W(I,ID)=1.D0
       ENDDO
 !
 !-------------------------------------
-!CDIR NODEP  !1
+!NEC$ ivdep
 !      DO I=1,MXCV+N2
       X(:)    =0.0D0
       W(:,1:7)=0.0D0
@@ -2127,7 +2362,7 @@ C  R=A*X
      &           IT,IJT,IW2K_VECT,X,W(1,R0))  !R0
 !
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,NCVINN
       W(I,R0)=(B(I)-W(I,R0))*dble(IW(I))!5555
       ENDDO
@@ -2174,7 +2409,7 @@ C  R=A*X
       endif
 !
       IF(NPE.gt.1) CALL hpcrsum(sss)
-!CDIR NODEP
+!NEC$ ivdep
 !-------------------------------------
 C  P=(LU)**(-1)*R 
 !-------------------------------------
@@ -2222,7 +2457,7 @@ C  Q= A*P
 !
       alpha=sss/(vvv+SML)
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
         W(I,Q0)=W(I,R1)-alpha*W(I,Q1)
       enddo
@@ -2340,11 +2575,11 @@ C  Q=(LU)**(-1)*R
 !
  900  CONTINUE
 !
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N 
       W(I,3)=X(IJT(I))*Z(IJT(I))
       enddo
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       X(I)=W(I,3)
       enddo
@@ -2397,7 +2632,7 @@ CSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
       enddo
 !
       DO 80 J=2,NLmax
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       P(I)=(P(I)+AL(I,J)*X(LL(I,J)))*dble(IW(I))
       enddo
@@ -2408,7 +2643,7 @@ C  Q=Q + AU*P
 !--------------------
 !
       DO 100 J=1,NUmax
-!CDIR NODEP
+!NEC$ ivdep
       DO I=1,N
       P(I)=(P(I)+AU(I,J)*X(LU(I,J)))*dble(IW(I))
       enddo
@@ -2489,7 +2724,7 @@ C
 !
 !----------------------------------------
 !
-!CDIR NODEP
+!NEC$ ivdep
 !          DO I=IS,IE 
 !          DD(I)=1.d0/(DD(I))
 !          enddo 
@@ -2502,7 +2737,7 @@ C
           enddo 
 !
           DO 60 K=2,NLmax-1 
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE   !SSSSS
           DD(I)=DD(I)-AL(I,K)*DD(LL(I,K))*AU(I,K) 
 !          DD(I)=DD(I)-AL(I,K)**2*DD(LL(I,K))
@@ -2511,7 +2746,7 @@ C
           enddo
    60     enddo
 !
-!CDIR NODEP
+!NEC$ ivdep
 !
           DO I=IS,IE   !SSSSS
           DW=DD(I)-AL(I,NLmax)*DD(LL(I,NLmax))*AU(I,NLmax) 
@@ -2579,19 +2814,19 @@ C  Q=(L)**(-1)*R
         IS=LN(J-1)+1
         IE=LN(J)
         IF((IE-IS+1)>0) then
-!CDIR NODEP
+!NEC$ ivdep
           DO 20 I=IS,IE
           Q(I)=(R(I)-AL(I,1)*Q(LL(I,1)))*dble(IW(I))
  20       enddo
 !
           DO 60 K=2,NLmax-1
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
           Q(I)=(Q(I)-AL(I,K)*Q(LL(I,K)))*dble(IW(I))
           enddo
    60     enddo
 !
-!CDIR NODEP
+!NEC$ ivdep
           DO I=IS,IE
           Q(I)=(DD(I)*(Q(I)-AL(I,NLmax)*Q(LL(I,NLmax))))
      &         *dble(IW(I))
@@ -2610,7 +2845,7 @@ C  Q= (U)**(-1)*Q
         IE=LN(J)
         DO 140 K=1,NUmax
         IF((IE-IS+1)>0) then
-!CDIR NODEP
+!NEC$ ivdep
           DO 120 I=IS,IE 
           Q(I)=(Q(I)-DD(I)*AU(I,K)*Q(LU(I,K)))*dble(IW(I))
  120      enddo

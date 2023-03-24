@@ -206,11 +206,11 @@
 ! --- Other BC:
         if(ical_vect) then 
           do k=1,nko  !huilai
-!CDIR VECTOR
+!NEC$ vector
           do IBFL=IBFS,IBFE
           tmpfac(IBFL,1)=aa(LVEDGE(1,LBC_SSF(IBFL)),k)
           ENDDO
-!CDIR VECTOR
+!NEC$ vector
           do IBFL=IBFS,IBFE
           aa(LVEDGE(2,LBC_SSF(IBFL)),k)=tmpfac(IBFL,1)
           ENDDO
@@ -1340,27 +1340,27 @@
       elseif(kd/=kdtchi) then
         if(ical_vect) then 
           do k=1, nko
-!CDIR NODEP
+!NEC$ ivdep
           do IBFL=IBFS,IBFE
           tmpfac(IBFL,1)=aa(LVEDGE(1,LBC_SSF(IBFL)),1,k)
           enddo
-!CDIR NODEP          
+!NEC$ ivdep
           do IBFL=IBFS,IBFE
           aa(LVEDGE(2,LBC_SSF(IBFL)),1,k)=tmpfac(IBFL,1)
           enddo
-!CDIR NODEP  
+!NEC$ ivdep
           do IBFL=IBFS,IBFE
           tmpfac(IBFL,1)=aa(LVEDGE(1,LBC_SSF(IBFL)),2,k)
           enddo
-!CDIR NODEP  
+!NEC$ ivdep
           do IBFL=IBFS,IBFE
           aa(LVEDGE(2,LBC_SSF(IBFL)),2,k)=tmpfac(IBFL,1)
           enddo
-!CDIR NODEP  
+!NEC$ ivdep
           do IBFL=IBFS,IBFE
           tmpfac(IBFL,1)=aa(LVEDGE(1,LBC_SSF(IBFL)),3,k)
           enddo
-!CDIR NODEP
+!NEC$ ivdep
           do IBFL=IBFS,IBFE
           aa(LVEDGE(2,LBC_SSF(IBFL)),3,k)=tmpfac(IBFL,1)
           enddo
@@ -2657,11 +2657,11 @@
 !          IDC=LVEDGE(2,ICFL)
 !          vv(IDC,i,j)=vv(ICV,i,j)
 !          enddo
-!CDIR VECTOR          
+!NEC$ vector
           do IBFL=IBFS,IBFE
           tmpfac(IBFL,1)=vv(LVEDGE(1,LBC_SSF(IBFL)),i,j)
           enddo
-!CDIR VECTOR
+!NEC$ vector
           do IBFL=IBFS,IBFE
           vv(LVEDGE(2,LBC_SSF(IBFL)),i,j)=tmpfac(IBFL,1)
           enddo
@@ -2946,11 +2946,11 @@
 ! --- Other BC:
         if(ical_vect) then 
           do k=1,nko  !huilai
-!CDIR VECTOR
+!NEC$ vector
           do IBFL=IBFS,IBFE
           tmpfac(IBFL,1)=aa(LVEDGE(1,LBC_SSF(IBFL)),k)
           ENDDO
-!CDIR VECTOR
+!NEC$ vector
           do IBFL=IBFS,IBFE
           aa(LVEDGE(2,LBC_SSF(IBFL)),k)=tmpfac(IBFL,1)
           ENDDO

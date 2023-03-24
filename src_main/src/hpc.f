@@ -272,6 +272,48 @@
 !
 ! --- INIT.
 !
+#ifdef SX_TUNE
+      do 100 idim=1,ndim
+      WS=0.d0
+      WR=0.d0
+!
+! --- SEND
+!
+      do neib= 1, NEIBPETOT
+        istart= EXPORT_index(neib-1)
+        inum  = EXPORT_index(neib  ) - istart
+        do k=istart+1,istart+inum
+           WS(k)=X(EXPORT_item(k),idim)
+        enddo
+        call MPI_SEND (WS(istart+1), inum, MPI_DOUBLE_PRECISION,
+     &                  NEIBPE(neib), 0, SOLVER_COMM,
+     &                  ierr)
+      enddo
+!
+! --- RECEIVE
+!
+      do neib= 1, NEIBPETOT
+        istart=IMPORT_index(neib-1)
+        inum  =IMPORT_index(neib)-istart
+        call MPI_IRECV (WR(istart+1), inum, MPI_DOUBLE_PRECISION,
+     &                  NEIBPE(neib), 0, SOLVER_COMM,
+     &                  req2(neib), ierr)
+      enddo
+!
+! --- WAIT
+!
+      call MPI_WAITALL (NEIBPETOT, req2, sta2, ierr)
+!
+      do neib=1,NEIBPETOT
+        istart=IMPORT_index(neib-1)
+        inum  =IMPORT_index(neib)-istart
+      do k=istart+1,istart+inum
+        X(IMPORT_item(K),idim)= WR(k)
+      enddo
+      enddo
+!
+ 100  continue
+#else
       do 100 idim=1,ndim
       WS=0.d0
       WR=0.d0
@@ -313,6 +355,7 @@
 !
       call MPI_WAITALL (NEIBPETOT,req1,sta1,ierr)
  100  continue
+#endif /** SX_TUNE **/
 !
 !      deallocate(WS,WR)
 !

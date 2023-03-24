@@ -5476,6 +5476,55 @@ CIDR VECTOR
 !---------------------------------------------------------
 !      if(IMODE/=3.and.cn/='R') then
       if(IMODE/=3) then
+#ifdef SX_TUNE
+        if(ndf<2) THEN
+          do IIMAT=1,NMAT   !ICV=1,NALLCV
+          if(.not.mat_cal(IIMAT)) cycle
+          ICVS=MAT_CVEXT(IIMAT-1)+1
+          ICVE=MAT_CVEXT(IIMAT)
+          do ICVL=ICVS,ICVE
+            dmax(ICVL)=dif(ICVL,1)
+            dmin(ICVL)=dif(ICVL,1)
+          enddo
+!
+          IDCS=MAT_DCIDX(IIMAT-1)+1
+          IDCE=MAT_DCIDX(IIMAT)
+          do ICVL=IDCS,IDCE
+            dmax(ICVL)=dif(ICVL,1)
+            dmin(ICVL)=dif(ICVL,1)
+          enddo
+          enddo
+        else
+          do IIMAT=1,NMAT   !ICV=1,NALLCV
+          if(.not.mat_cal(IIMAT)) cycle
+          ICVS=MAT_CVEXT(IIMAT-1)+1
+          ICVE=MAT_CVEXT(IIMAT)
+          do ICVL=ICVS,ICVE
+            dx=dif(ICVL,1)
+            dy=dx
+            do m=2,ndf
+              dx=max(dx,dif(ICVL,m))
+              dy=min(dy,dif(ICVL,m))
+            enddo
+            dmax(ICVL)=dx
+            dmin(ICVL)=dy
+          enddo
+!
+          IDCS=MAT_DCIDX(IIMAT-1)+1
+          IDCE=MAT_DCIDX(IIMAT)
+          do ICVL=IDCS,IDCE
+            dx=dif(ICVL,1)
+            dy=dx
+            do m=2,ndf
+              dx=max(dx,dif(ICVL,m))
+              dy=min(dy,dif(ICVL,m))
+            enddo
+            dmax(ICVL)=dx
+            dmin(ICVL)=dy
+          enddo
+          enddo
+        endif
+#else
         do IIMAT=1,NMAT   !ICV=1,NALLCV
         if(.not.mat_cal(IIMAT)) cycle
         ICVS=MAT_CVEXT(IIMAT-1)+1
@@ -5504,6 +5553,7 @@ CIDR VECTOR
         dmin(ICVL)=dy
         enddo
         enddo
+#endif /** SX_TUNE **/
       endif
 !2222
 !-----------------------------------
@@ -5627,6 +5677,31 @@ CIDR VECTOR
       ENDDO
 !????
 !
+#ifdef SX_TUNE
+!NEC$ outerloop_unroll(8)
+      DO IE=1,MAXIE
+      do ICVL=ICVS_V,ICVE_V
+      if(vctr(ICVL,IE)==0) cycle
+      IF(vctr(ICVL,IE)<0) then                    !ICVB
+        ICFL=-vctr(ICVL,IE)
+        KD=kdbf(ICFL)
+        aalw(ICVL,IE)=
+     &  max(0.d0,dble(1-KD))
+!     &   *(-tempf(ICFL,2)-max(0.d0,rva(ICFL)))
+     &   *(-tempf(ICFL,2)+min(0.d0,rva(ICFL)))    !OK
+     &         *cofd(LVEDGE(2,ICFL))*calph
+      elseIF(vctr(ICVL,IE)>0) then                !ICVA
+        ICFL=vctr(ICVL,IE)
+        KD=kdbf(ICFL)
+        aalw(ICVL,IE)=
+     &  max(0.d0,dble(1-KD))
+!     &  *(-tempf(ICFL,2)+min(0.d0,rva(ICFL)))
+     &  *(-tempf(ICFL,2)-max(0.d0,rva(ICFL)))     !OK
+     &         *cofd(LVEDGE(1,ICFL))*calph
+      endif
+      enddo
+      enddo
+#else
       DO IE=1,MAXIE
       do 500 ICVL=ICVS_V,ICVE_V
       if(vctr(ICVL,IE)==0) cycle
@@ -5649,6 +5724,7 @@ CIDR VECTOR
       endif
  500  enddo
       enddo
+#endif /** SX_TUNE **/
 !2222
 !
 !      if(NEW_TSTP) then

@@ -73,6 +73,12 @@
 !
         do IE=1,MAXIE   !vctr(ICVL,0)
 !CIDR NODEP
+#ifdef SX_TUNE
+!NEC$ retain(phi)
+!NEC$ retain(vctr)
+!NEC$ gather_reorder
+!NEC$ vob
+!NEC$ vovertake
         DO ICVL=ICVS_V,ICVE_V
         ICFL=vctr(ICVL,IE)
         if(ICFL==0) cycle
@@ -111,6 +117,46 @@
      &       *SFAREA(4,ICFL)
         endif
         enddo
+#else
+        DO ICVL=ICVS_V,ICVE_V
+        ICFL=vctr(ICVL,IE)
+        if(ICFL==0) cycle
+        if(ICFL<0) then
+          grdc(ICVL,1,IDIM)=grdc(ICVL,1,IDIM)
+     &       +SFAREA(1,-ICFL)
+     &       *(wiface(-ICFL)*phi(ICVL,IDIM)
+     &       +(1.d0-wiface(-ICFL))*phi(LVEDGE(2,-ICFL),IDIM))
+     &       *SFAREA(4,-ICFL)
+          grdc(ICVL,2,IDIM)=grdc(ICVL,2,IDIM)
+     &       +SFAREA(2,-ICFL)
+     &       *(wiface(-ICFL)*phi(ICVL,IDIM)
+     &       +(1.d0-wiface(-ICFL))*phi(LVEDGE(2,-ICFL),IDIM))
+     &       *SFAREA(4,-ICFL)
+          grdc(ICVL,3,IDIM)=grdc(ICVL,3,IDIM)
+     &       +SFAREA(3,-ICFL)
+     &       *(wiface(-ICFL)*phi(ICVL,IDIM)
+     &       +(1.d0-wiface(-ICFL))*phi(LVEDGE(2,-ICFL),IDIM))
+     &       *SFAREA(4,-ICFL)
+!
+        elseif(ICFL>0) then
+          grdc(ICVL,1,IDIM)=grdc(ICVL,1,IDIM)
+     &       -SFAREA(1,ICFL)
+     &       *((1.d0-wiface(ICFL))*phi(ICVL,IDIM)
+     &       +wiface(ICFL)*phi(LVEDGE(1,ICFL),IDIM))
+     &       *SFAREA(4,ICFL)
+          grdc(ICVL,2,IDIM)=grdc(ICVL,2,IDIM)
+     &       -SFAREA(2,ICFL)
+     &       *((1.d0-wiface(ICFL))*phi(ICVL,IDIM)
+     &       +wiface(ICFL)*phi(LVEDGE(1,ICFL),IDIM))
+     &       *SFAREA(4,ICFL)
+          grdc(ICVL,3,IDIM)=grdc(ICVL,3,IDIM)
+     &       -SFAREA(3,ICFL)
+     &       *((1.d0-wiface(ICFL))*phi(ICVL,IDIM)
+     &       +wiface(ICFL)*phi(LVEDGE(1,ICFL),IDIM))
+     &       *SFAREA(4,ICFL)
+        endif
+        enddo
+#endif /** SX_TUNE **/
         enddo
 !
 !CIDR NODEP

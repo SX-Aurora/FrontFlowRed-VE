@@ -1,0 +1,3630 @@
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+     NNNNAAAAMMMMEEEE
+	  gcc, g++ - GNU project C and C++ Compiler (gcc-2.95)
+
+     SSSSYYYYNNNNOOOOPPPPSSSSIIIISSSS
+	  ggggcccccccc [	_o_p_t_i_o_n | _f_i_l_e_n_a_m_e ]...
+	  gggg++++++++ [	_o_p_t_i_o_n | _f_i_l_e_n_a_m_e ]...
+
+     WWWWAAAARRRRNNNNIIIINNNNGGGG
+	  The information in this man page is an extract from the full
+	  documentation	of the GNU C compiler, and is limited to the
+	  meaning of the options.
+
+	  This man page	is not kept up to date except when volunteers
+	  want to maintain it.	If you find a discrepancy between the
+	  man page and the software, please check the Info file, which
+	  is the authoritative documentation.
+
+	  If we	find that the things in	this man page that are out of
+	  date cause significant confusion or complaints, we will stop
+	  distributing the man page.  The alternative, updating	the
+	  man page when	we update the Info file, is impossible because
+	  the rest of the work of maintaining GNU CC leaves us no time
+	  for that.  The GNU project regards man pages as obsolete and
+	  should not let them take time	away from other	things.
+
+	  For complete and current documentation, refer	to the Info
+	  file `ggggcccccccc' or	the manual _U_s_i_n_g _a_n_d _P_o_r_t_i_n_g _G_N_U _C_C (_f_o_r
+	  _v_e_r_s_i_o_n _2._0).	 Both are made from the	Texinfo	source file
+	  ggggcccccccc....tttteeeexxxxiiiinnnnffffoooo.
+
+     DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN
+	  The C	and C++	compilers are integrated.  Both	process	input
+	  files	through	one or more of four stages: preprocessing,
+	  compilation, assembly, and linking.  Source filename
+	  suffixes identify the	source language, but which name	you
+	  use for the compiler governs default assumptions:
+
+	  ggggcccccccc  assumes preprocessed (....iiii) files are C and assumes C
+	       style linking.
+
+	  gggg++++++++  assumes preprocessed (....iiii) files are C++ and assumes C++
+	       style linking.
+
+	  Suffixes of source file names	indicate the language and kind
+	  of processing	to be done:
+
+	  ....cccc	C source; preprocess, compile, assemble
+	  ....CCCC	C++ source; preprocess,	compile, assemble
+	  ....cccccccc	C++ source; preprocess,	compile, assemble
+	  ....ccccxxxxxxxx	C++ source; preprocess,	compile, assemble
+	  ....mmmm	Objective-C source; preprocess,	compile, assemble
+	  ....iiii	preprocessed C;	compile, assemble
+
+
+
+     Page 1					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ....iiiiiiii	preprocessed C++; compile, assemble
+	  ....ssss	Assembler source; assemble
+	  ....SSSS	Assembler source; preprocess, assemble
+	  ....hhhh	Preprocessor file; not usually named on	command	line
+
+	  Files	with other suffixes are	passed to the linker.  Common
+	  cases	include:
+
+	  ....oooo	Object file
+	  ....aaaa	Archive	file
+
+	  Linking is always the	last stage unless you use one of the
+	  ----cccc, ----SSSS, or ----EEEE	options	to avoid it (or	unless compilation
+	  errors stop the whole	process).  For the link	stage, all ....oooo
+	  files	corresponding to source	files, ----llll libraries,
+	  unrecognized filenames (including named ....oooo object files and
+	  ....aaaa archives) are passed to the linker	in command-line	order.
+
+     OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  Options must be separate: `----ddddrrrr' is quite different from `----dddd
+	  ----rrrr '.
+
+	  Most `----ffff' and	`----WWWW' options have two contrary forms:  ----ffff_n_a_m_e
+	  and ----ffffnnnnoooo----_n_a_m_e	(or ----WWWW_n_a_m_e and ----WWWWnnnnoooo----_n_a_m_e).  Only the non-
+	  default forms	are shown here.
+
+	  Here is a summary of all the options,	grouped	by type.
+	  Explanations are in the following sections.
+
+	  OOOOvvvveeeerrrraaaallllllll OOOOppppttttiiiioooonnnnssss
+	       -c -S -E	-o _f_i_l_e	-pipe -v -x _l_a_n_g_u_a_g_e
+
+	  LLLLaaaannnngggguuuuaaaaggggeeee OOOOppppttttiiiioooonnnnssss
+	       -ansi -fall-virtual -fcond-mismatch
+	       -fdollars-in-identifiers	-fenum-int-equiv
+	       -fexternal-templates -fno-asm -fno-builtin -fhosted
+	       -fno-hosted -ffreestanding -fno-freestanding
+	       -fno-strict-prototype -fsigned-bitfields	-fsigned-char
+	       -fthis-is-variable -funsigned-bitfields -funsigned-char
+	       -fwritable-strings -traditional -traditional-cpp
+	       -trigraphs
+
+	  WWWWaaaarrrrnnnniiiinnnngggg OOOOppppttttiiiioooonnnnssss
+	       -fsyntax-only -pedantic -pedantic-errors	-w -W -Wall
+	       -Waggregate-return -Wcast-align -Wcast-qual
+	       -Wchar-subscript	-Wcomment -Wconversion -Wenum-clash
+	       -Werror -Wformat	-Wid-clash-_l_e_n -Wimplicit
+	       -Wimplicit-int -Wimplicit-function-declaration -Winline
+	       -Wlong-long -Wmain -Wmissing-prototypes
+	       -Wmissing-declarations -Wnested-externs -Wno-import
+	       -Wparentheses -Wpointer-arith -Wredundant-decls
+	       -Wreturn-type -Wshadow -Wstrict-prototypes -Wswitch
+
+
+
+     Page 2					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       -Wtemplate-debugging -Wtraditional -Wtrigraphs
+	       -Wuninitialized -Wunused	-Wwrite-strings
+
+	  DDDDeeeebbbbuuuuggggggggiiiinnnngggg OOOOppppttttiiiioooonnnnssss
+	       -a -d_l_e_t_t_e_r_s -fpretend-float -g -g_l_e_v_e_l -gcoff -gxcoff
+	       -gxcoff+	-gdwarf	-gdwarf+ -gstabs -gstabs+ -ggdb	-p -pg
+	       -save-temps -print-file-name=_l_i_b_r_a_r_y
+	       -print-libgcc-file-name -print-prog-name=_p_r_o_g_r_a_m
+
+	  OOOOppppttttiiiimmmmiiiizzzzaaaattttiiiioooonnnn OOOOppppttttiiiioooonnnnssss
+	       -fcaller-saves -fcse-follow-jumps -fcse-skip-blocks
+	       -fdelayed-branch	-felide-constructors
+	       -fexpensive-optimizations -ffast-math -ffloat-store
+	       -fforce-addr -fforce-mem	-finline-functions
+	       -fkeep-inline-functions -fmemoize-lookups
+	       -fno-default-inline -fno-defer-pop -fno-function-cse
+	       -fno-inline -fno-peephole -fomit-frame-pointer
+	       -frerun-cse-after-loop -fschedule-insns
+	       -fschedule-insns2 -fstrength-reduce -fthread-jumps
+	       -funroll-all-loops -funroll-loops -O -O2	-O3
+
+	  PPPPrrrreeeepppprrrroooocccceeeessssssssoooorrrr OOOOppppttttiiiioooonnnnssss
+	       -A_a_s_s_e_r_t_i_o_n -C -dD -dM -dN -D_m_a_c_r_o[=_d_e_f_n] -E -H
+	       -idirafter _d_i_r -include _f_i_l_e -imacros _f_i_l_e -iprefix
+	       _f_i_l_e -iwithprefix _d_i_r -M	-MD -MM	-MMD -nostdinc -P
+	       -U_m_a_c_r_o -undef
+
+	  AAAAsssssssseeeemmmmbbbblllleeeerrrr OOOOppppttttiiiioooonnnn
+	       -Wa,_o_p_t_i_o_n
+
+	  LLLLiiiinnnnkkkkeeeerrrr OOOOppppttttiiiioooonnnnssss
+	       -l_l_i_b_r_a_r_y -nostartfiles -nostdlib -static -shared
+	       -symbolic -Xlinker _o_p_t_i_o_n -Wl,_o_p_t_i_o_n -u _s_y_m_b_o_l
+
+	  DDDDiiiirrrreeeeccccttttoooorrrryyyy OOOOppppttttiiiioooonnnnssss
+	       -B_p_r_e_f_i_x	-I_d_i_r -I- -L_d_i_r
+
+	  TTTTaaaarrrrggggeeeetttt OOOOppppttttiiiioooonnnnssss
+	       -b  _m_a_c_h_i_n_e -V _v_e_r_s_i_o_n
+
+	  CCCCoooonnnnffffiiiigggguuuurrrraaaattttiiiioooonnnn	DDDDeeeeppppeeeennnnddddeeeennnntttt OOOOppppttttiiiioooonnnnssss
+	       _M_6_8_0_x_0 _O_p_t_i_o_n_s
+	       -m68000 -m68020 -m68020-40 -m68030 -m68040 -m68881
+	       -mbitfield -mc68000 -mc68020 -mfpa -mnobitfield -mrtd
+	       -mshort -msoft-float
+
+	       _V_A_X _O_p_t_i_o_n_s
+	       -mg -mgnu -munix
+
+	       _S_P_A_R_C _O_p_t_i_o_n_s
+	       -mepilogue -mfpu	-mhard-float -mno-fpu -mno-epilogue
+	       -msoft-float -msparclite	-mv8 -msupersparc -mcypress
+
+
+
+     Page 3					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       _C_o_n_v_e_x _O_p_t_i_o_n_s
+	       -margcount -mc1 -mc2 -mnoargcount
+
+	       _A_M_D_2_9_K _O_p_t_i_o_n_s
+	       -m29000 -m29050 -mbw -mdw -mkernel-registers -mlarge
+	       -mnbw -mnodw -msmall -mstack-check -muser-registers
+
+	       _M_8_8_K _O_p_t_i_o_n_s
+	       -m88000 -m88100 -m88110 -mbig-pic -mcheck-zero-division
+	       -mhandle-large-shift -midentify-revision
+	       -mno-check-zero-division	-mno-ocs-debug-info
+	       -mno-ocs-frame-position -mno-optimize-arg-area
+	       -mno-serialize-volatile -mno-underscores
+	       -mocs-debug-info	-mocs-frame-position
+	       -moptimize-arg-area -mserialize-volatile
+	       -mshort-data-_n_u_m	-msvr3 -msvr4 -mtrap-large-shift
+	       -muse-div-instruction -mversion-03.00
+	       -mwarn-passed-structs
+
+	       _R_S_6_0_0_0 _O_p_t_i_o_n_s
+	       -mfp-in-toc -mno-fop-in-toc
+
+	       _R_T _O_p_t_i_o_n_s
+	       -mcall-lib-mul -mfp-arg-in-fpregs -mfp-arg-in-gregs
+	       -mfull-fp-blocks	-mhc-struct-return -min-line-mul
+	       -mminimum-fp-blocks -mnohc-struct-return
+
+	       _M_I_P_S _O_p_t_i_o_n_s
+	       -mcpu=_c_p_u _t_y_p_e -mips2 -mips3 -mint64 -mlong64
+	       -mlonglong128 -mmips-as -mgas -mrnames -mno-rnames
+	       -mgpopt -mno-gpopt -mstats -mno-stats -mmemcpy
+	       -mno-memcpy -mno-mips-tfile -mmips-tfile	-msoft-float
+	       -mhard-float -mabicalls -mno-abicalls -mhalf-pic
+	       -mno-half-pic -G	_n_u_m -nocpp
+
+	       _i_3_8_6 _O_p_t_i_o_n_s
+	       -m486 -mno-486 -msoft-float -mno-fp-ret-in-387
+
+	       _H_P_P_A _O_p_t_i_o_n_s
+	       -mpa-risc-1-0 -mpa-risc-1-1 -mkernel -mshared-libs
+	       -mno-shared-libs	-mlong-calls -mdisable-fpregs
+	       -mdisable-indexing -mtrailing-colon
+
+	       _i_9_6_0 _O_p_t_i_o_n_s
+	       -m_c_p_u-_t_y_p_e -mnumerics -msoft-float -mleaf-procedures
+	       -mno-leaf-procedures -mtail-call	-mno-tail-call
+	       -mcomplex-addr -mno-complex-addr	-mcode-align
+	       -mno-code-align -mic-compat -mic2.0-compat
+	       -mic3.0-compat -masm-compat -mintel-asm -mstrict-align
+	       -mno-strict-align -mold-align -mno-old-align
+
+	       _D_E_C _A_l_p_h_a _O_p_t_i_o_n_s
+
+
+
+     Page 4					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       -mfp-regs -mno-fp-regs -mno-soft-float -msoft-float
+
+	       _S_y_s_t_e_m _V	_O_p_t_i_o_n_s
+	       -G -Qy -Qn -YP,_p_a_t_h_s -Ym,_d_i_r
+
+	  CCCCooooddddeeee GGGGeeeennnneeeerrrraaaattttiiiioooonnnn OOOOppppttttiiiioooonnnnssss
+	       -fcall-saved-_r_e_g	-fcall-used-_r_e_g	-ffixed-_r_e_g
+	       -finhibit-size-directive	-fnonnull-objects -fno-common
+	       -fno-ident -fno-gnu-linker -fpcc-struct-return -fpic
+	       -fPIC -freg-struct-return -fshared-data -fshort-enums
+	       -fshort-double -fvolatile -fvolatile-global
+	       -fverbose-asm
+
+     OOOOVVVVEEEERRRRAAAALLLLLLLL OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  ----xxxx _l_a_n_g_u_a_g_e
+	       Specify explicitly the _l_a_n_g_u_a_g_e for the following input
+	       files (rather than choosing a default based on the file
+	       name suffix) .  This option applies  to	all  following
+	       input  files  until  the	 next  `----xxxx'  option.  Possible
+	       values of _l_a_n_g_u_a_g_e are `cccc', `oooobbbbjjjjeeeeccccttttiiiivvvveeee----cccc',  `cccc----hhhheeeeaaaaddddeeeerrrr',
+	       `cccc++++++++',	    `ccccpppppppp----oooouuuuttttppppuuuutttt',	`aaaasssssssseeeemmmmbbbblllleeeerrrr',	   and
+	       `aaaasssssssseeeemmmmbbbblllleeeerrrr----wwwwiiiitttthhhh----ccccpppppppp'.
+
+	  ----xxxx nnnnoooonnnneeee
+	       Turn off	any specification of a language, so that  sub-
+	       sequent	files are handled according to their file name
+	       suffixes	(as they are if	`----xxxx'  has  not	been  used  at
+	       all).
+
+	  If you want only some	of the four stages  (preprocess,  com-
+	  pile,	 assemble,  link),  you	can use	`----xxxx' (or filename suf-
+	  fixes) to tell ggggcccccccc where to start, and one  of  the  options
+	  `----cccc',	 `----SSSS', or `----EEEE' to say where ggggcccccccc	is to stop.  Note that
+	  some combinations (for example, `----xxxx ccccpppppppp----oooouuuuttttppppuuuutttt ----EEEE') instruct
+	  ggggcccccccc to do nothing at all.
+
+	  ----cccc   Compile or assemble the source files, but do not	 link.
+	       The  compiler output is an object file corresponding to
+	       each source file.
+
+	       By default, GCC makes the object	file name for a	source
+	       file  by	 replacing  the	suffix `....cccc', `....iiii', `....ssss', etc.,
+	       with `....oooo'.  Use ----oooo to select another name.
+
+	       GCC ignores any unrecognized input files	(those that do
+	       not  require  compilation  or assembly) with the	----cccc op-
+	       tion.
+
+	  ----SSSS   Stop after the stage of compilation proper; do not  as-
+	       semble.	 The output is an assembler code file for each
+	       non-assembler input file	specified.
+
+
+
+
+     Page 5					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       By default, GCC makes the assembler  file  name	for  a
+	       source  file  by	replacing the suffix `....cccc', `....iiii', etc.,
+	       with `....ssss'.  Use ----oooo to select another name.
+
+	       GCC ignores any input files that	don't require compila-
+	       tion.
+
+	  ----EEEE   Stop after the preprocessing stage; do not run the com-
+	       piler  proper.  The output is preprocessed source code,
+	       which is	sent to	the standard output.
+
+	       GCC ignores input files which don't require preprocess-
+	       ing.
+
+	  ----oooo _f_i_l_e
+	       Place output in file _f_i_l_e.  This	applies	regardless  to
+	       whatever	sort of	output GCC is producing, whether it be
+	       an executable file, an object file, an  assembler  file
+	       or preprocessed C code.
+
+	       Since only one output file can be  specified,  it  does
+	       not make	sense to use `----oooo' when compiling more than one
+	       input file, unless you are producing an executable file
+	       as output.
+
+	       If you do not specify `----oooo', the default is  to  put  an
+	       executable   file  in  `aaaa....oooouuuutttt',	the  object  file  for
+	       `_s_o_u_r_c_e...._s_u_f_f_i_x' in `_s_o_u_r_c_e....oooo', its  assembler  file  in
+	       `_s_o_u_r_c_e....ssss',  and	 all preprocessed C source on standard
+	       output.
+
+	  ----vvvv   Print (on standard error	output)	the commands  executed
+	       to  run the stages of compilation.  Also	print the ver-
+	       sion number of the compiler driver program and  of  the
+	       preprocessor and	the compiler proper.
+
+	  ----ppppiiiippppeeee
+	       Use pipes rather	than temporary files for communication
+	       between	the various stages of compilation.  This fails
+	       to work on some systems where the assembler cannot read
+	       from a pipe; but	the GNU	assembler has no trouble.
+
+     LLLLAAAANNNNGGGGUUUUAAAAGGGGEEEE OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  The following	options	control	the dialect of C that the com-
+	  piler	accepts:
+
+	  ----aaaannnnssssiiii
+	       Support all ANSI	standard C programs.
+
+	       This turns off certain features of GNU C	that  are  in-
+	       compatible  with	 ANSI  C,  such	as the aaaassssmmmm, iiiinnnnlllliiiinnnneeee and
+	       ttttyyyyppppeeeeooooffff keywords,	and predefined macros such as uuuunnnniiiixxxx and
+
+
+
+     Page 6					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       vvvvaaaaxxxx
+
+	       tttthhhhaaaatttt iiiiddddeeeennnnttttiiiiffffyyyy tttthhhheeee ttttyyyyppppeeee ooooffff ssssyyyysssstttteeeemmmm	 yyyyoooouuuu  aaaarrrreeee  uuuussssiiiinnnngggg....   IIIItttt
+	       aaaallllssssoooo  eeeennnnaaaabbbblllleeeessss tttthhhheeee undesirable and rarely	used ANSI tri-
+	       graph feature, and disallows `$$$$'	as  part  of  identif-
+	       iers.
+
+	       The alternate keywords  ________aaaassssmmmm________,	 ________eeeexxxxtttteeeennnnssssiiiioooonnnn________,	 ________iiiinnnn----
+	       lllliiiinnnneeee________ and ________ttttyyyyppppeeeeooooffff________ continue to work despite `----aaaannnnssssiiii'.
+	       You would not want to use them in an ANSI C program, of
+	       course,	but  it	 is useful to put them in header files
+	       that  might  be	included  in  compilations  done  with
+	       `----aaaannnnssssiiii'.	  Alternate predefined macros such as ________uuuunnnniiiixxxx________
+	       and  ________vvvvaaaaxxxx________  are  also	available,  with  or   without
+	       `----aaaannnnssssiiii'.
+
+	       The `----aaaannnnssssiiii' option does not cause non-ANSI programs  to
+	       be rejected gratuitously.  For that, `----ppppeeeeddddaaaannnnttttiiiicccc'	is re-
+	       quired in addition to `----aaaannnnssssiiii'.
+
+	       The preprocessor	 predefines  a	macro  ________SSSSTTTTRRRRIIIICCCCTTTT____AAAANNNNSSSSIIII________
+	       when you	use the	`----aaaannnnssssiiii'	option.	 Some header files may
+	       notice this macro and refrain  from  declaring  certain
+	       functions  or  defining	certain	 macros	 that the ANSI
+	       standard	doesn't	call for; this is to avoid interfering
+	       with  any programs that might use these names for other
+	       things.
+
+	  ----ffffnnnnoooo----aaaassssmmmm
+	       Do not recognize	aaaassssmmmm, iiiinnnnlllliiiinnnneeee or ttttyyyyppppeeeeooooffff  as  a  keyword.
+	       These  words  may then be used as identifiers.  You can
+	       use  ________aaaassssmmmm________,  ________iiiinnnnlllliiiinnnneeee________   and	 ________ttttyyyyppppeeeeooooffff________   instead.
+	       `----aaaannnnssssiiii' implies `----ffffnnnnoooo----aaaassssmmmm'.
+
+	  ----ffffnnnnoooo----bbbbuuuuiiiillllttttiiiinnnn
+	       Don't recognize built-in	functions that	do  not	 begin
+	       with two	leading	underscores.  Currently, the functions
+	       affected	include	____eeeexxxxiiiitttt, aaaabbbboooorrrrtttt, aaaabbbbssss, aaaallllllllooooccccaaaa, ccccoooossss,	 eeeexxxxiiiitttt,
+	       ffffaaaabbbbssss,  llllaaaabbbbssss, mmmmeeeemmmmccccmmmmpppp, mmmmeeeemmmmccccppppyyyy, ssssiiiinnnn, ssssqqqqrrrrtttt, ssssttttrrrrccccmmmmpppp, ssssttttrrrrccccppppyyyy,
+	       and ssssttttrrrrlllleeeennnn.
+
+	       The `----aaaannnnssssiiii' option prevents aaaallllllllooooccccaaaa and ____eeeexxxxiiiitttt from being
+	       builtin functions.
+
+	  ----ffffhhhhoooosssstttteeeedddd
+	       Compile for a  hosted  environment;  this  implies  the
+	       `----ffffbbbbuuuuiiiillllttttiiiinnnn'  option,  and  implies  that	suspicious de-
+	       clarations of mmmmaaaaiiiinnnn should be warned about.
+
+	  ----ffffffffrrrreeeeeeeessssttttaaaannnnddddiiiinnnngggg
+	       Compile for a freestanding  environment;	 this  implies
+	       the `----ffffnnnnoooo----bbbbuuuuiiiillllttttiiiinnnn' option, and implies that mmmmaaaaiiiinnnn	has no
+
+
+
+     Page 7					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       special requirements.
+
+	  ----ffffnnnnoooo----ssssttttrrrriiiicccctttt----pppprrrroooottttoooottttyyyyppppeeee
+	       Treat a function	declaration with no arguments, such as
+	       `iiiinnnntttt  ffffoooooooo  ();',	 as C would treat it-as	saying nothing
+	       about the number	 of  arguments	or  their  types  (C++
+	       only).	Normally, such a declaration in	C++ means that
+	       the function ffffoooooooo	takes no arguments.
+
+	  ----ttttrrrriiiiggggrrrraaaapppphhhhssss
+	       Support ANSI C trigraphs.  The `----aaaannnnssssiiii'  option  implies
+	       `----ttttrrrriiiiggggrrrraaaapppphhhhssss'.
+
+	  ----ttttrrrraaaaddddiiiittttiiiioooonnnnaaaallll
+	       Attempt to support some aspects of traditional  C  com-
+	       pilers.	 For details, see the GNU C Manual; the	dupli-
+	       cate list here has been deleted so that	we  won't  get
+	       complaints when it is out of date.
+
+	       But one note about C++ programs only (not C).  `----ttttrrrraaaaddddiiii----
+	       ttttiiiioooonnnnaaaallll'	has  one additional effect for C++: assignment
+	       to tttthhhhiiiissss is permitted.  This is the same as  the	effect
+	       of `----fffftttthhhhiiiissss----iiiissss----vvvvaaaarrrriiiiaaaabbbblllleeee'.
+
+	  ----ttttrrrraaaaddddiiiittttiiiioooonnnnaaaallll----ccccpppppppp
+	       Attempt	to  support  some  aspects  of	traditional  C
+	       preprocessors.	This  includes the items that specifi-
+	       cally mention the preprocessor above, but none  of  the
+	       other effects of	`----ttttrrrraaaaddddiiiittttiiiioooonnnnaaaallll'.
+
+	  ----ffffddddoooollllllllaaaarrrrssss----iiiinnnn----iiiiddddeeeennnnttttiiiiffffiiiieeeerrrrssss
+	       Permit the use of `$$$$' in	identifiers (C++  only).   You
+	       can also	use `----ffffnnnnoooo----ddddoooollllllllaaaarrrrssss----iiiinnnn----iiiiddddeeeennnnttttiiiiffffiiiieeeerrrrssss' to explicit-
+	       ly prohibit use of `$$$$'.	(GNU C++ allows	`$$$$' by default
+	       on some target systems but not others.)
+
+	  ----ffffeeeennnnuuuummmm----iiiinnnntttt----eeeeqqqquuuuiiiivvvv
+	       Permit implicit conversion of iiiinnnntttt to enumeration	 types
+	       (C++ only).  Normally GNU C++ allows conversion of eeeennnnuuuummmm
+	       to iiiinnnntttt, but not the other way around.
+
+	  ----ffffeeeexxxxtttteeeerrrrnnnnaaaallll----tttteeeemmmmppppllllaaaatttteeeessss
+	       Produce smaller code for	template declarations, by gen-
+	       erating	only  a	 single	copy of	each template function
+	       where it	is defined (C++	only).	 To  use  this	option
+	       successfully,  you  must	 also  mark all	files that use
+	       templates with either `####pppprrrraaaaggggmmmmaaaa iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn' (the de-
+	       finition) or `####pppprrrraaaaggggmmmmaaaa iiiinnnntttteeeerrrrffffaaaacccceeee'	(declarations).
+
+	       When your code is compiled with `----ffffeeeexxxxtttteeeerrrrnnnnaaaallll----tttteeeemmmmppppllllaaaatttteeeessss',
+	       all template instantiations are external.  You must ar-
+	       range for all necessary instantiations to appear	in the
+
+
+
+     Page 8					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       implementation  file;  you  can	do this	with a ttttyyyyppppeeeeddddeeeeffff
+	       that references each instantiation needed.  Conversely,
+	       when    you    compile	using	the   default	option
+	       `----ffffnnnnoooo----eeeexxxxtttteeeerrrrnnnnaaaallll----tttteeeemmmmppppllllaaaatttteeeessss', all template	instantiations
+	       are explicitly internal.
+
+	  ----ffffaaaallllllll----vvvviiiirrrrttttuuuuaaaallll
+	       Treat all possible member functions as virtual,	impli-
+	       citly.	All  member  functions (except for constructor
+	       functions and  nnnneeeewwww  or  ddddeeeelllleeeetttteeee  member  operators)  are
+	       treated	as  virtual  functions of the class where they
+	       appear.
+
+	       This does not mean that all calls to these member func-
+	       tions will be made through the internal table of	virtu-
+	       al functions.  Under some circumstances,	 the  compiler
+	       can  determine  that a call to a	given virtual function
+	       can be made directly; in	 these	cases  the  calls  are
+	       direct in any case.
+
+	  ----ffffccccoooonnnndddd----mmmmiiiissssmmmmaaaattttcccchhhh
+	       Allow conditional expressions with mismatched types  in
+	       the  second  and	third arguments.  The value of such an
+	       expression is void.
+
+	  ----fffftttthhhhiiiissss----iiiissss----vvvvaaaarrrriiiiaaaabbbblllleeee
+	       Permit assignment to tttthhhhiiiissss (C++ only).   The  incorpora-
+	       tion of user-defined free store management into C++ has
+	       made assignment to `tttthhhhiiiissss' an  anachronism.   Therefore,
+	       by  default  it	is  invalid to assign to tttthhhhiiiissss within a
+	       class member function.  However,	for backwards compati-
+	       bility,	 you   can  make  it  valid  with  `----fffftttthhhhiiiissss----iiiissss----
+	       vvvvaaaarrrriiiiaaaabbbblllleeee'.
+
+	  ----ffffuuuunnnnssssiiiiggggnnnneeeedddd----cccchhhhaaaarrrr
+	       Let the type cccchhhhaaaarrrr be unsigned, like uuuunnnnssssiiiiggggnnnneeeedddd cccchhhhaaaarrrr.
+
+	       Each kind of machine has	a default for what cccchhhhaaaarrrr	should
+	       be.  It is either like uuuunnnnssssiiiiggggnnnneeeedddd cccchhhhaaaarrrr by default or like
+	       ssssiiiiggggnnnneeeedddd cccchhhhaaaarrrr by default.
+
+	       Ideally,	a portable program should  always  use	ssssiiiiggggnnnneeeedddd
+	       cccchhhhaaaarrrr or uuuunnnnssssiiiiggggnnnneeeedddd	cccchhhhaaaarrrr when it depends on	the signedness
+	       of an object.  But many programs	have been  written  to
+	       use plain cccchhhhaaaarrrr and expect it to be signed, or expect it
+	       to be unsigned, depending on  the  machines  they  were
+	       written	for.   This  option,  and its inverse, let you
+	       make such a program work	with the opposite default.
+
+	       The type	cccchhhhaaaarrrr is	always a distinct type	from  each  of
+	       ssssiiiiggggnnnneeeedddd cccchhhhaaaarrrr and uuuunnnnssssiiiiggggnnnneeeedddd	cccchhhhaaaarrrr, even though its behavior
+	       is always just like one of those	two.
+
+
+
+     Page 9					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----ffffssssiiiiggggnnnneeeedddd----cccchhhhaaaarrrr
+	       Let the type cccchhhhaaaarrrr be signed, like ssssiiiiggggnnnneeeedddd	cccchhhhaaaarrrr.
+
+	       Note that this is equivalent  to	 `----ffffnnnnoooo----uuuunnnnssssiiiiggggnnnneeeedddd----cccchhhhaaaarrrr',
+	       which is	the negative form of `----ffffuuuunnnnssssiiiiggggnnnneeeedddd----cccchhhhaaaarrrr'.	 Like-
+	       wise,	`----ffffnnnnoooo----ssssiiiiggggnnnneeeedddd----cccchhhhaaaarrrr'    is     equivalent	    to
+	       `----ffffuuuunnnnssssiiiiggggnnnneeeedddd----cccchhhhaaaarrrr'.
+
+	  ----ffffssssiiiiggggnnnneeeedddd----bbbbiiiittttffffiiiieeeellllddddssss
+
+	  ----ffffuuuunnnnssssiiiiggggnnnneeeedddd----bbbbiiiittttffffiiiieeeellllddddssss
+
+	  ----ffffnnnnoooo----ssssiiiiggggnnnneeeedddd----bbbbiiiittttffffiiiieeeellllddddssss
+
+	  ----ffffnnnnoooo----uuuunnnnssssiiiiggggnnnneeeedddd----bbbbiiiittttffffiiiieeeellllddddssss
+	       These options control whether a bitfield	is  signed  or
+	       unsigned,  when	declared  with no explicit `ssssiiiiggggnnnneeeedddd' or
+	       `uuuunnnnssssiiiiggggnnnneeeedddd' qualifier.  By default, such a  bitfield  is
+	       signed,	because	 this is consistent: the basic integer
+	       types such as iiiinnnntttt are signed types.
+
+	       However,	when you specify `----ttttrrrraaaaddddiiiittttiiiioooonnnnaaaallll', bitfields are
+	       all unsigned no matter what.
+
+	  ----ffffwwwwrrrriiiittttaaaabbbblllleeee----ssssttttrrrriiiinnnnggggssss
+	       Store string constants in the writable data segment and
+	       don't  uniquize	them.	This is	for compatibility with
+	       old programs which assume they can  write  into	string
+	       constants.  `----ttttrrrraaaaddddiiiittttiiiioooonnnnaaaallll' also has this	effect.
+
+	       Writing into string constants is	a very bad idea;  con-
+	       stants should be	constant.
+
+     PPPPRRRREEEEPPPPRRRROOOOCCCCEEEESSSSSSSSOOOORRRR OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  These	options	control	the C preprocessor, which  is  run  on
+	  each C source	file before actual compilation.
+
+	  If you use the `----EEEE' option, GCC does nothing except  prepro-
+	  cessing.   Some  of  these  options make sense only together
+	  with `----EEEE' because they cause the preprocessor	output	to  be
+	  unsuitable for actual	compilation.
+
+	  ----iiiinnnncccclllluuuuddddeeee _f_i_l_e
+	       Process _f_i_l_e as input before processing the regular in-
+	       put file.  In effect, the contents of _f_i_l_e are compiled
+	       first.  Any `----DDDD'	and `----UUUU' options on the	 command  line
+	       are always processed before `----iiiinnnncccclllluuuuddddeeee _f_i_l_e', regardless
+	       of the order in which they are written.	All the	 `----iiiinnnn----
+	       cccclllluuuuddddeeee' and `----iiiimmmmaaaaccccrrrroooossss' options are processed in the ord-
+	       er in which they	are written.
+
+	  ----iiiimmmmaaaaccccrrrroooossss _f_i_l_e
+
+
+
+     Page 10					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Process _f_i_l_e as input, discarding the resulting output,
+	       before  processing the regular input file.  Because the
+	       output generated	from _f_i_l_e is discarded,	the  only  ef-
+	       fect  of	 `----iiiimmmmaaaaccccrrrroooossss _f_i_l_e' is to make the	macros defined
+	       in _f_i_l_e available for  use  in  the  main  input.   The
+	       preprocessor evaluates any `----DDDD' and `----UUUU'	options	on the
+	       command line before processing `----iiiimmmmaaaaccccrrrroooossss_f_i_l_e',  regard-
+	       less  of	 the order in which they are written.  All the
+	       `----iiiinnnncccclllluuuuddddeeee' and `----iiiimmmmaaaaccccrrrroooossss' options are processed in  the
+	       order in	which they are written.
+
+	  ----iiiiddddiiiirrrraaaafffftttteeeerrrr _d_i_r
+	       Add the directory _d_i_r to	the second include path.   The
+	       directories  on	the  second  include path are searched
+	       when a header file is not found in any  of  the	direc-
+	       tories in the main include path (the one	that `----IIII' adds
+	       to).
+
+	  ----iiiipppprrrreeeeffffiiiixxxx _p_r_e_f_i_x
+	       Specify _p_r_e_f_i_x as the prefix for	subsequent `----iiiiwwwwiiiitttthhhhpppprrrreeee----
+	       ffffiiiixxxx' options.
+
+	  ----iiiiwwwwiiiitttthhhhpppprrrreeeeffffiiiixxxx _d_i_r
+	       Add a  directory	 to  the  second  include  path.   The
+	       directory's  name  is  made by concatenating _p_r_e_f_i_x and
+	       _d_i_r, where _p_r_e_f_i_x was specified previously with `----iiiipppprrrreeee----
+	       ffffiiiixxxx'.
+
+	  ----nnnnoooossssttttddddiiiinnnncccc
+	       Do not  search  the  standard  system  directories  for
+	       header  files.  Only the	directories you	have specified
+	       with `----IIII' options (and the current  directory,  if  ap-
+	       propriate) are searched.
+
+	       By using	both `----nnnnoooossssttttddddiiiinnnncccc' and `----IIII----', you	can limit  the
+	       include-file  search file to only those directories you
+	       specify explicitly.
+
+	  ----nnnnoooossssttttddddiiiinnnncccc++++++++
+	       Do not search for  header  files	 in  the  C++-specific
+	       standard	 directories,  but  do	still search the other
+	       standard	directories.  (This option is used when	build-
+	       ing `lllliiiibbbbgggg++++++++'.)
+
+	  ----uuuunnnnddddeeeeffff
+	       Do not predefine	any  nonstandard  macros.   (Including
+	       architecture flags).
+
+	  ----EEEE   Run only	the C  preprocessor.   Preprocess  all	the  C
+	       source  files specified and output the results to stan-
+	       dard output or to the specified output file.
+
+
+
+
+     Page 11					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----CCCC   Tell the	preprocessor not to  discard  comments.	  Used
+	       with the	`----EEEE' option.
+
+	  ----PPPP   Tell the	preprocessor not to generate `####lllliiiinnnneeee' commands.
+	       Used with the `----EEEE' option.
+
+	  ----MMMM  [[[[	----MMMMGGGG ]]]]
+	       Tell the	preprocessor to	output	a  rule	 suitable  for
+	       mmmmaaaakkkkeeee  describing	 the dependencies of each object file.
+	       For each	source	file,  the  preprocessor  outputs  one
+	       mmmmaaaakkkkeeee-rule whose target is the object file name for that
+	       source file and whose dependencies are  all  the	 files
+	       `####iiiinnnncccclllluuuuddddeeee'd  in	it.  This rule may be a	single line or
+	       may be continued	with `\\\\'-newline if it is  long.   The
+	       list  of	rules is printed on standard output instead of
+	       the preprocessed	C program.
+
+	       `----MMMM' implies `----EEEE'.
+
+	       `----MMMMGGGG' says to treat missing header files	 as  generated
+	       files and assume	they live in the same directory	as the
+	       source file.  It	must be	specified in addition to `----MMMM'.
+
+	  ----MMMMMMMM  [[[[ ----MMMMGGGG ]]]]
+	       Like `----MMMM' but the output	mentions only the user	header
+	       files  included	with  `####iiiinnnncccclllluuuuddddeeee	_f_i_l_e"'.	 System	header
+	       files included with `####iiiinnnncccclllluuuuddddeeee <<<<_f_i_l_e>' are omitted.
+
+	  ----MMMMDDDD  Like `----MMMM' but the dependency information	is written  to
+	       files  with  names  made	by replacing `....oooo' with `....dddd' at
+	       the end of the output file names.  This is in  addition
+	       to compiling the	file as	specified-`----MMMMDDDD'	does not inhi-
+	       bit ordinary compilation	the way	`----MMMM' does.
+
+	       The Mach	utility	`mmmmdddd' can be used  to  merge  the  `....dddd'
+	       files  into a single dependency file suitable for using
+	       with the	`mmmmaaaakkkkeeee' command.
+
+	  ----MMMMMMMMDDDD Like `----MMMMDDDD' except mention only user header  files,  not
+	       system header files.
+
+	  ----HHHH   Print the name of each header file used,	in addition to
+	       other normal activities.
+
+	  ----AAAA_q_u_e_s_t_i_o_n((((_a_n_s_w_e_r))))
+	       Assert the answer _a_n_s_w_e_r	for _q_u_e_s_t_i_o_n, in  case	it  is
+	       tested  with  a	preprocessor  conditional such as `####iiiiffff
+	       ####_q_u_e_s_t_i_o_n((((_a_n_s_w_e_r))))'.  `----AAAA----' disables the standard	asser-
+	       tions that normally describe the	target machine.
+
+	  ----AAAA_q_u_e_s_t_i_o_n
+	       (_a_n_s_w_e_r)	Assert the answer _a_n_s_w_e_r for _q_u_e_s_t_i_o_n, in case
+
+
+
+     Page 12					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       it  is  tested  with a preprocessor conditional such as
+	       `####iiiiffff #_q_u_e_s_t_i_o_n(_a_n_s_w_e_r)'.	 `----AAAA----' disables	 the  standard
+	       assertions that normally	describe the target machine.
+
+	  ----DDDD_m_a_c_r_o
+	       Define macro _m_a_c_r_o with the string `1111' as  its  defini-
+	       tion.
+
+	  ----DDDD_m_a_c_r_o====_d_e_f_n
+	       Define macro _m_a_c_r_o as _d_e_f_n.    All instances of `----DDDD' on
+	       the command line	are processed before any `----UUUU' options.
+
+	  ----UUUU_m_a_c_r_o
+	       Undefine	macro _m_a_c_r_o.  `----UUUU' options are evaluated after
+	       all `----DDDD'	options, but before any	`----iiiinnnncccclllluuuuddddeeee' and `----iiiimmmmaaaacccc----
+	       rrrroooossss' options.
+
+	  ----ddddMMMM  Tell the	preprocessor to	output only a list of the mac-
+	       ro definitions that are in effect at the	end of prepro-
+	       cessing.	 Used with the `----EEEE' option.
+
+	  ----ddddDDDD  Tell the	preprocessor to	 pass  all  macro  definitions
+	       into  the  output, in their proper sequence in the rest
+	       of the output.
+
+	  ----ddddNNNN  Like `----ddddDDDD' except that the macro	arguments and contents
+	       are  omitted.   Only  `####ddddeeeeffffiiiinnnneeee _n_a_m_e' is included	in the
+	       output.
+
+     AAAASSSSSSSSEEEEMMMMBBBBLLLLEEEERRRR OOOOPPPPTTTTIIIIOOOONNNN
+	  ----WWWWaaaa,,,,_o_p_t_i_o_n
+	       Pass _o_p_t_i_o_n as an option	to the assembler.   If	_o_p_t_i_o_n
+	       contains	 commas,  it is	split into multiple options at
+	       the commas.
+
+     LLLLIIIINNNNKKKKEEEERRRR OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  These	options	come into play when the	compiler links	object
+	  files	 into an executable output file.  They are meaningless
+	  if the compiler is not doing a link step.
+
+	  _o_b_j_e_c_t-_f_i_l_e-_n_a_m_e
+	       A file name that	does not end in	a  special  recognized
+	       suffix is considered to name an object file or library.
+	       (Object files are distinguished from libraries  by  the
+	       linker  according to the	file contents.)	 If GCC	does a
+	       link step, these	object files are used as input to  the
+	       linker.
+
+	  ----llll_l_i_b_r_a_r_y
+	       Use the library named _l_i_b_r_a_r_y when linking.
+
+	       The linker searches a standard list of directories  for
+
+
+
+     Page 13					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       the   library,	which	is   actually	a  file	 named
+	       `lllliiiibbbb_l_i_b_r_a_r_y.a'.	The linker then	uses this file	as  if
+	       it had been specified precisely by name.
+
+	       The directories searched	include	several	standard  sys-
+	       tem directories plus any	that you specify with `----LLLL'.
+
+	       Normally	the files found	this way  are  library	files-
+	       archive	files  whose  members  are  object files.  The
+	       linker handles an archive file by scanning  through  it
+	       for  members which define symbols that have so far been
+	       referenced but not defined.   However,  if  the	linker
+	       finds  an  ordinary  object file	rather than a library,
+	       the object file is linked in the	 usual	fashion.   The
+	       only difference between using an	`----llll' option and	speci-
+	       fying a file name is that `----llll' surrounds	 _l_i_b_r_a_r_y  with
+	       `lllliiiibbbb' and `....aaaa' and searches several directories.
+
+	  ----lllloooobbbbjjjjcccc
+	       You need	this special case of the ----llll option in order to
+	       link an Objective C program.
+
+	  ----nnnnoooossssttttaaaarrrrttttffffiiiilllleeeessss
+	       Do not use the standard system startup files when link-
+	       ing.  The standard libraries are	used normally.
+
+	  ----nnnnoooossssttttddddlllliiiibbbb
+	       Don't use the standard  system  libraries  and  startup
+	       files when linking.  Only the files you specify will be
+	       passed to the linker.
+
+	  ----ssssttttaaaattttiiiicccc
+	       On systems that support dynamic linking,	this  prevents
+	       linking	with  the shared libraries.  On	other systems,
+	       this option has no effect.
+
+	  ----sssshhhhaaaarrrreeeedddd
+	       Produce a shared	object which can then be  linked  with
+	       other  objects  to form an executable.  Only a few sys-
+	       tems support this option.
+
+	  ----ssssyyyymmmmbbbboooolllliiiicccc
+	       Bind references	to  global  symbols  when  building  a
+	       shared  object.	 Warn  about any unresolved references
+	       (unless overridden by the link editor option  `----XXXXlllliiiinnnnkkkkeeeerrrr
+	       ----zzzz  ----XXXXlllliiiinnnnkkkkeeeerrrr  ddddeeeeffffssss').   Only a few systems support this
+	       option.
+
+	  ----XXXXlllliiiinnnnkkkkeeeerrrr _o_p_t_i_o_n
+	       Pass _o_p_t_i_o_n as an option	to the linker.	 You  can  use
+	       this to supply system-specific linker options which GNU
+	       CC does not know	how to recognize.
+
+
+
+     Page 14					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       If you want to pass an option that takes	 an  argument,
+	       you  must use `----XXXXlllliiiinnnnkkkkeeeerrrr'	twice, once for	the option and
+	       once for	the argument.  For example, to	pass  `----aaaasssssssseeeerrrrtttt
+	       ddddeeeeffffiiiinnnniiiittttiiiioooonnnnssss', you must write `----XXXXlllliiiinnnnkkkkeeeerrrr ----aaaasssssssseeeerrrrtttt ----XXXXlllliiiinnnnkkkkeeeerrrr
+	       ddddeeeeffffiiiinnnniiiittttiiiioooonnnnssss'.  It does  not  work  to  write  `----XXXXlllliiiinnnnkkkkeeeerrrr
+	       """"----aaaasssssssseeeerrrrtttt	 ddddeeeeffffiiiinnnniiiittttiiiioooonnnnssss""""',	because	this passes the	entire
+	       string as a single argument,  which  is	not  what  the
+	       linker expects.
+
+	  ----WWWWllll,,,,_o_p_t_i_o_n
+	       Pass _o_p_t_i_o_n as an option	to the linker.	If _o_p_t_i_o_n con-
+	       tains  commas, it is split into multiple	options	at the
+	       commas.
+
+	  ----uuuu _s_y_m_b_o_l
+	       Pretend the symbol _s_y_m_b_o_l is undefined, to force	 link-
+	       ing  of library modules to define it.  You can use `----uuuu'
+	       multiple	times with different symbols to	force  loading
+	       of additional library modules.
+
+     DDDDIIIIRRRREEEECCCCTTTTOOOORRRRYYYY OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  These	options	 specify  directories  to  search  for	header
+	  files, for libraries and for parts of	the compiler:
+
+	  ----IIII_d_i_r
+	       Append  directory  _d_i_r  to  the	list  of   directories
+	       searched	for include files.
+
+	  ----IIII----  Any directories you specify with	 `----IIII'  options	before
+	       the  `----IIII----'  option  are	searched  only for the case of
+	       `####iiiinnnncccclllluuuuddddeeee """"_f_i_l_e""""'; they are not searched	for  `####iiiinnnncccclllluuuuddddeeee
+	       <<<<_f_i_l_e>'.
+
+	       If additional directories are specified with  `----IIII'  op-
+	       tions  after  the `----IIII----',	these directories are searched
+	       for all `####iiiinnnncccclllluuuuddddeeee' directives.	(Ordinarily  _a_l_l  `----IIII'
+	       directories are used this way.)
+
+	       In addition, the	`----IIII----' option inhibits the use  of  the
+	       current	directory  (where  the current input file came
+	       from) as	 the  first  search  directory	for  `####iiiinnnncccclllluuuuddddeeee
+	       """"_f_i_l_e""""'.	  There	 is  no	way to override	this effect of
+	       `----IIII----'.  With `----IIII....' you can specify searching the	direc-
+	       tory  which  was	current	when the compiler was invoked.
+	       That is not exactly the same as what  the  preprocessor
+	       does by default,	but it is often	satisfactory.
+
+	       `----IIII----' does not inhibit the use of the  standard	system
+	       directories  for	header files.  Thus, `----IIII----' and `----nnnnoooosssstttt----
+	       ddddiiiinnnncccc' are independent.
+
+	  ----LLLL_d_i_r
+
+
+
+     Page 15					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Add directory _d_i_r to the	 list  of  directories	to  be
+	       searched	for `----llll'.
+
+	  ----BBBB_p_r_e_f_i_x
+	       This option specifies where to  find  the  executables,
+	       libraries and data files	of the compiler	itself.
+
+	       The compiler driver program runs	one  or	 more  of  the
+	       subprograms `ccccpppppppp', `cccccccc1111'	(or, for C++, `cccccccc1111pppplllluuuussss'), `aaaassss'
+	       and `lllldddd'.  It tries _p_r_e_f_i_x as a prefix for each program
+	       it    tries    to    run,   both	  with	 and   without
+	       `_m_a_c_h_i_n_e////_v_e_r_s_i_o_n////'.
+
+	       For each	subprogram to  be  run,	 the  compiler	driver
+	       first  tries  the `----BBBB' prefix, if any.  If that name is
+	       not found, or if	`----BBBB' was  not  specified,  the	driver
+	       tries  two standard prefixes, which are `////uuuussssrrrr////lllliiiibbbb////ggggcccccccc////'
+	       and `////uuuussssrrrr////llllooooccccaaaallll////lllliiiibbbb////ggggcccccccc----lllliiiibbbb////'.	If  neither  of	 those
+	       results	in  a  file  name  that	is found, the compiler
+	       driver searches for the unmodified program name,	 using
+	       the  directories	 specified  in your `PPPPAAAATTTTHHHH' environment
+	       variable.
+
+	       The run-time support file `lllliiiibbbbggggcccccccc....aaaa' is	also  searched
+	       for  using  the	`----BBBB'  prefix, if needed.  If it	is not
+	       found there, the	two standard prefixes above are	tried,
+	       and  that  is all.  The file is left out	of the link if
+	       it is not found by those	means.	Most of	the  time,  on
+	       most machines, `lllliiiibbbbggggcccccccc....aaaa' is not	actually necessary.
+
+	       You can get a similar result from the environment vari-
+	       able  GGGGCCCCCCCC____EEEEXXXXEEEECCCC____PPPPRRRREEEEFFFFIIIIXXXX;  if  it is defined, its value is
+	       used as a prefix	in the same way.  If both the `----BBBB' op-
+	       tion  and the GGGGCCCCCCCC____EEEEXXXXEEEECCCC____PPPPRRRREEEEFFFFIIIIXXXX variable are present, the
+	       `----BBBB' option is used first and the environment  variable
+	       value second.
+
+     WWWWAAAARRRRNNNNIIIINNNNGGGG OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  Warnings are diagnostic messages that	 report	 constructions
+	  which	 are  not  inherently erroneous	but which are risky or
+	  suggest there	may have been an error.
+
+	  These	options	control	the amount and kinds of	warnings  pro-
+	  duced	by GNU CC:
+
+	  ----ffffssssyyyynnnnttttaaaaxxxx----oooonnnnllllyyyy
+	       Check the code for syntax errors, but  don't  emit  any
+	       output.
+
+	  ----wwww   Inhibit all warning messages.
+
+	  ----WWWWnnnnoooo----iiiimmmmppppoooorrrrtttt
+
+
+
+     Page 16					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Inhibit warning messages	about the use of ####iiiimmmmppppoooorrrrtttt.
+
+	  ----ppppeeeeddddaaaannnnttttiiiicccc
+	       Issue all the warnings demanded by strict ANSI standard
+	       C; reject all programs that use forbidden extensions.
+
+	       Valid ANSI standard C programs should compile  properly
+	       with or without this option (though a rare few will re-
+	       quire `----aaaannnnssssiiii').	However, without this option,  certain
+	       GNU extensions and traditional C	features are supported
+	       as well.	 With this option, they	are  rejected.	 There
+	       is  no  reason  to  _u_s_e	this option; it	exists only to
+	       satisfy pedants.
+
+	       `----ppppeeeeddddaaaannnnttttiiiicccc' does	not cause warning messages for use  of
+	       the  alternate  keywords	whose names begin and end with
+	       `________'.  Pedantic warnings	are also disabled in  the  ex-
+	       pression	 that  follows	________eeeexxxxtttteeeennnnssssiiiioooonnnn________.	 However, only
+	       system header files should use these escape routes; ap-
+	       plication programs should avoid them.
+
+	  ----ppppeeeeddddaaaannnnttttiiiicccc----eeeerrrrrrrroooorrrrssss
+	       Like `----ppppeeeeddddaaaannnnttttiiiicccc', except	that errors are	produced rath-
+	       er than warnings.
+
+	  ----WWWW   Print extra warning messages for	these events:
+
+	     +o A nonvolatile automatic variable	might be changed by  a
+	       call  to	 lllloooonnnnggggjjjjmmmmpppp.  These warnings are possible only in
+	       optimizing compilation.
+
+	       The compiler sees only the calls	to sssseeeettttjjjjmmmmpppp.  It	cannot
+	       know  where  lllloooonnnnggggjjjjmmmmpppp  will be called; in	fact, a	signal
+	       handler could call it at	any point in the code.	 As  a
+	       result,	you  may  get  a warning even when there is in
+	       fact no problem	because	 lllloooonnnnggggjjjjmmmmpppp  cannot  in  fact  be
+	       called at the place which would cause a problem.
+
+	     +o A function can return either with or without  a	value.
+	       (Falling	off the	end of the function body is considered
+	       returning without a value.)  For	example, this function
+	       would evoke such	a warning:
+
+	       foo (a)
+	       {
+		 if (a > 0)
+		   return a;
+	       }
+
+	       Spurious	warnings can occur because  GNU	 CC  does  not
+	       realize	that  certain  functions  (including aaaabbbboooorrrrtttt and
+	       lllloooonnnnggggjjjjmmmmpppp)	will never return.
+
+
+
+     Page 17					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	     +o An expression-statement or the left-hand	side of	a com-
+	       ma expression contains no side effects. To suppress the
+	       warning,	cast the unused	expression to void.  For exam-
+	       ple,  an	expression such	as `xxxx[[[[iiii,,,,jjjj]]]]' will cause a warn-
+	       ing, but	`xxxx[[[[((((vvvvooooiiiidddd))))iiii,,,,jjjj]]]]' will not.
+
+	     +o An unsigned value is compared against zero with `>>>>'  or
+	       `<<<<===='.
+
+	  ----WWWWiiiimmmmpppplllliiiicccciiiitttt----iiiinnnntttt
+	       Warn whenever a declaration does	not specify a type.
+
+	  ----WWWWiiiimmmmpppplllliiiicccciiiitttt----ffffuuuunnnnccccttttiiiioooonnnn----ddddeeeeccccllllaaaarrrraaaattttiiiioooonnnn
+	       Warn whenever a function	is used	before being declared.
+
+	  ----WWWWiiiimmmmpppplllliiiicccciiiitttt
+	       Same   as   -Wimplicit-int   and	  -Wimplicit-function-
+	       declaration.
+
+	  ----WWWWmmmmaaaaiiiinnnn
+	       Warn if the mmmmaaaaiiiinnnn	function is declared or	defined	with a
+	       suspicious  type.   Typically,  it  is  a function with
+	       external	linkage, returning iiiinnnntttt,	and taking zero	or two
+	       arguments.
+
+
+	  ----WWWWrrrreeeettttuuuurrrrnnnn----ttttyyyyppppeeee
+	       Warn whenever a function	is defined with	a  return-type
+	       that  defaults  to  iiiinnnntttt.	  Also	warn  about any	rrrreeeettttuuuurrrrnnnn
+	       statement with no  return-value	in  a  function	 whose
+	       return-type is not vvvvooooiiiidddd.
+
+	  ----WWWWuuuunnnnuuuusssseeeedddd
+	       Warn whenever a local variable is unused	aside from its
+	       declaration, whenever a function	is declared static but
+	       never defined, and  whenever  a	statement  computes  a
+	       result that is explicitly not used.
+
+	  ----WWWWsssswwwwiiiittttcccchhhh
+	       Warn whenever  a	 sssswwwwiiiittttcccchhhh	 statement  has	 an  index  of
+	       enumeral	 type  and lacks a ccccaaaasssseeee	for one	or more	of the
+	       named codes of that enumeration.	 (The  presence	 of  a
+	       ddddeeeeffffaaaauuuulllltttt label prevents this warning.)  ccccaaaasssseeee labels out-
+	       side the	enumeration range also provoke	warnings  when
+	       this option is used.
+
+	  ----WWWWccccoooommmmmmmmeeeennnntttt
+	       Warn whenever a comment-start sequence `////****' appears  in
+	       a comment.
+
+	  ----WWWWttttrrrriiiiggggrrrraaaapppphhhhssss
+	       Warn if any trigraphs are  encountered  (assuming  they
+
+
+
+     Page 18					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       are enabled).
+
+	  ----WWWWffffoooorrrrmmmmaaaatttt
+	       Check calls to pppprrrriiiinnnnttttffff and ssssccccaaaannnnffff,	 etc.,	to  make  sure
+	       that  the  arguments supplied have types	appropriate to
+	       the format string specified.
+
+	  ----WWWWcccchhhhaaaarrrr----ssssuuuubbbbssssccccrrrriiiippppttttssss
+	       Warn if an array	subscript has type cccchhhhaaaarrrr.   This	 is  a
+	       common cause of error, as programmers often forget that
+	       this type is signed on some machines.
+
+	  ----WWWWuuuunnnniiiinnnniiiittttiiiiaaaalllliiiizzzzeeeedddd
+	       An automatic variable is	used without first being  ini-
+	       tialized.
+
+	       These warnings are possible only	in optimizing compila-
+	       tion,  because  they require data flow information that
+	       is computed only	when optimizing.  If you don't specify
+	       `----OOOO', you simply	won't get these	warnings.
+
+	       These warnings occur only for variables that are	candi-
+	       dates  for register allocation.	Therefore, they	do not
+	       occur for a variable  that  is  declared	 vvvvoooollllaaaattttiiiilllleeee,  or
+	       whose  address is taken,	or whose size is other than 1,
+	       2, 4 or 8 bytes.	 Also, they do not  occur  for	struc-
+	       tures,  unions  or arrays, even when they are in	regis-
+	       ters.
+
+	       Note that there may be no warning about a variable that
+	       is  used	 only  to compute a value that itself is never
+	       used, because such computations may be deleted by  data
+	       flow analysis before the	warnings are printed.
+
+	       These warnings are made optional	because	GNU CC is  not
+	       smart  enough to	see all	the reasons why	the code might
+	       be correct despite appearing to have an error.  Here is
+	       one example of how this can happen:
+
+	       {
+		 int x;
+		 switch	(y)
+		   {
+		   case	1: x = 1;
+		     break;
+		   case	2: x = 4;
+		     break;
+		   case	3: x = 5;
+		   }
+		 foo (x);
+	       }
+
+
+
+
+     Page 19					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       If the value of yyyy is always 1, 2	or 3, then xxxx is	always
+	       initialized,  but  GNU  CC  doesn't know	this.  Here is
+	       another common case:
+
+	       {
+		 int save_y;
+		 if (change_y) save_y =	y, y = new_y;
+		 ...
+		 if (change_y) y = save_y;
+	       }
+
+	       This has	no bug because ssssaaaavvvveeee____yyyy is used only  if	it  is
+	       set.
+
+	       Some spurious warnings can be avoided if	you declare as
+	       vvvvoooollllaaaattttiiiilllleeee	all the	functions you use that never return.
+
+	  ----WWWWppppaaaarrrreeeennnntttthhhheeeesssseeeessss
+	       Warn if parentheses are omitted in certain contexts.
+
+	  ----WWWWtttteeeemmmmppppllllaaaatttteeee----ddddeeeebbbbuuuuggggggggiiiinnnngggg
+	       When using templates in a C++ program, warn  if	debug-
+	       ging is not yet fully available (C++ only).
+
+	  ----WWWWaaaallllllll
+	       All of the above	`----WWWW' options combined.	These are  all
+	       the  options  which  pertain to usage that we recommend
+	       avoiding	and that we believe is easy to avoid, even  in
+	       conjunction with	macros.
+
+	  The remaining	`----WWWW............'	options	are not	implied	by `----WWWWaaaallllllll' be-
+	  cause	they warn about	constructions that we consider reason-
+	  able to use, on occasion, in clean programs.
+
+	  ----WWWWttttrrrraaaaddddiiiittttiiiioooonnnnaaaallll
+	       Warn about certain constructs that  behave  differently
+	       in traditional and ANSI C.
+
+	     +o Macro arguments occurring within	 string	 constants  in
+	       the macro body.	These would substitute the argument in
+	       traditional C, but are part of the constant in ANSI C.
+
+	     +o A function declared external in one block and then used
+	       after the end of	the block.
+
+	     +o A sssswwwwiiiittttcccchhhh	statement has an operand of type lllloooonnnngggg.
+
+	  ----WWWWsssshhhhaaaaddddoooowwww
+	       Warn whenever a local variable  shadows	another	 local
+	       variable.
+
+	  ----WWWWiiiidddd----ccccllllaaaasssshhhh----_l_e_n
+
+
+
+     Page 20					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Warn whenever two distinct  identifiers	match  in  the
+	       first _l_e_n characters.  This may help you	prepare	a pro-
+	       gram that will compile with  certain  obsolete,	brain-
+	       damaged compilers.
+
+	  ----WWWWppppooooiiiinnnntttteeeerrrr----aaaarrrriiiitttthhhh
+	       Warn about anything that	depends	on the size of a func-
+	       tion type or of vvvvooooiiiidddd.  GNU C assigns these types	a size
+	       of 1, for  convenience  in  calculations	 with  vvvvooooiiiidddd  ****
+	       pointers	and pointers to	functions.
+
+	  ----WWWWccccaaaasssstttt----qqqquuuuaaaallll
+	       Warn whenever a pointer is cast so as to	remove a  type
+	       qualifier from the target type.	For example, warn if a
+	       ccccoooonnnnsssstttt cccchhhhaaaarrrr **** is cast to an ordinary cccchhhhaaaarrrr	****.
+
+	  ----WWWWccccaaaasssstttt----aaaalllliiiiggggnnnn
+	       Warn whenever a pointer is cast such that the  required
+	       alignment  of  the  target  is increased.  For example,
+	       warn if a cccchhhhaaaarrrr ****	is cast	to an iiiinnnntttt **** on machines	 where
+	       integers	 can  only  be	accessed  at two- or four-byte
+	       boundaries.
+
+	  ----WWWWwwwwrrrriiiitttteeee----ssssttttrrrriiiinnnnggggssss
+	       Give string constants the type  ccccoooonnnnsssstttt  cccchhhhaaaarrrr[[[[_l_e_n_g_t_h]]]]  so
+	       that copying the	address	of one into a non-ccccoooonnnnsssstttt	cccchhhhaaaarrrr ****
+	       pointer will get	a warning.  These warnings  will  help
+	       you  find  at  compile  time code that can try to write
+	       into a string constant, but only	if you have been  very
+	       careful	about  using  ccccoooonnnnsssstttt in declarations and	proto-
+	       types.  Otherwise, it will just be a nuisance; this  is
+	       why we did not make `----WWWWaaaallllllll' request these warnings.
+
+	  ----WWWWccccoooonnnnvvvveeeerrrrssssiiiioooonnnn
+	       Warn if a prototype causes a type  conversion  that  is
+	       different  from	what would happen to the same argument
+	       in the absence of a prototype.  This  includes  conver-
+	       sions  of  fixed	 point to floating and vice versa, and
+	       conversions changing the	width or signedness of a fixed
+	       point argument except when the same as the default pro-
+	       motion.
+
+	  ----WWWWaaaaggggggggrrrreeeeggggaaaatttteeee----rrrreeeettttuuuurrrrnnnn
+	       Warn if any functions that return structures or	unions
+	       are defined or called.  (In languages where you can re-
+	       turn an array, this also	elicits	a warning.)
+
+	  ----WWWWssssttttrrrriiiicccctttt----pppprrrroooottttoooottttyyyyppppeeeessss
+	       Warn if a  function  is	declared  or  defined  without
+	       specifying  the argument	types.	(An old-style function
+	       definition is permitted without a warning  if  preceded
+	       by a declaration	which specifies	the argument types.)
+
+
+
+     Page 21					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----WWWWmmmmiiiissssssssiiiinnnngggg----pppprrrroooottttoooottttyyyyppppeeeessss
+	       Warn if a global	function is defined without a previous
+	       prototype  declaration.	This warning is	issued even if
+	       the definition itself provides a	prototype.  The	aim is
+	       to  detect global functions that	fail to	be declared in
+	       header files.
+
+	  ----WWWWmmmmiiiissssssssiiiinnnngggg----ddddeeeeccccllllaaaarrrraaaattttiiiioooonnnnssss
+	       Warn if a global	function is defined without a previous
+	       declaration.   Do so even if the	definition itself pro-
+	       vides a prototype.  Use this option  to	detect	global
+	       functions that are not declared in header files.
+
+	  ----WWWWrrrreeeedddduuuunnnnddddaaaannnntttt----ddddeeeeccccllllssss
+	       Warn if anything	is declared more than once in the same
+	       scope,  even  in	 cases	where  multiple	declaration is
+	       valid and changes nothing.
+
+	  ----WWWWnnnneeeesssstttteeeedddd----eeeexxxxtttteeeerrrrnnnnssss
+	       Warn if an eeeexxxxtttteeeerrrrnnnn declaration is	encountered within  an
+	       function.
+
+	  ----WWWWeeeennnnuuuummmm----ccccllllaaaasssshhhh
+	       Warn about  conversion  between	different  enumeration
+	       types (C++ only).
+
+	  ----WWWWlllloooonnnngggg----lllloooonnnngggg
+	       Warn if lllloooonnnngggg lllloooonnnngggg type is used.	This is	 default.   To
+	       inhibit	   the	   warning    messages,	   use	  flag
+	       `----WWWWnnnnoooo----lllloooonnnngggg----lllloooonnnngggg'.      Flags	`----WWWW----lllloooonnnngggg----lllloooonnnngggg'	   and
+	       `----WWWWnnnnoooo----lllloooonnnngggg----lllloooonnnngggg'	 are taken into	account	only when flag
+	       `----ppppeeeeddddaaaannnnttttiiiicccc' is used.
+
+	  ----WWWWoooovvvveeeerrrrllllooooaaaaddddeeeedddd----vvvviiiirrrrttttuuuuaaaallll
+	       (C++ only.)  In a derived  class,  the  definitions  of
+	       virtual	functions  must	 match the type	signature of a
+	       virtual function	declared in the	base class.  Use  this
+	       option  to  request  warnings  when a derived class de-
+	       clares a	function that may be an	erroneous  attempt  to
+	       define  a  virtual function: that is, warn when a func-
+	       tion with the same name as a virtual  function  in  the
+	       base  class,  but  with	a  type	signature that doesn't
+	       match any virtual functions from	the base class.
+
+	  ----WWWWiiiinnnnlllliiiinnnneeee
+	       Warn if a function can not be inlined,  and  either  it
+	       was  declared as	inline,	or else	the ----ffffiiiinnnnlllliiiinnnneeee----ffffuuuunnnnccccttttiiiioooonnnnssss
+	       option was given.
+
+	  ----WWWWeeeerrrrrrrroooorrrr
+	       Treat warnings as errors; abort compilation  after  any
+	       warning.
+
+
+
+     Page 22					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+     DDDDEEEEBBBBUUUUGGGGGGGGIIIINNNNGGGG OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  GNU CC has various special options that are used for	debug-
+	  ging either your program or GCC:
+
+	  ----gggg   Produce debugging information in	the operating system's
+	       native  format (stabs, COFF, XCOFF, or DWARF).  GDB can
+	       work with this debugging	information.
+
+	       On most systems that use	stabs format, `----gggg' enables use
+	       of  extra  debugging information	that only GDB can use;
+	       this extra information makes debugging work  better  in
+	       GDB but will probably make other	debuggers crash	or re-
+	       fuse to read the	program.  If you want to  control  for
+	       certain	whether	to generate the	extra information, use
+	       `----ggggssssttttaaaabbbbssss++++',    `----ggggssssttttaaaabbbbssss',    `----ggggxxxxccccooooffffffff++++',	    `----ggggxxxxccccooooffffffff',
+	       `----ggggddddwwwwaaaarrrrffff++++', or `----ggggddddwwwwaaaarrrrffff'	(see below).
+
+	       Unlike most other C compilers, GNU CC allows you	to use
+	       `----gggg'  with `----OOOO'.	 The shortcuts taken by	optimized code
+	       may occasionally	produce	surprising results: some vari-
+	       ables  you  declared may	not exist at all; flow of con-
+	       trol may	briefly	move where you did not expect it; some
+	       statements  may	not  be	 executed because they compute
+	       constant	results	or their values	were already at	 hand;
+	       some statements may execute in different	places because
+	       they were moved out of loops.
+
+	       Nevertheless it proves possible to debug	optimized out-
+	       put.  This makes	it reasonable to use the optimizer for
+	       programs	that might have	bugs.
+
+	  The following	options	are useful when	GNU  CC	 is  generated
+	  with the capability for more than one	debugging format.
+
+	  ----ggggggggddddbbbb
+	       Produce debugging information in	the native format  (if
+	       that  is	supported), including GDB extensions if	at all
+	       possible.
+
+	  ----ggggssssttttaaaabbbbssss
+	       Produce debugging information in	stabs format (if  that
+	       is  supported),	without	 GDB  extensions.  This	is the
+	       format used by DBX on most BSD systems.
+
+	  ----ggggssssttttaaaabbbbssss++++
+	       Produce debugging information in	stabs format (if  that
+	       is  supported), using GNU extensions understood only by
+	       the GNU debugger	(GDB).	The use	of these extensions is
+	       likely  to make other debuggers crash or	refuse to read
+	       the program.
+
+	  ----ggggccccooooffffffff
+
+
+
+     Page 23					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Produce debugging information in	COFF format  (if  that
+	       is  supported).	This is	the format used	by SDB on most
+	       System V	systems	prior to System	V Release 4.
+
+	  ----ggggxxxxccccooooffffffff
+	       Produce debugging information in	XCOFF format (if  that
+	       is  supported).	This is	the format used	by the DBX de-
+	       bugger on IBM RS/6000 systems.
+
+	  ----ggggxxxxccccooooffffffff++++
+	       Produce debugging information in	XCOFF format (if  that
+	       is  supported), using GNU extensions understood only by
+	       the GNU debugger	(GDB).	The use	of these extensions is
+	       likely  to make other debuggers crash or	refuse to read
+	       the program.
+
+	  ----ggggddddwwwwaaaarrrrffff
+	       Produce debugging information in	DWARF format (if  that
+	       is  supported).	This is	the format used	by SDB on most
+	       System V	Release	4 systems.
+
+	  ----ggggddddwwwwaaaarrrrffff++++
+	       Produce debugging information in	DWARF format (if  that
+	       is  supported), using GNU extensions understood only by
+	       the GNU debugger	(GDB).	The use	of these extensions is
+	       likely  to make other debuggers crash or	refuse to read
+	       the program.
+
+	  ----gggg_l_e_v_e_l
+	  ----ggggggggddddbbbb_l_e_v_e_l
+	  ----ggggssssttttaaaabbbbssss_l_e_v_e_l
+	  ----ggggccccooooffffffff_l_e_v_e_l ----ggggxxxxccccooooffffffff_l_e_v_e_l
+
+	  ----ggggddddwwwwaaaarrrrffff_l_e_v_e_l
+	       Request debugging information and  also	use  _l_e_v_e_l  to
+	       specify how much	information.  The default level	is 2.
+
+	       Level 1 produces	minimal	information, enough for	making
+	       backtraces  in parts of the program that	you don't plan
+	       to debug.  This includes	descriptions of	functions  and
+	       external	 variables,  but  no  information  about local
+	       variables and no	line numbers.
+
+	       Level 3 includes	extra information,  such  as  all  the
+	       macro  definitions  present  in	the program.  Some de-
+	       buggers support macro expansion when you	use `----gggg3333'.
+
+	  ----pppp   Generate	extra code to write profile information	 suit-
+	       able for	the analysis program pppprrrrooooffff.
+
+	  ----ppppgggg  Generate	extra code to write profile information	 suit-
+	       able for	the analysis program ggggpppprrrrooooffff.
+
+
+
+     Page 24					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----aaaa   Generate	extra code to write  profile  information  for
+	       basic  blocks,  which  will  record the number of times
+	       each basic block	 is  executed.	 This  data  could  be
+	       analyzed	 by  a program like ttttccccoooovvvv.  Note, however, that
+	       the format of the data is not what ttttccccoooovvvv expects.	 Even-
+	       tually  GNU  ggggpppprrrrooooffff  should  be extended to process this
+	       data.
+
+	  ----aaaaxxxx  Generate	extra  code  to	 read  basic  block  profiling
+	       parameters   from  file	`bb.in'	 and  write  profiling
+	       results to file `bb.out'.  `bb.in' contains a  list  of
+	       functions.  Whenever a function on the list is entered,
+	       profiling is turned on. When the	 outmost  function  is
+	       left,  profiling	 is  turned off. If a function name is
+	       prefixed	with `-' the function is excluded from profil-
+	       ing.  If	a function name	is not unique it can be	disam-
+	       biguated	 by  writing  `/path/filename.d:functionname'.
+	       `bb.out'	 will  list  some  available  filenames.  Four
+	       function	names have a special meaning:	`__bb_jumps__'
+	       will  cause jump	frequencies to be written to `bb.out'.
+	       `__bb_trace__' will cause the sequence of basic	blocks
+	       to   be	 piped	 into	`gzip'	and  written  to  file
+	       `bbtrace.gz'.  `__bb_hidecall__'	will  cause  call  in-
+	       structions    to	   be	excluded   from	  the	trace.
+	       `__bb_showret__'	will cause return instructions	to  be
+	       included	in the trace.
+
+	  ----dddd_l_e_t_t_e_r_s
+	       Says to make  debugging	dumps  during  compilation  at
+	       times specified by _l_e_t_t_e_r_s.  This is used for debugging
+	       the compiler.  The file names for most of the dumps are
+	       made  by	appending a word to the	source file name (e.g.
+	       `ffffoooooooo....cccc....rrrrttttllll' or `ffffoooooooo....cccc....jjjjuuuummmmpppp').
+
+	  ----ddddMMMM  Dump all	macro definitions, at the end  of  preprocess-
+	       ing, and	write no output.
+
+	  ----ddddNNNN  Dump all	macro names, at	the end	of preprocessing.
+
+	  ----ddddDDDD  Dump all	macro definitions, at the end  of  preprocess-
+	       ing, in addition	to normal output.
+
+	  ----ddddyyyy  Dump debugging information during parsing, to  standard
+	       error.
+
+	  ----ddddrrrr  Dump after RTL generation, to `_f_i_l_e....rrrrttttllll'.
+
+	  ----ddddxxxx  Just generate RTL for a function	instead	 of  compiling
+	       it.  Usually used with `rrrr'.
+
+	  ----ddddjjjj  Dump after first	jump optimization, to `_f_i_l_e....jjjjuuuummmmpppp'.
+
+
+
+
+     Page 25					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----ddddssss  Dump after CSE (including the  jump  optimization  that
+	       sometimes follows CSE), to `_f_i_l_e....ccccsssseeee'.
+
+	  ----ddddLLLL  Dump after loop optimization, to	`_f_i_l_e....lllloooooooopppp'.
+
+	  ----ddddtttt  Dump after the second CSE pass (including the jump  op-
+	       timization that sometimes follows CSE), to `_f_i_l_e....ccccsssseeee2222'.
+
+	  ----ddddffff  Dump after flow analysis, to `_f_i_l_e....fffflllloooowwww'.
+
+	  ----ddddcccc  Dump after instruction combination, to `_f_i_l_e....ccccoooommmmbbbbiiiinnnneeee'.
+
+	  ----ddddSSSS  Dump after the first instruction	 scheduling  pass,  to
+	       `_f_i_l_e....sssscccchhhheeeedddd'.
+
+	  ----ddddllll  Dump after local	register allocation, to	`_f_i_l_e....llllrrrreeeegggg'.
+
+	  ----ddddgggg  Dump after global register allocation, to `_f_i_l_e....ggggrrrreeeegggg'.
+
+	  ----ddddRRRR  Dump after the second instruction scheduling  pass,  to
+	       `_f_i_l_e....sssscccchhhheeeedddd2222'.
+
+	  ----ddddJJJJ  Dump after last jump optimization, to `_f_i_l_e....jjjjuuuummmmpppp2222'.
+
+	  ----dddddddd  Dump after delayed branch scheduling, to	`_f_i_l_e....ddddbbbbrrrr'.
+
+	  ----ddddkkkk  Dump after  conversion  from  registers	to  stack,  to
+	       `_f_i_l_e....ssssttttaaaacccckkkk'.
+
+	  ----ddddaaaa  Produce all the dumps listed above.
+
+	  ----ddddmmmm  Print statistics	on memory usage, at  the  end  of  the
+	       run, to standard	error.
+
+	  ----ddddpppp  Annotate	the assembler output with a comment indicating
+	       which pattern and alternative was used.
+
+	  ----ffffpppprrrreeeetttteeeennnndddd----ffffllllooooaaaatttt
+	       When running a cross-compiler, pretend that the	target
+	       machine uses the	same floating point format as the host
+	       machine.	 This causes incorrect output  of  the	actual
+	       floating	constants, but the actual instruction sequence
+	       will probably be	the same as GNU	 CC  would  make  when
+	       running on the target machine.
+
+	  ----ssssaaaavvvveeee----tttteeeemmmmppppssss
+	       Store the usual temporary intermediate files permanent-
+	       ly;  place  them	in the current directory and name them
+	       based on	the source file.  Thus,	compiling `ffffoooooooo....cccc' with
+	       `----cccc  ----ssssaaaavvvveeee----tttteeeemmmmppppssss'  would	 produce  files	 `ffffoooooooo....ccccpppppppp' and
+	       `ffffoooooooo....ssss',	as well	as `ffffoooooooo....oooo'.
+
+
+
+
+     Page 26					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----pppprrrriiiinnnntttt----ffffiiiilllleeee----nnnnaaaammmmeeee====_l_i_b_r_a_r_y
+	       Print the  full	absolute  name	of  the	 library  file
+	       _l_i_b_r_a_r_y	 that would be used when linking-and do	not do
+	       anything	else.  With this option, GNU CC	does not  com-
+	       pile or link anything; it just prints the file name.
+
+	  ----pppprrrriiiinnnntttt----lllliiiibbbbggggcccccccc----ffffiiiilllleeee----nnnnaaaammmmeeee
+	       Same as `----pppprrrriiiinnnntttt----ffffiiiilllleeee----nnnnaaaammmmeeee====lllliiiibbbbggggcccccccc....aaaa'.
+
+	  ----pppprrrriiiinnnntttt----pppprrrroooogggg----nnnnaaaammmmeeee====_p_r_o_g_r_a_m
+	       Like `----pppprrrriiiinnnntttt----ffffiiiilllleeee----nnnnaaaammmmeeee',	but  searches  for  a  program
+	       such as `cpp'.
+
+     OOOOPPPPTTTTIIIIMMMMIIIIZZZZAAAATTTTIIIIOOOONNNN OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  These	options	control	various	sorts of optimizations:
+
+	  ----OOOO
+
+	  ----OOOO1111  Optimize.  Optimizing compilation takes	somewhat  more
+	       time, and a lot more memory for a large function.
+
+	       Without `----OOOO', the compiler's goal is to reduce the cost
+	       of  compilation	and  to	make debugging produce the ex-
+	       pected results.	Statements  are	 independent:  if  you
+	       stop  the program with a	breakpoint between statements,
+	       you can then assign a new  value	 to  any  variable  or
+	       change  the  program  counter to	any other statement in
+	       the function and	get exactly the	results	you would  ex-
+	       pect from the source code.
+
+	       Without `----OOOO', only variables declared rrrreeeeggggiiiisssstttteeeerrrr are  al-
+	       located in registers.  The resulting compiled code is a
+	       little worse than produced by PCC without `----OOOO'.
+
+	       With `----OOOO', the compiler tries to	reduce code  size  and
+	       execution time.
+
+	       When you	specify	`----OOOO', the two options `----fffftttthhhhrrrreeeeaaaadddd----jjjjuuuummmmppppssss'
+	       and `----ffffddddeeeeffffeeeerrrr----ppppoooopppp' are turned on.	 On machines that have
+	       delay slots, the	`----ffffddddeeeellllaaaayyyyeeeedddd----bbbbrrrraaaannnncccchhhh'  option  is	turned
+	       on.  For	those machines that can	support	debugging even
+	       without a frame pointer,	the `----ffffoooommmmiiiitttt----ffffrrrraaaammmmeeee----ppppooooiiiinnnntttteeeerrrr' op-
+	       tion  is	 turned	 on.  On some machines other flags may
+	       also be turned on.
+
+	  ----OOOO2222  Optimize	even more.  Nearly all supported optimizations
+	       that  do	 not  involve  a space-speed tradeoff are per-
+	       formed.	Loop unrolling and function inlining  are  not
+	       done,  for example.  As compared	to ----OOOO, this option in-
+	       creases both compilation	time and  the  performance  of
+	       the generated code.
+
+
+
+
+     Page 27					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----OOOO3333  Optimize	yet more. This turns on	everything  ----OOOO2222	 does,
+	       along with also turning on ----ffffiiiinnnnlllliiiinnnneeee----ffffuuuunnnnccccttttiiiioooonnnnssss....
+
+	  ----OOOO0000  Do not optimize.
+
+	       If you use multiple ----OOOO options, with or	without	 level
+	       numbers,	the last such option is	the one	that is	effec-
+	       tive.
+
+	  Options of the  form	`----ffff_f_l_a_g'  specify  machine-independent
+	  flags.   Most	 flags	have both positive and negative	forms;
+	  the negative form of `----ffffffffoooooooo' would be	`----ffffnnnnoooo----ffffoooooooo'.  The  fol-
+	  lowing list shows only one form-the one which	is not the de-
+	  fault.  You can figure out the other form by either removing
+	  `nnnnoooo----'	or adding it.
+
+	  ----ffffffffllllooooaaaatttt----ssssttttoooorrrreeee
+	       Do not store floating  point  variables	in  registers.
+	       This  prevents undesirable excess precision on machines
+	       such as the 68000 where the floating registers (of  the
+	       68881) keep more	precision than a ddddoooouuuubbbblllleeee	is supposed to
+	       have.
+
+	       For most	programs, the excess precision does only good,
+	       but  a  few  programs rely on the precise definition of
+	       IEEE floating point.  Use `----ffffffffllllooooaaaatttt----ssssttttoooorrrreeee' for such pro-
+	       grams.
+
+	  ----ffffmmmmeeeemmmmooooiiiizzzzeeee----llllooooooookkkkuuuuppppssss
+
+	  ----ffffssssaaaavvvveeee----mmmmeeeemmmmooooiiiizzzzeeeedddd
+	       Use heuristics to compile  faster  (C++	only).	 These
+	       heuristics  are	not enabled by default,	since they are
+	       only effective for certain input	 files.	  Other	 input
+	       files compile more slowly.
+
+	       The first time the compiler must	 build	a  call	 to  a
+	       member  function	 (or  reference	 to a data member), it
+	       must (1)	determine whether the class implements	member
+	       functions  of that name;	(2) resolve which member func-
+	       tion to call (which involves figuring out what sorts of
+	       type  conversions  need	to be made); and (3) check the
+	       visibility of the member	function to the	 caller.   All
+	       of  this	 adds up to slower compilation.	 Normally, the
+	       second time a call is made to that member function  (or
+	       reference  to that data member),	it must	go through the
+	       same lengthy process again.  This means that code  like
+	       this
+
+		 cout << "This " << p << " has " << n << " legs.\n";
+
+	       makes six passes	through	all three steps.  By  using  a
+
+
+
+     Page 28					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       software	 cache,	a hit significantly reduces this cost.
+	       Unfortunately, using the	cache introduces another layer
+	       of  mechanisms which must be implemented, and so	incurs
+	       its  own	 overhead.   `----ffffmmmmeeeemmmmooooiiiizzzzeeee----llllooooooookkkkuuuuppppssss'  enables  the
+	       software	cache.
+
+	       Because access privileges (visibility) to  members  and
+	       member  functions  may differ from one function context
+	       to the next, gggg++++++++	may need to flush the cache.  With the
+	       `----ffffmmmmeeeemmmmooooiiiizzzzeeee----llllooooooookkkkuuuuppppssss'  flag,  the	cache is flushed after
+	       every function that is compiled.	 The `-fsave-memoized'
+	       flag enables the	same software cache, but when the com-
+	       piler determines	that the context of the	last  function
+	       compiled	 would yield the same access privileges	of the
+	       next function to	compile, it preserves the cache.  This
+	       is most helpful when defining many member functions for
+	       the same	class: with the	exception of member  functions
+	       which  are  friends of other classes, each member func-
+	       tion has	exactly	the same access	 privileges  as	 every
+	       other, and the cache need not be	flushed.
+
+	  ----ffffnnnnoooo----ddddeeeeffffaaaauuuulllltttt----iiiinnnnlllliiiinnnneeee
+	       Don't make member functions inline  by  default	merely
+	       because	they  are  defined inside the class scope (C++
+	       only).
+
+	  ----ffffnnnnoooo----ddddeeeeffffeeeerrrr----ppppoooopppp
+	       Always pop the arguments	to each	function call as  soon
+	       as  that	function returns.  For machines	which must pop
+	       arguments after a function call,	the compiler  normally
+	       lets  arguments	accumulate  on	the  stack for several
+	       function	calls and pops them all	at once.
+
+	  ----ffffffffoooorrrrcccceeee----mmmmeeeemmmm
+	       Force memory operands to	be copied into	registers  be-
+	       fore doing arithmetic on	them.  This may	produce	better
+	       code by making all memory references  potential	common
+	       subexpressions.	 When  they  are not common subexpres-
+	       sions, instruction  combination	should	eliminate  the
+	       separate	 register-load.	  I  am	 interested in hearing
+	       about the difference this makes.
+
+	  ----ffffffffoooorrrrcccceeee----aaaaddddddddrrrr
+	       Force memory address constants to be copied into	regis-
+	       ters before doing arithmetic on them.  This may produce
+	       better code just	as `----ffffffffoooorrrrcccceeee----mmmmeeeemmmm' may.  I am interested
+	       in hearing about	the difference this makes.
+
+	  ----ffffoooommmmiiiitttt----ffffrrrraaaammmmeeee----ppppooooiiiinnnntttteeeerrrr
+	       Don't keep the frame pointer in a  register  for	 func-
+	       tions  that  don't  need	one.  This avoids the instruc-
+	       tions to	save, set up and restore  frame	 pointers;  it
+
+
+
+     Page 29					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       also  makes  an	extra register available in many func-
+	       tions.  _I_t _a_l_s_o _m_a_k_e_s _d_e_b_u_g_g_i_n_g _i_m_p_o_s_s_i_b_l_e _o_n .
+
+	       On some machines, such as the Vax, this flag has	no ef-
+	       fect,  because  the standard calling sequence automati-
+	       cally handles the frame pointer and nothing is saved by
+	       pretending  it  doesn't exist.  The machine-description
+	       macro FFFFRRRRAAAAMMMMEEEE____PPPPOOOOIIIINNNNTTTTEEEERRRR____RRRREEEEQQQQUUUUIIIIRRRREEEEDDDD controls whether a	target
+	       machine supports	this flag.
+
+	  ----ffffiiiinnnnlllliiiinnnneeee----ffffuuuunnnnccccttttiiiioooonnnnssss
+	       Integrate all simple functions into their callers.  The
+	       compiler	heuristically decides which functions are sim-
+	       ple enough to be	worth integrating in this way.
+
+	       If all calls to a given function	 are  integrated,  and
+	       the function is declared	ssssttttaaaattttiiiicccc,	then GCC normally does
+	       not output the function as assembler code  in  its  own
+	       right.
+
+	  ----ffffccccaaaalllllllleeeerrrr----ssssaaaavvvveeeessss
+	       Enable values to	be allocated in	registers that will be
+	       clobbered by function calls, by emitting	extra instruc-
+	       tions to	save and restore  the  registers  around  such
+	       calls.	Such  allocation is done only when it seems to
+	       result in better	code than would	otherwise be produced.
+
+	       This option is enabled by default on certain  machines,
+	       usually those which have	no call-preserved registers to
+	       use instead.
+
+	  ----ffffkkkkeeeeeeeepppp----iiiinnnnlllliiiinnnneeee----ffffuuuunnnnccccttttiiiioooonnnnssss
+	       Even if all calls to a given function  are  integrated,
+	       and  the	function is declared ssssttttaaaattttiiiicccc, nevertheless out-
+	       put a separate run-time callable	version	of  the	 func-
+	       tion.
+
+	  ----ffffnnnnoooo----ffffuuuunnnnccccttttiiiioooonnnn----ccccsssseeee
+	       Do not put function addresses in	registers;  make  each
+	       instruction  that calls a constant function contain the
+	       function's address explicitly.
+
+	       This option results in less efficient  code,  but  some
+	       strange	hacks  that  alter the assembler output	may be
+	       confused	by the optimizations performed when  this  op-
+	       tion is not used.
+
+	  ----ffffnnnnoooo----ppppeeeeeeeepppphhhhoooolllleeee
+	       Disable any machine-specific peephole optimizations.
+
+	  ----ffffffffaaaasssstttt----mmmmaaaatttthhhh
+	       This option allows GCC to violate  some	ANSI  or  IEEE
+
+
+
+     Page 30					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       rules/specifications in the interest of optimizing code
+	       for speed.  For example,	it allows the compiler to  as-
+	       sume  arguments	to  the	ssssqqqqrrrrtttt function are non-negative
+	       numbers.
+
+	       This option should never	be turned on by	any  `----OOOO'  op-
+	       tion  since  it can result in incorrect output for pro-
+	       grams which depend on an	exact implementation  of  IEEE
+	       or ANSI rules/specifications for	math functions.
+
+	  The following	options	control	specific  optimizations.   The
+	  `----OOOO2222'	 option	 turns	on  all	 of these optimizations	except
+	  `----ffffuuuunnnnrrrroooollllllll----llllooooooooppppssss' and `----ffffuuuunnnnrrrroooollllllll----aaaallllllll----llllooooooooppppssss'.
+
+	  The `----OOOO' option usually turns	on  the	 `----fffftttthhhhrrrreeeeaaaadddd----jjjjuuuummmmppppssss'  and
+	  `----ffffddddeeeellllaaaayyyyeeeedddd----bbbbrrrraaaannnncccchhhh' options, but specific machines may	change
+	  the default optimizations.
+
+	  You can use the following  flags  in	the  rare  cases  when
+	  fine-tuning of optimizations to be performed is desired.
+
+	  ----ffffssssttttrrrreeeennnnggggtttthhhh----rrrreeeedddduuuucccceeee
+	       Perform the optimizations of  loop  strength  reduction
+	       and elimination of iteration variables.
+
+	  ----fffftttthhhhrrrreeeeaaaadddd----jjjjuuuummmmppppssss
+	       Perform optimizations where we check to see if  a  jump
+	       branches	 to  a	location where another comparison sub-
+	       sumed by	the first is found.  If	so, the	 first	branch
+	       is  redirected  to either the destination of the	second
+	       branch or a point immediately following	it,  depending
+	       on whether the condition	is known to be true or false.
+
+	  ----ffffuuuunnnnrrrroooollllllll----llllooooooooppppssss
+	       Perform the optimization	of loop	 unrolling.   This  is
+	       only  done  for loops whose number of iterations	can be
+	       determined at compile time or run time.
+
+	  ----ffffuuuunnnnrrrroooollllllll----aaaallllllll----llllooooooooppppssss
+	       Perform the optimization	of loop	 unrolling.   This  is
+	       done  for  all  loops.  This usually makes programs run
+	       more slowly.
+
+	  ----ffffccccsssseeee----ffffoooolllllllloooowwww----jjjjuuuummmmppppssss
+	       In common subexpression elimination, scan through  jump
+	       instructions when the target of the jump	is not reached
+	       by any other path.  For example,	when CSE encounters an
+	       iiiiffff  statement  with an eeeellllsssseeee clause, CSE will follow the
+	       jump when the condition tested is false.
+
+	  ----ffffccccsssseeee----sssskkkkiiiipppp----bbbblllloooocccckkkkssss
+	       This is similar to `----ffffccccsssseeee----ffffoooolllllllloooowwww----jjjjuuuummmmppppssss',	but causes CSE
+
+
+
+     Page 31					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       to  follow  jumps which conditionally skip over blocks.
+	       When CSE	encounters a simple iiiiffff statement with no  else
+	       clause,	`----ffffccccsssseeee----sssskkkkiiiipppp----bbbblllloooocccckkkkssss'  causes  CSE to follow the
+	       jump around the body of the iiiiffff.
+
+	  ----ffffrrrreeeerrrruuuunnnn----ccccsssseeee----aaaafffftttteeeerrrr----lllloooooooopppp
+	       Re-run common subexpression elimination after loop  op-
+	       timizations has been performed.
+
+	  ----ffffeeeelllliiiiddddeeee----ccccoooonnnnssssttttrrrruuuuccccttttoooorrrrssss
+	       Elide  constructors  when  this	seems  plausible  (C++
+	       only).	With this flag,	GNU C++	initializes yyyy directly
+	       from the	call to	ffffoooooooo without going through a  temporary
+	       in the following	code:
+
+	       A foo (); A y = foo ();
+
+	       Without this option, GNU	C++  first  initializes	 yyyy  by
+	       calling	the  appropriate  constructor for type AAAA; then
+	       assigns the result of ffffoooooooo to a temporary; and, finally,
+	       replaces	the initial value of `yyyy' with the temporary.
+
+	       The  default  behavior  (`----ffffnnnnoooo----eeeelllliiiiddddeeee----ccccoooonnnnssssttttrrrruuuuccccttttoooorrrrssss')  is
+	       specified  by  the  draft  ANSI	C++ standard.  If your
+	       program's  constructors	have   side   effects,	 using
+	       `----ffffeeeelllliiiiddddeeee----ccccoooonnnnssssttttrrrruuuuccccttttoooorrrrssss'  can  make your program act dif-
+	       ferently, since some constructor	calls may be omitted.
+
+	  ----ffffeeeexxxxppppeeeennnnssssiiiivvvveeee----ooooppppttttiiiimmmmiiiizzzzaaaattttiiiioooonnnnssss
+	       Perform a number	of minor optimizations that are	 rela-
+	       tively expensive.
+
+	  ----ffffddddeeeellllaaaayyyyeeeedddd----bbbbrrrraaaannnncccchhhh
+	       If supported for	the target machine, attempt to reorder
+	       instructions  to	 exploit  instruction  slots available
+	       after delayed branch instructions.
+
+	  ----ffffsssscccchhhheeeedddduuuulllleeee----iiiinnnnssssnnnnssss
+	       If supported for	the target machine, attempt to reorder
+	       instructions  to	 eliminate execution stalls due	to re-
+	       quired data being  unavailable.	 This  helps  machines
+	       that  have  slow	floating point or memory load instruc-
+	       tions by	allowing other instructions to be issued until
+	       the result of the load or floating point	instruction is
+	       required.
+
+	  ----ffffsssscccchhhheeeedddduuuulllleeee----iiiinnnnssssnnnnssss2222
+	       Similar to `----ffffsssscccchhhheeeedddduuuulllleeee----iiiinnnnssssnnnnssss', but  requests  an	 addi-
+	       tional  pass  of	 instruction scheduling	after register
+	       allocation has been done.  This is especially useful on
+	       machines	 with  a  relatively small number of registers
+	       and where memory	load instructions take more  than  one
+
+
+
+     Page 32					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       cycle.
+
+     TTTTAAAARRRRGGGGEEEETTTT OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  By default, GNU CC  compiles	code  for  the	same  type  of
+	  machine  that	 you  are  using.  However, it can also	be in-
+	  stalled as a cross-compiler, to compile for some other  type
+	  of  machine.	 In  fact, several different configurations of
+	  GNU CC, for different	target machines, can be	installed side
+	  by  side.   Then  you	specify	which one to use with the `----bbbb'
+	  option.
+
+	  In addition, older and newer versions	of GNU CC can  be  in-
+	  stalled  side	 by  side.   One of them (probably the newest)
+	  will be the default, but  you	 may  sometimes	 wish  to  use
+	  another.
+
+	  ----bbbb _m_a_c_h_i_n_e
+	       The argument _m_a_c_h_i_n_e specifies the target  machine  for
+	       compilation.   This  is	useful when you	have installed
+	       GNU CC as a cross-compiler.
+
+	       The value to use	for _m_a_c_h_i_n_e is the same	as was	speci-
+	       fied  as	 the machine type when configuring GNU CC as a
+	       cross-compiler.	For example, if	a  cross-compiler  was
+	       configured  with	 `ccccoooonnnnffffiiiigggguuuurrrreeee i386v', meaning to compile
+	       for an 80386 running System V, then you	would  specify
+	       `----bbbb iiii333388886666vvvv' to run that cross compiler.
+
+	       When you	do not specify `----bbbb', it	normally means to com-
+	       pile for	the same type of machine that you are using.
+
+	  ----VVVV _v_e_r_s_i_o_n
+	       The argument _v_e_r_s_i_o_n specifies which version of GNU  CC
+	       to  run.	 This is useful	when multiple versions are in-
+	       stalled.	 For example, _v_e_r_s_i_o_n might be `2222....0000',  meaning
+	       to run GNU CC version 2.0.
+
+	       The default version, when you do	not specify  `----VVVV',  is
+	       controlled  by  the way GNU CC is installed.  Normally,
+	       it will be a version that is  recommended  for  general
+	       use.
+
+     MMMMAAAACCCCHHHHIIIINNNNEEEE DDDDEEEEPPPPEEEENNNNDDDDEEEENNNNTTTT OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  Each of the target machine types can have  its  own  special
+	  options,   starting  with  `----mmmm',  to	choose	among  various
+	  hardware models  or  configurations-for  example,  68010  vs
+	  68020,  floating  coprocessor	 or  none.  A single installed
+	  version of the compiler can compile for any model or	confi-
+	  guration, according to the options specified.
+
+	  Some configurations of the compiler also support  additional
+	  special options, usually for command-line compatibility with
+
+
+
+     Page 33					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  other	compilers on the same platform.
+
+	  These	are the	`----mmmm' options defined for the 68000 series:
+
+	  ----mmmm66668888000000000000
+
+	  ----mmmmcccc66668888000000000000
+	       Generate	output for a 68000.  This is the default  when
+	       the compiler is configured for 68000-based systems.
+
+	  ----mmmm66668888000022220000
+
+	  ----mmmmcccc66668888000022220000
+	       Generate	output for a  68020  (rather  than  a  68000).
+	       This is the default when	the compiler is	configured for
+	       68020-based systems.
+
+	  ----mmmm66668888888888881111
+	       Generate	 output	 containing  68881  instructions   for
+	       floating	 point.	  This	is the default for most	68020-
+	       based systems unless ----nnnnffffpppp was specified when  the  com-
+	       piler was configured.
+
+	  ----mmmm66668888000033330000
+	       Generate	output for a 68030.  This is the default  when
+	       the compiler is configured for 68030-based systems.
+
+	  ----mmmm66668888000044440000
+	       Generate	output for a 68040.  This is the default  when
+	       the compiler is configured for 68040-based systems.
+
+	  ----mmmm66668888000022220000----44440000
+	       Generate	output for a 68040, without using any  of  the
+	       new  instructions.   This results in code which can run
+	       relatively efficiently on either	 a  68020/68881	 or  a
+	       68030 or	a 68040.
+
+	  ----mmmmffffppppaaaa
+	       Generate	output containing  Sun	FPA  instructions  for
+	       floating	point.
+
+	  ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       Generate	output containing library calls	 for  floating
+	       point.	_W_A_R_N_I_N_G:  the requisite	libraries are not part
+	       of GNU CC.  Normally the	facilities  of	the  machine's
+	       usual  C	 compiler  are	used,  but  this can't be done
+	       directly	in cross-compilation.  You must	make your  own
+	       arrangements  to	provide	suitable library functions for
+	       cross-compilation.
+
+	  ----mmmmsssshhhhoooorrrrtttt
+	       Consider	type iiiinnnntttt to be 16 bits wide, like sssshhhhoooorrrrtttt	iiiinnnntttt.
+
+
+
+     Page 34					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----mmmmnnnnoooobbbbiiiittttffffiiiieeeelllldddd
+	       Do not use the bit-field	instructions.	`----mmmm66668888000000000000'  im-
+	       plies `----mmmmnnnnoooobbbbiiiittttffffiiiieeeelllldddd'.
+
+	  ----mmmmbbbbiiiittttffffiiiieeeelllldddd
+	       Do use the bit-field instructions.   `----mmmm66668888000022220000'  implies
+	       `----mmmmbbbbiiiittttffffiiiieeeelllldddd'.  This is the default if you use the unmo-
+	       dified sources.
+
+	  ----mmmmrrrrttttdddd
+	       Use a different function-calling	convention,  in	 which
+	       functions  that take a fixed number of arguments	return
+	       with the	rrrrttttdddd instruction, which	pops  their  arguments
+	       while  returning.   This	 saves	one instruction	in the
+	       caller since there is no	 need  to  pop	the  arguments
+	       there.
+
+	       This calling convention is incompatible	with  the  one
+	       normally	used on	Unix, so you cannot use	it if you need
+	       to call libraries compiled with the Unix	compiler.
+
+	       Also, you must  provide	function  prototypes  for  all
+	       functions  that take variable numbers of	arguments (in-
+	       cluding pppprrrriiiinnnnttttffff);	otherwise incorrect code will be  gen-
+	       erated for calls	to those functions.
+
+	       In addition, seriously incorrect	code  will  result  if
+	       you  call a function with too many arguments.  (Normal-
+	       ly, extra arguments are harmlessly ignored.)
+
+	       The rrrrttttdddd instruction is supported	by the 68010 and 68020
+	       processors, but not by the 68000.
+
+	  These	`----mmmm' options are defined for the Vax:
+
+	  ----mmmmuuuunnnniiiixxxx
+	       Do not output certain jump instructions (aaaaoooobbbblllleeeeqqqq and  so
+	       on)  that  the Unix assembler for the Vax cannot	handle
+	       across long ranges.
+
+	  ----mmmmggggnnnnuuuu
+	       Do output those jump instructions,  on  the  assumption
+	       that you	will assemble with the GNU assembler.
+
+	  ----mmmmgggg  Output code for g-format	floating point numbers instead
+	       of d-format.
+
+	  These	`----mmmm' switches are supported on the SPARC:
+
+	  ----mmmmffffppppuuuu
+
+	  ----mmmmhhhhaaaarrrrdddd----ffffllllooooaaaatttt
+
+
+
+     Page 35					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Generate	output containing floating point instructions.
+	       This is the default.
+
+	  ----mmmmnnnnoooo----ffffppppuuuu
+
+	  ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       Generate	output containing library calls	 for  floating
+	       point.  _W_a_r_n_i_n_g:	there is no GNU	floating-point library
+	       for SPARC.  Normally the	facilities  of	the  machine's
+	       usual  C	 compiler  are	used,  but this	cannot be done
+	       directly	in cross-compilation.  You must	make your  own
+	       arrangements  to	provide	suitable library functions for
+	       cross-compilation.
+
+	       ----mmmmssssoooofffftttt----ffffllllooooaaaatttt changes the	calling	convention in the out-
+	       put  file;  therefore, it is only useful	if you compile
+	       _a_l_l of a	program	with this option.
+
+	  ----mmmmnnnnoooo----eeeeppppiiiilllloooogggguuuueeee
+
+	  ----mmmmeeeeppppiiiilllloooogggguuuueeee
+	       With ----mmmmeeeeppppiiiilllloooogggguuuueeee (the default), the compiler always  em-
+	       its code	for function exit at the end of	each function.
+	       Any function exit in the	middle of the  function	 (such
+	       as a return statement in	C) will	generate a jump	to the
+	       exit code at the	end of the function.
+
+	       With ----mmmmnnnnoooo----eeeeppppiiiilllloooogggguuuueeee, the compiler	 tries	to  emit  exit
+	       code inline at every function exit.
+
+	  ----mmmmnnnnoooo----vvvv8888
+
+	  ----mmmmvvvv8888
+
+	  ----mmmmssssppppaaaarrrrcccclllliiiitttteeee
+	       These three options select variations on	the SPARC  ar-
+	       chitecture.
+
+	       By default  (unless  specifically  configured  for  the
+	       Fujitsu SPARClite), GCC generates code for the v7 vari-
+	       ant of the SPARC	architecture.
+
+	       ----mmmmvvvv8888 will give you SPARC	v8 code.  The only  difference
+	       from  v7	 code  is  that	the compiler emits the integer
+	       multiply	and integer divide instructions	which exist in
+	       SPARC v8	but not	in SPARC v7.
+
+	       ----mmmmssssppppaaaarrrrcccclllliiiitttteeee will	give you SPARClite  code.   This  adds
+	       the  integer  multiply,	integer	 divide	 step and scan
+	       (ffs) instructions which	exist in SPARClite but not  in
+	       SPARC v7.
+
+
+
+
+     Page 36					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----mmmmccccyyyypppprrrreeeessssssss
+
+	  ----mmmmssssuuuuppppeeeerrrrssssppppaaaarrrrcccc
+	       These two options select	the processor  for  which  the
+	       code is optimised.
+
+	       With ----mmmmccccyyyypppprrrreeeessssssss (the default),  the  compiler  optimises
+	       code  for  the  Cypress	CY7C602	 chip,	as used	in the
+	       SparcStation/SparcServer	3xx series. This is  also  ap-
+	       propriate for the older SparcStation 1, 2, IPX etc.
+
+	       With ----mmmmssssuuuuppppeeeerrrrssssppppaaaarrrrcccc the compiler optimises	code  for  the
+	       SuperSparc  cpu,	 as  used in the SparcStation 10, 1000
+	       and 2000	series.	This flag also enables use of the full
+	       SPARC v8	instruction set.
+
+	  These	`----mmmm' options are defined for the Convex:
+
+	  ----mmmmcccc1111 Generate	output for a C1.  This is the default when the
+	       compiler	is configured for a C1.
+
+	  ----mmmmcccc2222 Generate	output for a C2.  This is the default when the
+	       compiler	is configured for a C2.
+
+	  ----mmmmaaaarrrrggggccccoooouuuunnnntttt
+	       Generate	code which puts	an argument count in the  word
+	       preceding  each argument	list.  Some nonportable	Convex
+	       and Vax programs	need this word.	 (Debuggers don't, ex-
+	       cept for	functions with variable-length argument	lists;
+	       this info is in the symbol table.)
+
+	  ----mmmmnnnnooooaaaarrrrggggccccoooouuuunnnntttt
+	       Omit the	argument count word.  This is the  default  if
+	       you use the unmodified sources.
+
+	  These	`----mmmm' options are defined for the AMD Am29000:
+
+	  ----mmmmddddwwww Generate	code that assumes the DW  bit  is  set,	 i.e.,
+	       that byte and halfword operations are directly support-
+	       ed by the hardware.  This is the	default.
+
+	  ----mmmmnnnnooooddddwwww
+	       Generate	code that assumes the DW bit is	not set.
+
+	  ----mmmmbbbbwwww Generate	code that assumes the system supports byte and
+	       halfword	write operations.  This	is the default.
+
+	  ----mmmmnnnnbbbbwwww
+	       Generate	code that assumes the systems does not support
+	       byte  and  halfword  write  operations.	 This  implies
+	       `----mmmmnnnnooooddddwwww'.
+
+
+
+
+     Page 37					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----mmmmssssmmmmaaaallllllll
+	       Use a small memory model	that assumes that all function
+	       addresses  are either within a single 256 KB segment or
+	       at an absolute address of less than 256K.  This	allows
+	       the  ccccaaaallllllll  instruction  to  be used instead of a	ccccoooonnnnsssstttt,
+	       ccccoooonnnnsssstttthhhh, ccccaaaalllllllliiii sequence.
+
+	  ----mmmmllllaaaarrrrggggeeee
+	       Do not assume that the ccccaaaallllllll instruction	can  be	 used;
+	       this is the default.
+
+	  ----mmmm22229999000055550000
+	       Generate	code for the Am29050.
+
+	  ----mmmm22229999000000000000
+	       Generate	code for the Am29000.  This is the default.
+
+	  ----mmmmkkkkeeeerrrrnnnneeeellll----rrrreeeeggggiiiisssstttteeeerrrrssss
+	       Generate	references to registers	ggggrrrr66664444----ggggrrrr99995555  instead  of
+	       ggggrrrr99996666----ggggrrrr111122227777.   This  option  can	be used	when compiling
+	       kernel code that	wants a	set of global  registers  dis-
+	       joint from that used by user-mode code.
+
+	       Note that when this option is used, register  names  in
+	       `----ffff' flags must use the normal, user-mode, names.
+
+	  ----mmmmuuuusssseeeerrrr----rrrreeeeggggiiiisssstttteeeerrrrssss
+	       Use the normal set  of  global  registers,  ggggrrrr99996666----ggggrrrr111122227777.
+	       This is the default.
+
+	  ----mmmmssssttttaaaacccckkkk----cccchhhheeeecccckkkk
+	       Insert a	call to	________mmmmsssspppp____cccchhhheeeecccckkkk after each	stack  adjust-
+	       ment.  This is often used for kernel code.
+
+	  These	`----mmmm' options are defined for  Motorola	88K  architec-
+	  tures:
+
+	  ----mmmm88888888000000000000
+	       Generate	code that works	well on	both  the  m88100  and
+	       the m88110.
+
+	  ----mmmm88888888111100000000
+	       Generate	code that works	best for the m88100, but  that
+	       also runs on the	m88110.
+
+	  ----mmmm88888888111111110000
+	       Generate	code that works	best for the m88110,  and  may
+	       not run on the m88100.
+
+	  ----mmmmiiiiddddeeeennnnttttiiiiffffyyyy----rrrreeeevvvviiiissssiiiioooonnnn
+	       Include an iiiiddddeeeennnntttt	 directive  in	the  assembler	output
+	       recording  the source file name,	compiler name and ver-
+
+
+
+     Page 38					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       sion, timestamp,	and compilation	flags used.
+
+	  ----mmmmnnnnoooo----uuuunnnnddddeeeerrrrssssccccoooorrrreeeessss
+	       In assembler output, emit symbol	names  without	adding
+	       an  underscore character	at the beginning of each name.
+	       The default is to use an	underscore as prefix  on  each
+	       name.
+
+	  ----mmmmnnnnoooo----cccchhhheeeecccckkkk----zzzzeeeerrrroooo----ddddiiiivvvviiiissssiiiioooonnnn
+
+	  ----mmmmcccchhhheeeecccckkkk----zzzzeeeerrrroooo----ddddiiiivvvviiiissssiiiioooonnnn
+	       Early models of the 88K architecture had	problems  with
+	       division	 by  zero;  in particular, many	of them	didn't
+	       trap.  Use these	options	to avoid including (or to  in-
+	       clude explicitly) additional code to detect division by
+	       zero and	signal an exception.  All  GCC	configurations
+	       for the 88K use `----mmmmcccchhhheeeecccckkkk----zzzzeeeerrrroooo----ddddiiiivvvviiiissssiiiioooonnnn' by default.
+
+	  ----mmmmooooccccssss----ddddeeeebbbbuuuugggg----iiiinnnnffffoooo
+
+	  ----mmmmnnnnoooo----ooooccccssss----ddddeeeebbbbuuuugggg----iiiinnnnffffoooo
+	       Include	(or  omit)  additional	debugging  information
+	       (about registers	used in	each stack frame) as specified
+	       in the 88Open Object Compatibility Standard, OCS.  This
+	       extra  information  is  not needed by GDB.  The default
+	       for DG/UX, SVr4,	and Delta 88 SVr3.2 is to include this
+	       information;  other 88k configurations omit this	infor-
+	       mation by default.
+
+	  ----mmmmooooccccssss----ffffrrrraaaammmmeeee----ppppoooossssiiiittttiiiioooonnnn
+
+	  ----mmmmnnnnoooo----ooooccccssss----ffffrrrraaaammmmeeee----ppppoooossssiiiittttiiiioooonnnn
+	       Force (or do not	require) register values to be	stored
+	       in  a particular	place in stack frames, as specified in
+	       OCS.  The DG/UX,	Delta88	SVr3.2,	and BCS	configurations
+	       use  `----mmmmooooccccssss----ffffrrrraaaammmmeeee----ppppoooossssiiiittttiiiioooonnnn';  other  88k	configurations
+	       have the	default	`----mmmmnnnnoooo----ooooccccssss----ffffrrrraaaammmmeeee----ppppoooossssiiiittttiiiioooonnnn'.
+
+	  ----mmmmooooppppttttiiiimmmmiiiizzzzeeee----aaaarrrrgggg----aaaarrrreeeeaaaa
+
+	  ----mmmmnnnnoooo----ooooppppttttiiiimmmmiiiizzzzeeee----aaaarrrrgggg----aaaarrrreeeeaaaa
+	       Control	how  to	 store	function  arguments  in	 stack
+	       frames.	 `----mmmmooooppppttttiiiimmmmiiiizzzzeeee----aaaarrrrgggg----aaaarrrreeeeaaaa'	saves  space,  but may
+	       break	   some	      debuggers	      (not	 GDB).
+	       `----mmmmnnnnoooo----ooooppppttttiiiimmmmiiiizzzzeeee----aaaarrrrgggg----aaaarrrreeeeaaaa'	 conforms better to standards.
+	       By default GCC does not optimize	the argument area.
+
+	  ----mmmmsssshhhhoooorrrrtttt----ddddaaaattttaaaa----_n_u_m
+	       _n_u_m Generate smaller data references by making them re-
+	       lative to rrrr0000, which allows loading a value using	a sin-
+	       gle instruction (rather than the	usual two).  You  con-
+	       trol  which  data references are	affected by specifying
+
+
+
+     Page 39					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       _n_u_m with	this option.   For  example,  if  you  specify
+	       `----mmmmsssshhhhoooorrrrtttt----ddddaaaattttaaaa----555511112222',  then  the data references affected
+	       are those involving  displacements  of  less  than  512
+	       bytes.	`----mmmmsssshhhhoooorrrrtttt----ddddaaaattttaaaa----_n_u_m'  is	not  effective for _n_u_m
+	       greater than 64K.
+
+	  ----mmmmsssseeeerrrriiiiaaaalllliiiizzzzeeee----vvvvoooollllaaaattttiiiilllleeee
+
+	  ----mmmmnnnnoooo----sssseeeerrrriiiiaaaalllliiiizzzzeeee----vvvvoooollllaaaattttiiiilllleeee
+	       Do, or do not, generate code  to	 guarantee  sequential
+	       consistency of volatile memory references.
+
+	       GNU CC always guarantees	consistency  by	 default,  for
+	       the  preferred  processor  submodel.   How this is done
+	       depends on the submodel.
+
+	       The m88100 processor does not reorder memory references
+	       and  so always provides sequential consistency.	If you
+	       use `----mmmm88888888111100000000', GNU CC does not generate any special in-
+	       structions for sequential consistency.
+
+	       The order of memory references made by the m88110  pro-
+	       cessor  does not	always match the order of the instruc-
+	       tions requesting	those references.   In	particular,  a
+	       load  instruction  may execute before a preceding store
+	       instruction.  Such reordering violates sequential  con-
+	       sistency	 of volatile memory references,	when there are
+	       multiple	 processors.   When  you  use	`----mmmm88888888000000000000'   or
+	       `----mmmm88888888111111110000',  GNU	CC generates special instructions when
+	       appropriate, to force execution in the proper order.
+
+	       The extra code generated	to guarantee  consistency  may
+	       affect  the  performance	 of  your application.	If you
+	       know that you can safely	forgo this guarantee, you  may
+	       use the option `----mmmmnnnnoooo----sssseeeerrrriiiiaaaalllliiiizzzzeeee----vvvvoooollllaaaattttiiiilllleeee'.
+
+	       If you use the `----mmmm88888888111100000000'	option but require  sequential
+	       consistency  when  running on the m88110	processor, you
+	       should use `----mmmmsssseeeerrrriiiiaaaalllliiiizzzzeeee----vvvvoooollllaaaattttiiiilllleeee'.
+
+	  ----mmmmssssvvvvrrrr4444
+
+	  ----mmmmssssvvvvrrrr3333
+	       Turn on (`----mmmmssssvvvvrrrr4444') or off  (`----mmmmssssvvvvrrrr3333')  compiler	exten-
+	       sions  related to System	V release 4 (SVr4).  This con-
+	       trols the following:
+
+	     +o Which variant of	the assembler syntax  to  emit	(which
+	       you can select independently using `----mmmmvvvveeeerrrrssssiiiioooonnnn----00003333....00000000').
+
+	     +o `----mmmmssssvvvvrrrr4444'	makes the C  preprocessor  recognize  `####pppprrrraaaaggggmmmmaaaa
+	       wwwweeeeaaaakkkk'
+
+
+
+     Page 40					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	     +o `----mmmmssssvvvvrrrr4444'	makes GCC issue	additional declaration	direc-
+	       tives used in SVr4.
+
+	  `----mmmmssssvvvvrrrr3333' is the default for all m88K	configurations	except
+	  the SVr4 configuration.
+
+	  ----mmmmttttrrrraaaapppp----llllaaaarrrrggggeeee----sssshhhhiiiifffftttt
+
+	  ----mmmmhhhhaaaannnnddddlllleeee----llllaaaarrrrggggeeee----sssshhhhiiiifffftttt
+	       Include code to detect bit-shifts of more than 31 bits;
+	       respectively,  trap  such shifts	or emit	code to	handle
+	       them properly.  By default GCC makes no special	provi-
+	       sion for	large bit shifts.
+
+	  ----mmmmuuuusssseeee----ddddiiiivvvv----iiiinnnnssssttttrrrruuuuccccttttiiiioooonnnn
+	       Very early models of the	88K architecture didn't	have a
+	       divide  instruction,  so	GCC avoids that	instruction by
+	       default.	 Use this option to specify that it's safe  to
+	       use the divide instruction.
+
+	  ----mmmmvvvveeeerrrrssssiiiioooonnnn----00003333....00000000
+	       In the DG/UX configuration, there are  two  flavors  of
+	       SVr4.   This  option  modifies ----mmmmssssvvvvrrrr4444 to	select whether
+	       the hybrid-COFF or real-ELF flavor is used.  All	 other
+	       configurations ignore this option.
+
+	  ----mmmmwwwwaaaarrrrnnnn----ppppaaaasssssssseeeedddd----ssssttttrrrruuuuccccttttssss
+	       Warn when a function passes a struct as an argument  or
+	       result.	 Structure-passing  conventions	 have  changed
+	       during the evolution of the C language, and  are	 often
+	       the  source  of	portability problems.  By default, GCC
+	       issues no such warning.
+
+	  These	options	are defined for	the IBM	RS6000:
+
+	  ----mmmmffffpppp----iiiinnnn----ttttoooocccc
+
+	  ----mmmmnnnnoooo----ffffpppp----iiiinnnn----ttttoooocccc
+	       Control whether or not floating-point constants	go  in
+	       the  Table  of  Contents	 (TOC),	 a table of all	global
+	       variable	and function addresses.	 By default  GCC  puts
+	       floating-point  constants  there; if the	TOC overflows,
+	       `----mmmmnnnnoooo----ffffpppp----iiiinnnn----ttttoooocccc'	will reduce the	size of	the TOC, which
+	       may avoid the overflow.
+
+	  These	`----mmmm' options are defined for the IBM RT	PC:
+
+	  ----mmmmiiiinnnn----lllliiiinnnneeee----mmmmuuuullll
+	       Use an in-line code sequence  for  integer  multiplies.
+	       This is the default.
+
+	  ----mmmmccccaaaallllllll----lllliiiibbbb----mmmmuuuullll
+
+
+
+     Page 41					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Call llllmmmmuuuullll$$$$$$$$ for integer multiples.
+
+	  ----mmmmffffuuuullllllll----ffffpppp----bbbblllloooocccckkkkssss
+	       Generate	full-size floating point data blocks,  includ-
+	       ing  the	minimum	amount of scratch space	recommended by
+	       IBM.  This is the default.
+
+	  ----mmmmmmmmiiiinnnniiiimmmmuuuummmm----ffffpppp----bbbblllloooocccckkkkssss
+	       Do not include extra scratch space  in  floating	 point
+	       data  blocks.  This results in smaller code, but	slower
+	       execution, since	scratch	space must be allocated	dynam-
+	       ically.
+
+	  ----mmmmffffpppp----aaaarrrrgggg----iiiinnnn----ffffpppprrrreeeeggggssss
+	       Use a calling sequence incompatible with	the  IBM  cal-
+	       ling  convention	 in which floating point arguments are
+	       passed  in  floating  point   registers.	   Note	  that
+	       vvvvaaaarrrraaaarrrrggggssss....hhhh  and  ssssttttddddaaaarrrrggggssss....hhhh  will	not work with floating
+	       point operands if this option is	specified.
+
+	  ----mmmmffffpppp----aaaarrrrgggg----iiiinnnn----ggggrrrreeeeggggssss
+	       Use the normal calling convention  for  floating	 point
+	       arguments.  This	is the default.
+
+	  ----mmmmhhhhcccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn
+	       Return structures of more  than	one  word  in  memory,
+	       rather than in a	register.  This	provides compatibility
+	       with   the   MetaWare   HighC   (hc)   compiler.	   Use
+	       `----ffffppppcccccccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn'  for compatibility	with the Port-
+	       able C Compiler (pcc).
+
+	  ----mmmmnnnnoooohhhhcccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn
+	       Return some structures of more than one word in	regis-
+	       ters,  when convenient.	This is	the default.  For com-
+	       patibility with the IBM-supplied	compilers, use	either
+	       `----ffffppppcccccccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn' or	`----mmmmhhhhcccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn'.
+
+	  These	`----mmmm' options are defined for the MIPS family  of  com-
+	  puters:
+
+	  ----mmmmccccppppuuuu====_c_p_u-_t_y_p_e
+	       Assume the defaults for the machine type	_c_p_u-_t_y_p_e  when
+	       scheduling  instructions.   The default _c_p_u-_t_y_p_e	is ddddeeee----
+	       ffffaaaauuuulllltttt, which picks the longest cycles times for any  of
+	       the  machines, in order that the	code run at reasonable
+	       rates on	all MIPS cpu's.	 Other	choices	 for  _c_p_u-_t_y_p_e
+	       are  rrrr2222000000000000,  rrrr3333000000000000,  rrrr4444000000000000, and rrrr6666000000000000.  While picking a
+	       specific	_c_p_u-_t_y_p_e will  schedule	 things	 appropriately
+	       for  that  particular  chip, the	compiler will not gen-
+	       erate any code that does	not meet level 1 of  the  MIPS
+	       ISA  (instruction  set architecture) without the	----mmmmiiiippppssss2222
+	       or ----mmmmiiiippppssss3333 switches being	used.
+
+
+
+     Page 42					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----mmmmiiiippppssss2222
+	       Issue instructions from level 2 of the MIPS ISA (branch
+	       likely,	square root instructions).  The	----mmmmccccppppuuuu====rrrr4444000000000000 or
+	       ----mmmmccccppppuuuu====rrrr6666000000000000 switch must be  used	 in  conjunction  with
+	       ----mmmmiiiippppssss2222.
+
+	  ----mmmmiiiippppssss3333
+	       Issue instructions from level 3 of the MIPS ISA (64 bit
+	       instructions).	The ----mmmmccccppppuuuu====rrrr4444000000000000	switch must be used in
+	       conjunction with	----mmmmiiiippppssss2222.
+
+	  ----mmmmiiiinnnntttt66664444
+
+	  ----mmmmlllloooonnnngggg66664444
+
+	  ----mmmmlllloooonnnngggglllloooonnnngggg111122228888
+	       These options don't work	at present.
+
+	  ----mmmmmmmmiiiippppssss----aaaassss
+	       Generate	 code  for  the	 MIPS  assembler,  and	invoke
+	       mmmmiiiippppssss----ttttffffiiiilllleeee  to  add  normal debug information.  This is
+	       the default for all  platforms  except  for  the	 OSF/1
+	       reference  platform,  using the OSF/rose	object format.
+	       If any of the ----ggggggggddddbbbb, ----ggggssssttttaaaabbbbssss, or	----ggggssssttttaaaabbbbssss++++ switches  are
+	       used, the mmmmiiiippppssss----ttttffffiiiilllleeee program will encapsulate the stabs
+	       within MIPS ECOFF.
+
+	  ----mmmmggggaaaassss
+	       Generate	code for the GNU assembler.  This is  the  de-
+	       fault  on  the  OSF/1  reference	 platform,  using  the
+	       OSF/rose	object format.
+
+	  ----mmmmrrrrnnnnaaaammmmeeeessss
+
+	  ----mmmmnnnnoooo----rrrrnnnnaaaammmmeeeessss
+	       The ----mmmmrrrrnnnnaaaammmmeeeessss switch says	to output code using the  MIPS
+	       software	 names	for  the  registers,  instead  of  the
+	       hardware	names (ie, aaaa0000 instead of $$$$4444).  The GNU	assem-
+	       bler does not support the ----mmmmrrrrnnnnaaaammmmeeeessss switch, and the MIPS
+	       assembler will be instructed to run the MIPS C  prepro-
+	       cessor over the source file.  The ----mmmmnnnnoooo----rrrrnnnnaaaammmmeeeessss switch is
+	       default.
+
+	  ----mmmmggggppppoooopppptttt
+
+	  ----mmmmnnnnoooo----ggggppppoooopppptttt
+	       The ----mmmmggggppppoooopppptttt switch says to write	all of	the  data  de-
+	       clarations before the instructions in the text section,
+	       to all the MIPS assembler to generate one  word	memory
+	       references  instead of using two	words for short	global
+	       or static data items.  This is on by default if optimi-
+	       zation is selected.
+
+
+
+     Page 43					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----mmmmssssttttaaaattttssss
+
+	  ----mmmmnnnnoooo----ssssttttaaaattttssss
+	       For each	non-inline  function  processed,  the  ----mmmmssssttttaaaattttssss
+	       switch  causes  the  compiler  to  emit one line	to the
+	       standard	error file to print statistics about the  pro-
+	       gram (number of registers saved,	stack size, etc.).
+
+	  ----mmmmmmmmeeeemmmmccccppppyyyy
+
+	  ----mmmmnnnnoooo----mmmmeeeemmmmccccppppyyyy
+	       The ----mmmmmmmmeeeemmmmccccppppyyyy switch makes all block moves call the  ap-
+	       propriate  string function (mmmmeeeemmmmccccppppyyyy or bbbbccccooooppppyyyy) instead of
+	       possibly	generating inline code.
+
+	  ----mmmmmmmmiiiippppssss----ttttffffiiiilllleeee
+
+	  ----mmmmnnnnoooo----mmmmiiiippppssss----ttttffffiiiilllleeee
+	       The ----mmmmnnnnoooo----mmmmiiiippppssss----ttttffffiiiilllleeee  switch  causes  the	 compiler  not
+	       postprocess  the	 object	 file with the mmmmiiiippppssss----ttttffffiiiilllleeee pro-
+	       gram, after the MIPS assembler has generated it to  add
+	       debug support.  If mmmmiiiippppssss----ttttffffiiiilllleeee is	not run, then no local
+	       variables will be available to the debugger.  In	 addi-
+	       tion, ssssttttaaaaggggeeee2222 and	ssssttttaaaaggggeeee3333 objects will have the temporary
+	       file names passed to the	assembler embedded in the  ob-
+	       ject file, which	means the objects will not compare the
+	       same.
+
+	  ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       Generate	output containing library calls	 for  floating
+	       point.	_W_A_R_N_I_N_G:  the requisite	libraries are not part
+	       of GNU CC.  Normally the	facilities  of	the  machine's
+	       usual  C	 compiler  are	used,  but  this can't be done
+	       directly	in cross-compilation.  You must	make your  own
+	       arrangements  to	provide	suitable library functions for
+	       cross-compilation.
+
+	  ----mmmmhhhhaaaarrrrdddd----ffffllllooooaaaatttt
+	       Generate	output containing floating point instructions.
+	       This is the default if you use the unmodified sources.
+
+	  ----mmmmffffpppp66664444
+	       Assume that the FFFFRRRR bit in the status word  is  on,  and
+	       that  there are 32 64-bit floating point	registers, in-
+	       stead of	32 32-bit floating point registers.  You  must
+	       also specify the	----mmmmccccppppuuuu====rrrr4444000000000000 and	----mmmmiiiippppssss3333 switches.
+
+	  ----mmmmffffpppp33332222
+	       Assume that there are 32	32-bit floating	 point	regis-
+	       ters.  This is the default.
+
+	  ----mmmmaaaabbbbiiiiccccaaaallllllllssss
+
+
+
+     Page 44					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----mmmmnnnnoooo----aaaabbbbiiiiccccaaaallllllllssss
+	       Emit (or	do  not	 emit)	the  ....aaaabbbbiiiiccccaaaallllllllssss,	 ....ccccppppllllooooaaaadddd,  and
+	       ....ccccpppprrrreeeessssttttoooorrrreeee pseudo operations that some System V.4 ports
+	       use for position	independent code.
+
+	  ----mmmmhhhhaaaallllffff----ppppiiiicccc
+
+	  ----mmmmnnnnoooo----hhhhaaaallllffff----ppppiiiicccc
+	       The ----mmmmhhhhaaaallllffff----ppppiiiicccc switch says to put  pointers  to	extern
+	       references  into	 the  data  section  and load them up,
+	       rather than put the references  in  the	text  section.
+	       This option does	not work at present.  ----GGGG_n_u_m Put	global
+	       and static items	less than or equal to _n_u_m  bytes  into
+	       the  small  data	 or bss	sections instead of the	normal
+	       data or bss section.  This allows the assembler to emit
+	       one  word  memory  reference  instructions based	on the
+	       global pointer (ggggpppp or $$$$22228888), instead of the  normal  two
+	       words  used.  By	default, _n_u_m is	8 when the MIPS	assem-
+	       bler is used, and 0 when	the  GNU  assembler  is	 used.
+	       The  ----GGGG_n_u_m  switch  is also passed to the assembler and
+	       linker.	All modules should be compiled with  the  same
+	       ----GGGG_n_u_m value.
+
+	  ----nnnnooooccccpppppppp
+	       Tell the	MIPS assembler to  not	run  its  preprocessor
+	       over user assembler files (with a `....ssss' suffix) when as-
+	       sembling	them.
+
+	  These	`----mmmm' options are defined for the Intel 80386 family of
+	  computers:  ----mmmm444488886666
+
+	  ----mmmmnnnnoooo----444488886666
+	       Control whether or not code is optimized	for a 486  in-
+	       stead  of an 386.  Code generated for a 486 will	run on
+	       a 386 and vice versa.
+
+	  ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       Generate	output containing library calls	 for  floating
+	       point.	_W_a_r_n_i_n_g:  the requisite	libraries are not part
+	       of GNU CC.  Normally the	facilities  of	the  machine's
+	       usual  C	 compiler  are	used,  but  this can't be done
+	       directly	in cross-compilation.  You must	make your  own
+	       arrangements  to	provide	suitable library functions for
+	       cross-compilation.
+
+	       On machines where a  function  returns  floating	 point
+	       results	in  the	 80387	register  stack, some floating
+	       point opcodes may be emitted even if `----mmmmssssoooofffftttt----ffffllllooooaaaatttt'  is
+	       used.
+
+	  ----mmmmnnnnoooo----ffffpppp----rrrreeeetttt----iiiinnnn----333388887777
+	       Do not use the FPU registers for	return values of func-
+
+
+
+     Page 45					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       tions.
+
+	       The  usual  calling  convention	has  functions	return
+	       values  of  types  ffffllllooooaaaatttt	and ddddoooouuuubbbblllleeee in an FPU register,
+	       even if there is	no FPU.	 The idea is that the  operat-
+	       ing system should emulate an FPU.
+
+	       The option `----mmmmnnnnoooo----ffffpppp----rrrreeeetttt----iiiinnnn----333388887777' causes such  values  to
+	       be returned in ordinary CPU registers instead.
+
+	  These	`----mmmm' options are defined for the HPPA family  of  com-
+	  puters:
+
+	  ----mmmmppppaaaa----rrrriiiisssscccc----1111----0000
+	       Generate	code for a PA 1.0 processor.
+
+	  ----mmmmppppaaaa----rrrriiiisssscccc----1111----1111
+	       Generate	code for a PA 1.1 processor.
+
+	  ----mmmmkkkkeeeerrrrnnnneeeellll
+	       Generate	code which is suitable	for  use  in  kernels.
+	       Specifically,  avoid  aaaadddddddd  instructions in which	one of
+	       the arguments is	the DP register;  generate  aaaaddddddddiiiillll  in-
+	       structions  instead.   This avoids a rather serious bug
+	       in the HP-UX linker.
+
+	  ----mmmmsssshhhhaaaarrrreeeedddd----lllliiiibbbbssss
+	       Generate	code that can be linked	against	 HP-UX	shared
+	       libraries.   This option	is not fully function yet, and
+	       is not on by default for	any PA target.	Using this op-
+	       tion  can  cause	 incorrect code	to be generated	by the
+	       compiler.
+
+	  ----mmmmnnnnoooo----sssshhhhaaaarrrreeeedddd----lllliiiibbbbssss
+	       Don't generate code that	will be	linked against	shared
+	       libraries.  This	is the default for all PA targets.
+
+	  ----mmmmlllloooonnnngggg----ccccaaaallllllllssss
+	       Generate	code which allows calls	to  functions  greater
+	       than 256K away from the caller when the caller and cal-
+	       lee are in the same source file.	 Do not	turn this  op-
+	       tion  on	unless code refuses to link with branch	out of
+	       range errors from the linker.
+
+	  ----mmmmddddiiiissssaaaabbbblllleeee----ffffpppprrrreeeeggggssss
+	       Prevent floating	point registers	from being used	in any
+	       manner.	 This is necessary for compiling kernels which
+	       perform lazy context switching of floating point	regis-
+	       ters.   If  you	use this option	and attempt to perform
+	       floating	point operations, the compiler will abort.
+
+	  ----mmmmddddiiiissssaaaabbbblllleeee----iiiinnnnddddeeeexxxxiiiinnnngggg
+
+
+
+     Page 46					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Prevent the compiler from using indexing	address	modes.
+	       This avoids some	rather obscure problems	when compiling
+	       MIG generated code under	MACH.
+
+	  ----mmmmttttrrrraaaaiiiilllliiiinnnngggg----ccccoooolllloooonnnn
+	       Add a colon to the end of label	definitions  (for  ELF
+	       assemblers).
+
+	  These	`----mmmm' options are defined for the Intel 80960 family of
+	  computers:
+
+	  ----mmmm_c_p_u-_t_y_p_e
+	       Assume the defaults for the machine type	 _c_p_u-_t_y_p_e  for
+	       instruction and addressing-mode availability and	align-
+	       ment.  The default _c_p_u-_t_y_p_e is kkkkbbbb;  other  choices  are
+	       kkkkaaaa, mmmmcccc, ccccaaaa, ccccffff, ssssaaaa, and ssssbbbb.
+
+	  ----mmmmnnnnuuuummmmeeeerrrriiiiccccssss
+
+	  ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       The ----mmmmnnnnuuuummmmeeeerrrriiiiccccssss option indicates that the	processor does
+	       support	floating-point instructions.  The ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       option indicates	that floating-point support should not
+	       be assumed.
+
+	  ----mmmmlllleeeeaaaaffff----pppprrrroooocccceeeedddduuuurrrreeeessss
+
+	  ----mmmmnnnnoooo----lllleeeeaaaaffff----pppprrrroooocccceeeedddduuuurrrreeeessss
+	       Do (or do not) attempt to alter leaf procedures	to  be
+	       callable	 with  the  _b_a_l	 instruction  as well as _c_a_l_l.
+	       This will result	in more	efficient  code	 for  explicit
+	       calls  when  the	 _b_a_l instruction can be	substituted by
+	       the assembler or	linker,	but  less  efficient  code  in
+	       other  cases,  such  as calls via function pointers, or
+	       using a linker that doesn't support this	optimization.
+
+	  ----mmmmttttaaaaiiiillll----ccccaaaallllllll
+
+	  ----mmmmnnnnoooo----ttttaaaaiiiillll----ccccaaaallllllll
+	       Do (or do not) make additional attempts	(beyond	 those
+	       of the machine-independent portions of the compiler) to
+	       optimize	tail-recursive calls into branches.   You  may
+	       not  want  to  do  this	because	the detection of cases
+	       where this is not valid is not totally  complete.   The
+	       default is ----mmmmnnnnoooo----ttttaaaaiiiillll----ccccaaaallllllll.
+
+	  ----mmmmccccoooommmmpppplllleeeexxxx----aaaaddddddddrrrr
+
+	  ----mmmmnnnnoooo----ccccoooommmmpppplllleeeexxxx----aaaaddddddddrrrr
+	       Assume (or do not assume) that the use of a complex ad-
+	       dressing	 mode  is  a win on this implementation	of the
+	       i960.  Complex addressing modes may not	be  worthwhile
+
+
+
+     Page 47					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       on  the	K-series,  but	they  definitely are on	the C-
+	       series.	The default is	currently  ----mmmmccccoooommmmpppplllleeeexxxx----aaaaddddddddrrrr  for
+	       all processors except the CB and	CC.
+
+	  ----mmmmccccooooddddeeee----aaaalllliiiiggggnnnn
+
+	  ----mmmmnnnnoooo----ccccooooddddeeee----aaaalllliiiiggggnnnn
+	       Align code to 8-byte boundaries for faster fetching (or
+	       don't  bother).	 Currently turned on by	default	for C-
+	       series implementations only.
+
+	  ----mmmmiiiicccc----ccccoooommmmppppaaaatttt
+
+	  ----mmmmiiiicccc2222....0000----ccccoooommmmppppaaaatttt
+
+	  ----mmmmiiiicccc3333....0000----ccccoooommmmppppaaaatttt
+	       Enable compatibility with iC960 v2.0 or v3.0.
+
+	  ----mmmmaaaassssmmmm----ccccoooommmmppppaaaatttt
+
+	  ----mmmmiiiinnnntttteeeellll----aaaassssmmmm
+	       Enable compatibility with the iC960 assembler.
+
+	  ----mmmmssssttttrrrriiiicccctttt----aaaalllliiiiggggnnnn
+
+	  ----mmmmnnnnoooo----ssssttttrrrriiiicccctttt----aaaalllliiiiggggnnnn
+	       Do not permit (do permit) unaligned accesses.
+
+	  ----mmmmoooolllldddd----aaaalllliiiiggggnnnn
+	       Enable structure-alignment compatibility	 with  Intel's
+	       gcc release version 1.3 (based on gcc 1.37).  Currently
+	       this is buggy in	that ####pppprrrraaaaggggmmmmaaaa aaaalllliiiiggggnnnn 1111 is	always assumed
+	       as well,	and cannot be turned off.
+
+	  These	`----mmmm' options are defined for the DEC Alpha implementa-
+	  tions:
+
+	  ----mmmmnnnnoooo----ssssoooofffftttt----ffffllllooooaaaatttt
+
+	  ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       Use (do not use)	the hardware  floating-point  instruc-
+	       tions for floating-point	operations.  When ----mmmmssssoooofffftttt----ffffllllooooaaaatttt
+	       is specified, functions in `lllliiiibbbbggggcccccccc1111....cccc' will be used  to
+	       perform floating-point operations.  Unless they are re-
+	       placed by  routines  that  emulate  the	floating-point
+	       operations,  or	compiled in such a way as to call such
+	       emulations  routines,   these   routines	  will	 issue
+	       floating-point  operations.    If you are compiling for
+	       an Alpha	without	floating-point	operations,  you  must
+	       ensure  that  the  library  is  built so	as not to call
+	       them.
+
+
+
+
+     Page 48					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       Note that Alpha implementations without	floating-point
+	       operations  are	required to have floating-point	regis-
+	       ters.
+
+	  ----mmmmffffpppp----rrrreeeegggg
+
+	  ----mmmmnnnnoooo----ffffpppp----rrrreeeeggggssss
+	       Generate	code that uses (does not  use)	the  floating-
+	       point register set.  ----mmmmnnnnoooo----ffffpppp----rrrreeeeggggssss implies ----mmmmssssoooofffftttt----ffffllllooooaaaatttt.
+	       If the floating-point register set is not used,	float-
+	       ing  point  operands are	passed in integer registers as
+	       if they were integers and  floating-point  results  are
+	       passed  in  $0  instead of $f0.	This is	a non-standard
+	       calling sequence, so any	function with a	floating-point
+	       argument	 or  return value called by code compiled with
+	       ----mmmmnnnnoooo----ffffpppp----rrrreeeeggggssss must also be compiled with that option.
+
+	       A typical use of	this option is building	a kernel  that
+	       does  not use, and hence	need not save and restore, any
+	       floating-point registers.
+
+	  These	additional options are available on System V Release 4
+	  for compatibility with other compilers on those systems:
+
+	  ----GGGG   On SVr4 systems,	 ggggcccccccc  accepts  the  option  `----GGGG'  (and
+	       passes it to the	system linker),	for compatibility with
+	       other compilers.	 However, we suggest you use `----ssssyyyymmmmbbbboooollll----
+	       iiiicccc'  or	`----sssshhhhaaaarrrreeeedddd' as appropriate, instead of supplying
+	       linker options on the ggggcccccccc command line.
+
+	  ----QQQQyyyy  Identify	the versions of	each tool  used	 by  the  com-
+	       piler, in a ....iiiiddddeeeennnntttt assembler directive in the output.
+
+	  ----QQQQnnnn  Refrain from adding ....iiiiddddeeeennnntttt  directives  to  the	output
+	       file (this is the default).
+
+	  ----YYYYPPPP,,,,_d_i_r_s
+	       Search the directories _d_i_r_s, and	 no  others,  for  li-
+	       braries specified with `----llll'.  You can separate directo-
+	       ry entries in _d_i_r_s from one another with	colons.
+
+	  ----YYYYmmmm,,,,_d_i_r
+	       Look in the directory _d_i_r to find the M4	 preprocessor.
+	       The assembler uses this option.
+
+     CCCCOOOODDDDEEEE GGGGEEEENNNNEEEERRRRAAAATTTTIIIIOOOONNNN OOOOPPPPTTTTIIIIOOOONNNNSSSS
+	  These	machine-independent options control the	interface con-
+	  ventions used	in code	generation.
+
+	  Most of them begin with `-f'.	 These options have both posi-
+	  tive	and negative forms; the	negative form of `----ffffffffoooooooo' would
+	  be `----ffffnnnnoooo----ffffoooooooo'.  In the table below, only one of the forms is
+
+
+
+     Page 49					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  listed-the one which is not the default.  You	can figure out
+	  the other form by either removing `nnnnoooo----' or adding it.
+
+	  ----ffffnnnnoooonnnnnnnnuuuullllllll----oooobbbbjjjjeeeeccccttttssss
+	       Assume that objects reached through references are  not
+	       null (C++ only).
+
+	       Normally, GNU C++ makes conservative assumptions	 about
+	       objects	reached	 through references.  For example, the
+	       compiler	must check that	aaaa is not null in code like the
+	       following:
+
+	       obj &a =	g (); a.f (2);
+
+	       Checking	that references	of  this  sort	have  non-null
+	       values requires extra code, however, and	it is unneces-
+	       sary  for  many	programs.   You	 can  use  `----ffffnnnnoooonnnnnnnnuuuullllllll----
+	       oooobbbbjjjjeeeeccccttttssss'	 to  omit the checks for null, if your program
+	       doesn't require checking.
+
+	  ----ffffppppcccccccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn
+	       Use the same convention for returning ssssttttrrrruuuucccctttt and	 uuuunnnniiiioooonnnn
+	       values  that  is	 used  by the usual C compiler on your
+	       system.	This convention	is less	 efficient  for	 small
+	       structures,  and	 on many machines it fails to be reen-
+	       trant; but it has the advantage of allowing intercalla-
+	       bility between GCC-compiled code	and PCC-compiled code.
+
+	  ----ffffrrrreeeegggg----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn
+	       Use the convention that ssssttttrrrruuuucccctttt and uuuunnnniiiioooonnnn	values are re-
+	       turned  in registers when possible.  This is more effi-
+	       cient for small structures than ----ffffppppcccccccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn.
+
+	       If  you	 specify   neither   ----ffffppppcccccccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn   nor
+	       ----ffffrrrreeeegggg----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn,  GNU CC defaults to	whichever con-
+	       vention is standard for the target.   If	 there	is  no
+	       standard	    convention,	   GNU	  CC	defaults    to
+	       ----ffffppppcccccccc----ssssttttrrrruuuucccctttt----rrrreeeettttuuuurrrrnnnn.
+
+	  ----ffffsssshhhhoooorrrrtttt----eeeennnnuuuummmmssss
+	       Allocate	to an eeeennnnuuuummmm type	only as	many bytes as it needs
+	       for the declared	range of possible values.  Specifical-
+	       ly, the eeeennnnuuuummmm type will be equivalent  to	 the  smallest
+	       integer type which has enough room.
+
+	  ----ffffsssshhhhoooorrrrtttt----ddddoooouuuubbbblllleeee
+	       Use the same size for ddddoooouuuubbbblllleeee as for ffffllllooooaaaatttt .
+
+	  ----ffffsssshhhhaaaarrrreeeedddd----ddddaaaattttaaaa
+	       Requests	that the data and non-ccccoooonnnnsssstttt variables of  this
+	       compilation  be	shared	data rather than private data.
+	       The distinction makes sense only	on  certain  operating
+
+
+
+     Page 50					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       systems,	 where shared data is shared between processes
+	       running the same	program, while private data exists  in
+	       one copy	per process.
+
+	  ----ffffnnnnoooo----ccccoooommmmmmmmoooonnnn
+	       Allocate	even uninitialized global variables in the bss
+	       section of the object file, rather than generating them
+	       as common blocks.  This has the effect that if the same
+	       variable	 is declared (without eeeexxxxtttteeeerrrrnnnn) in two different
+	       compilations, you will get an error when	you link them.
+	       The  only reason	this might be useful is	if you wish to
+	       verify that the program	will  work  on	other  systems
+	       which always work this way.
+
+	  ----ffffnnnnoooo----iiiiddddeeeennnntttt
+	       Ignore the `####iiiiddddeeeennnntttt' directive.
+
+	  ----ffffnnnnoooo----ggggnnnnuuuu----lllliiiinnnnkkkkeeeerrrr
+	       Do not output global initializations (such as C++  con-
+	       structors  and destructors) in the form used by the GNU
+	       linker (on systems where	the GNU	linker is the standard
+	       method  of  handling  them).   Use this option when you
+	       want to use a non-GNU linker, which also	requires using
+	       the ccccoooolllllllleeeecccctttt2222 program to make sure the system linker in-
+	       cludes constructors and destructors.  (ccccoooolllllllleeeecccctttt2222 is  in-
+	       cluded  in the GNU CC distribution.)  For systems which
+	       _m_u_s_t use	ccccoooolllllllleeeecccctttt2222, the compiler driver ggggcccccccc  is  config-
+	       ured to do this automatically.
+
+	  ----ffffiiiinnnnhhhhiiiibbbbiiiitttt----ssssiiiizzzzeeee----ddddiiiirrrreeeeccccttttiiiivvvveeee
+	       Don't output a ....ssssiiiizzzzeeee assembler directive,  or  anything
+	       else  that would	cause trouble if the function is split
+	       in the middle, and the two halves are placed  at	 loca-
+	       tions  far  apart  in memory.  This option is used when
+	       compiling `ccccrrrrttttssssttttuuuuffffffff....cccc'; you should not need to  use  it
+	       for anything else.
+
+	  ----ffffvvvveeeerrrrbbbboooosssseeee----aaaassssmmmm
+	       Put extra commentary information	in the	generated  as-
+	       sembly  code  to	make it	more readable.	This option is
+	       generally only of use to	those  who  actually  need  to
+	       read  the generated assembly code (perhaps while	debug-
+	       ging the	compiler itself).
+
+	  ----ffffvvvvoooollllaaaattttiiiilllleeee
+	       Consider	all memory references through pointers	to  be
+	       volatile.
+
+	  ----ffffvvvvoooollllaaaattttiiiilllleeee----gggglllloooobbbbaaaallll
+	       Consider	all memory references  to  extern  and	global
+	       data items to be	volatile.
+
+
+
+
+     Page 51					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  ----ffffppppiiiicccc
+	       If  supported  for  the	 target	  machines,   generate
+	       position-independent code, suitable for use in a	shared
+	       library.
+
+	  ----ffffPPPPIIIICCCC
+	       If supported for	the  target  machine,  emit  position-
+	       independent code, suitable for dynamic linking, even if
+	       branches	need large displacements.
+
+	  ----ffffffffiiiixxxxeeeedddd----_r_e_g
+	       Treat the register named	_r_e_g as a fixed register;  gen-
+	       erated code should never	refer to it (except perhaps as
+	       a stack pointer,	frame pointer or in some  other	 fixed
+	       role).
+
+	       _r_e_g must	be the name of a register.  The	register names
+	       accepted	 are  machine-specific	and are	defined	in the
+	       RRRREEEEGGGGIIIISSSSTTTTEEEERRRR____NNNNAAAAMMMMEEEESSSS macro in the machine  description	 macro
+	       file.
+
+	       This flag does not have a  negative  form,  because  it
+	       specifies a three-way choice.
+
+	  ----ffffccccaaaallllllll----uuuusssseeeedddd----_r_e_g
+	       Treat the register named	_r_e_g as an  allocable  register
+	       that  is	 clobbered by function calls.  It may be allo-
+	       cated for temporaries or	variables  that	 do  not  live
+	       across  a  call.	  Functions compiled this way will not
+	       save and	restore	the register _r_e_g.
+
+	       Use of this flag	for a register that has	a  fixed  per-
+	       vasive  role  in	the machine's execution	model, such as
+	       the stack pointer or frame pointer, will	produce	disas-
+	       trous results.
+
+	       This flag does not have a  negative  form,  because  it
+	       specifies a three-way choice.
+
+	  ----ffffccccaaaallllllll----ssssaaaavvvveeeedddd----_r_e_g
+	       Treat the register named	_r_e_g as an  allocable  register
+	       saved  by functions.  It	may be allocated even for tem-
+	       poraries	or variables that live across a	 call.	 Func-
+	       tions  compiled	this way will save and restore the re-
+	       gister _r_e_g if they use it.
+
+	       Use of this flag	for a register that has	a  fixed  per-
+	       vasive  role  in	the machine's execution	model, such as
+	       the stack pointer or frame pointer, will	produce	disas-
+	       trous results.
+
+	       A different sort	of disaster will result	from  the  use
+
+
+
+     Page 52					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	       of  this	 flag  for a register in which function	values
+	       may be returned.
+
+	       This flag does not have a  negative  form,  because  it
+	       specifies a three-way choice.
+
+     PPPPRRRRAAAAGGGGMMMMAAAASSSS
+	  Two `####pppprrrraaaaggggmmmmaaaa'	directives are supported for GNU C++, to  per-
+	  mit using the	same header file for two purposes: as a	defin-
+	  ition	of interfaces to a given object	class, and as the full
+	  definition of	the contents of	that object class.
+
+	  ####pppprrrraaaaggggmmmmaaaa iiiinnnntttteeeerrrrffffaaaacccceeee
+	       (C++ only.)  Use	this directive in  header  files  that
+	       define object classes, to save space in most of the ob-
+	       ject files that use  those  classes.   Normally,	 local
+	       copies  of certain information (backup copies of	inline
+	       member functions, debugging information,	and the	inter-
+	       nal  tables  that  implement virtual functions) must be
+	       kept in each object file	that  includes	class  defini-
+	       tions.	You can	use this pragma	to avoid such duplica-
+	       tion.  When a header file  containing  `####pppprrrraaaaggggmmmmaaaa	iiiinnnntttteeeerrrr----
+	       ffffaaaacccceeee'  is included in a compilation, this auxiliary in-
+	       formation will not be generated (unless the main	 input
+	       source file itself uses `####pppprrrraaaaggggmmmmaaaa	iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn').  In-
+	       stead, the object files will contain references	to  be
+	       resolved	at link	time.
+
+	  ####pppprrrraaaaggggmmmmaaaa iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn
+
+	  ####pppprrrraaaaggggmmmmaaaa iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn """"_o_b_j_e_c_t_s....hhhh""""
+	       (C++ only.)  Use	this pragma in a main input file, when
+	       you  want  full output from included header files to be
+	       generated (and made globally  visible).	 The  included
+	       header  file,  in turn, should use `####pppprrrraaaaggggmmmmaaaa iiiinnnntttteeeerrrrffffaaaacccceeee'.
+	       Backup copies of	inline member functions, debugging in-
+	       formation,  and	the  internal tables used to implement
+	       virtual functions are all generated  in	implementation
+	       files.
+
+	       If you use `####pppprrrraaaaggggmmmmaaaa iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn' with	 no  argument,
+	       it applies to an	include	file with the same basename as
+	       your  source  file;  for	 example,  in	`aaaallllllllccccllllaaaassssssss....cccccccc',
+	       `####pppprrrraaaaggggmmmmaaaa	 iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn'  by  itself  is equivalent to
+	       `####pppprrrraaaaggggmmmmaaaa	iiiimmmmpppplllleeeemmmmeeeennnnttttaaaattttiiiioooonnnn """"aaaallllllllccccllllaaaassssssss....hhhh""""'.  Use the	string
+	       argument	 if  you  want a single	implementation file to
+	       include code from multiple header files.
+
+	       There is	no way to split	up the contents	 of  a	single
+	       header file into	multiple implementation	files.
+
+     FFFFIIIILLLLEEEESSSS
+
+
+
+     PPPPaaaaggggeeee 55553333					      ((((pppprrrriiiinnnntttteeeedddd 4444////5555////00000000))))
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  file.c	     C source file
+	  file.h	     C header (preprocessor) file
+	  file.i	     preprocessed C source file
+	  file.C	     C++ source	file
+	  file.cc	     C++ source	file
+	  file.cxx	     C++ source	file
+	  file.m	     Objective-C source	file
+	  file.s	     assembly language file
+	  file.o	     object file
+	  a.out		     link edited output
+	  _T_M_P_D_I_R/cc*	     temporary files
+	  _L_I_B_D_I_R/cpp	     preprocessor
+	  _L_I_B_D_I_R/cc1	     compiler for C
+	  _L_I_B_D_I_R/cc1plus     compiler for C++
+	  _L_I_B_D_I_R/collect     linker front end needed on	some machines
+	  _L_I_B_D_I_R/libgcc.a    GCC subroutine library
+	  /lib/crt[01n].o    start-up routine
+	  _L_I_B_D_I_R/ccrt0	     additional	start-up routine for C++
+	  /lib/libc.a	     standard C	library, see
+	  _i_n_t_r_o(3)
+	  /usr/include	     standard directory	for ####iiiinnnncccclllluuuuddddeeee files
+	  _L_I_B_D_I_R/include     standard gcc directory for	####iiiinnnncccclllluuuuddddeeee files
+	  _L_I_B_D_I_R/g++-include additional	g++ directory for ####iiiinnnncccclllluuuuddddeeee
+
+	  _L_I_B_D_I_R is usually ////uuuussssrrrr////llllooooccccaaaallll////lllliiiibbbb////_m_a_c_h_i_n_e/_v_e_r_s_i_o_n.
+	  _T_M_P_D_I_R comes from the	environment variable  TTTTMMMMPPPPDDDDIIIIRRRR  (default
+	  ////uuuussssrrrr////ttttmmmmpppp if available, else ////ttttmmmmpppp).
+
+     SSSSEEEEEEEE AAAALLLLSSSSOOOO
+	  cpp(1), as(1), ld(1),	gdb(1),	adb(1),	dbx(1),	sdb(1).
+	  `ggggcccccccc', `ccccpppppppp',	`aaaassss', `lllldddd', and	`ggggddddbbbb' entries in iiiinnnnffffoooo.
+	  _U_s_i_n_g	_a_n_d _P_o_r_t_i_n_g _G_N_U	 _C_C  (_f_o_r  _v_e_r_s_i_o_n  _2._0),  Richard  M.
+	  Stallman; _T_h_e	_C _P_r_e_p_r_o_c_e_s_s_o_r,	Richard	M. Stallman; _D_e_b_u_g_g_i_n_g
+	  _w_i_t_h _G_D_B: _t_h_e	_G_N_U _S_o_u_r_c_e-_L_e_v_e_l _D_e_b_u_g_g_e_r, Richard M. Stallman
+	  and  Roland H. Pesch;	_U_s_i_n_g _a_s: _t_h_e _G_N_U _A_s_s_e_m_b_l_e_r, Dean Els-
+	  ner, Jay Fenlason & friends; _l_d: _t_h_e _G_N_U _l_i_n_k_e_r, Steve Cham-
+	  berlain and Roland Pesch.
+
+     BBBBUUUUGGGGSSSS
+	  For instructions on reporting	bugs, see the GCC manual.
+
+     CCCCOOOOPPPPYYYYIIIINNNNGGGG
+	  Copyright 1991, 1992,	1993 Free Software Foundation, Inc.
+
+	  Permission is	granted	to make	and distribute verbatim	copies
+	  of  this  manual provided the	copyright notice and this per-
+	  mission notice are preserved on all copies.
+
+	  Permission is	granted	to copy	and distribute	modified  ver-
+	  sions	of this	manual under the conditions for	verbatim copy-
+	  ing, provided	that the entire	resulting derived work is dis-
+	  tributed under the terms of a	permission notice identical to
+
+
+
+     Page 54					      (printed 4/5/00)
+
+
+
+
+
+
+     GGGGCCCCCCCC((((1111))))		  GGGGNNNNUUUU TTTToooooooollllssss ((((1111999999998888////11112222////11116666))))		GGGGCCCCCCCC((((1111))))
+
+
+
+	  this one.
+
+	  Permission is	granted	to copy	and distribute translations of
+	  this	manual	into  another language,	under the above	condi-
+	  tions	for modified versions, except that this	permission no-
+	  tice	may  be	 included in translations approved by the Free
+	  Software Foundation instead of in the	original English.
+
+     AAAAUUUUTTTTHHHHOOOORRRRSSSS
+	  See the GNU CC Manual	for the	contributors to	GNU CC.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+     Page 55					      (printed 4/5/00)
+
+
+

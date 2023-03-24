@@ -1,0 +1,32 @@
+###
+### macro definitions
+###
+###
+
+### compile for OS
+OS = GCC
+
+### Fortran compiler related macros
+F90 = gfortran
+F90LINKER = gfortran
+FOPTIONS = -ffixed-line-length-132 -w -O2
+
+
+### C compiler related macros
+CC = gcc
+COPTIONS = -w -O2 -static
+
+
+### C linker related macros
+LDOPTIONS = 
+AR = ar rv
+RANLIB = ar -ts
+
+
+### MPI related macros
+# OpenMPI-1.10.2
+MPI_HOME = /usr/lib/openmpi
+MPI_F90 = mpif90
+MPI_INC = -I$(MPI_HOME)/include
+MPI_LIBS = -L$(MPI_HOME)/lib -lmpi -lmpi_mpifh -lmpi_usempif08
+# eof

@@ -1,0 +1,10 @@
+Changelog 
+Y.Takahashi, 2021.11.16
+
+"log2(x)"" is replaced by "log2_fun(x)" in following source files:
+Lib/kmetis.c
+Lib/kvmetis.c
+Lib/mkmetis.c
+Lib/proto.h
+Lib/rename.h
+Lib/util.c

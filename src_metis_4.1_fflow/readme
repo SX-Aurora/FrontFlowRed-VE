@@ -1,0 +1,5 @@
+This Diretory is for partitioning mesh-graph by using METIS Ver. 4.1 
+
+cd Lib
+make clean
+make

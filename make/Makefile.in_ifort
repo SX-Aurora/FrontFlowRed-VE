@@ -1,0 +1,36 @@
+###
+### macro definitions
+###
+###
+
+### compile for OS
+OS = INTEL
+
+### Fortran compiler related macros
+F90 = ifort
+F90LINKER = ifort
+FOPTIONS = -132 -w -O2 -static-intel
+#FOPTIONS = -132 -w -O2 -static-intel -Vaxlib -convert big_endian
+
+
+### C compiler related macros
+CC = icc
+COPTIONS = -w -O2 -static-intel
+
+
+### C linker related macros
+LDOPTIONS = 
+AR = ar rv
+RANLIB = ar -ts
+
+
+### MPI related macros
+#MPI_HOME = /usr/lib64/openmpi/openmpi-1.6.3
+#MPI_F90 = ifort
+#MPI_INC = -I$(MPI_HOME)/include
+#MPI_LIBS = -L$(MPI_HOME)/lib -lmpi -lmpi_f90 -lmpi_f77
+MPI_HOME = /usr/lib/openmpi
+MPI_F90 = ifort
+MPI_INC = -I$(MPI_HOME)/include
+MPI_LIBS = -L$(MPI_HOME)/lib -lmpi -lmpi_mpifh -lmpi_usempif08
+# eof

@@ -1,0 +1,35 @@
+###############################################################################
+1) compile MAIN program to creat [fflowS] & [fflowHPC]
+###############################################################################
+step-1: cd src_main/src/
+step-2: modifining [Makefile.in] 
+step-3: make clean
+step-4: make all 
+
+
+
+###############################################################################
+2) compile PRE program to creat [prefflow]
+###############################################################################
+step-1: compile metis program
+ 	step-1-1 :  cd src_metis_4.1_fflow/Lib/
+        step-1-2 :  modifining [Makefile.in] 
+	step-1-3 :  make clean
+ 	step-1-4 :  make
+step-2: compile pre-program 
+ 	step-2-1 : cd src_pre/src/
+ 	step-2-2 : modifining [Makefile.in] in Makefile file 
+ 	step-2-3 : make clean
+        step-2-3 : make
+
+
+###############################################################################
+3) compile FFR2VIZ program to creat [ffr2viz]
+###############################################################################
+step-1: cd FFR2VIZ/src/ 
+step-2: modifining [Makefile.in] in Makefile file 
+step-3: make clean
+step-4: make all 
+
+
+

@@ -1,0 +1,34 @@
+FrontFlow/red Ver.3.1 Free Software License Terms and Conditions
+
+Note: This English translation is only for reference purposes. The original Japanese document remains the official text. If there are any discrepancies between the original Japanese text and English translation, the original Japanese text will prevail.
+
+National University Corporation Hokkaido University grants permission to use all or part of FrontFlow/red Ver.3.1 free software and related technical materials free of charge under the following terms and conditions. In principle, these terms and conditions conform to those defined for RSS21 free software cited below. Agreeing to this License Terms and Conditions shall be deemed to agree to the relevant clauses of the "RSS21 Free Software License Terms and Conditions."
+
+1. Definition of FrontFlow/red Ver.3.1 free software
+FrontFlow/red Ver.3.1 free software is a research product developed and improved at National University Corporation Hokkaido University based on FrontFlow/red Ver.3.0, which is part of RSS21 free software cited below. The research products, including source programs, object programs, specifications, design documents, data, execution results, and manuals, that are marked "FrontFlow/red Ver. 3.1 Free Software," are referred to as FrontFlow/red Ver. 3.1 Free Software. 
+
+2. Scope of free use
+The free use of FrontFlow/red Ver.3.1 free software by the user shall include executing FrontFlow/red Ver.3.1 free software with arbitrary data for the user's own use, using the result thereof for the user's own use, reproducing and distributing FrontFlow/red Ver.3.1 free software, and modifying and executing FrontFlow/red Ver.3.1 free software.
+
+3. Matters to be observed in modification and distribution
+The following must be observed when reproducing and distributing the modified FrontFlow/red Ver.3.1 free software by altering the software or incorporating it into other software: The name of such software keeps the name of the originating RSS21 free software, "FrontFlow" (e.g., such as FrontFlow/○○); the fact that the software has been modified from FrontFlow/red Ver. 3.1 free software is clearly indicated; the copyright notice is included. Regardless of the purpose, revising the copyright notice in the internal code of FrontFlow/red Ver.3.1 free software (including the part that originates from RSS21 free software) is prohibited except in the case of adding to the modification history, such as the name of the modifier or date and time of the modification. 
+
+4. Copyright notice
+As described in 3 above, the user must include the copyright notice on a copy of FrontFlow/red Ver.3.1 free software, appropriately and clearly indicating the software name, version, the author name, etc. at the top of the notice. In the case of distributing a copy, this License Terms and Conditions and the unrevised, full text of the RSS21 Free Software License Terms and Conditions cited below must be attached to the copy.
+
+5. User obligations
+When publishing the results of using FrontFlow/red Ver.3.1 free software, the user must clearly indicate that "the research results at National University Corporation Hokkaido University and the results from the Frontier Simulation Software for Industrial Science Project were utilized," along with the indication of FrontFlow/red Ver.3.1 free software used.
+In the event that the user modifies FrontFlow/red Ver. 3.1 free software and publishes the results of execution thereof, the user must attach an explanation that specifies the modification and the history of such modifications.
+In the event that the user finds bugs, malfunctions, or errors in FrontFlow/red Ver.3.1 free software, the user shall contact and report them to the author listed in the relevant software program or technical materials. It is prohibited to publish the found bugs and malfunctions or disclose them to a third party without the author's permission.
+
+6. Commercial use
+In the event that the user uses FrontFlow/red Ver. 3.1 free software for commercial purposes such as those described in (1) to (3) below, the user must conclude in advance a separate license agreement for commercial purposes.
+(1)When the user reproduces and distributes FrontFlow/red Ver. 3.1 free software, the user suggests or requests to the recipient of the distribution not only compensation for the copyrighted material but also the economic value such as the cost of reproduction or distribution.
+(2)The user, including a corporation, executes FrontFlow/red Ver.3.1 free software to provide services to any third party, whether paid or unpaid, as the user is permitted to execute FrontFlow/red Ver.3.1 free software for their own purposes only.
+(3) The user acknowledges in advance that the copyright holders of the software or other materials may prohibit the use of the software or other materials if the user makes them the subject of any commercial transaction, such as pledging or collateralizing FrontFlow/red Ver.3.1 free software including any portion that has been modified by the user, or if the user violates this clause. The user also acknowledges in advance that they shall be required to compensate the amount equivalent to the income earned thereby.
+
+7. No warranty
+There is no warranty for the user on the quality, performance, or execution results of FrontFlow/red Ver.3.1 free software. The user agrees to use the software at their own risk and shall be fully responsible for any damages caused by the use of the software, including the damages to third parties and the repair of such damages. The same shall apply if any part of FrontFlow/red Ver.3.1 free software is claimed to infringe any Japanese or foreign patents or copyrights.
+
+8. Violation of the License Terms and Conditions
+In the event that the user violates this License Terms and Conditions, the user shall unconditionally comply with any measures deemed necessary to rectify the situation and any demands made by Hokkaido University within the scope of the laws and regulations to recover the damages.

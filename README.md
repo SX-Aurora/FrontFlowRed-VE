@@ -1,4 +1,4 @@
-# FrontFlowRed-ve: A general-purpose software package for thermofluidic analysis that uses unstructured meshes to solve heat-flow equations for SX-Aurora TSUBASA Vector Engine.
+# FrontFlowRed-VE: A general-purpose software package for thermofluidic analysis that uses unstructured meshes to solve heat-flow equations for SX-Aurora TSUBASA Vector Engine.
 
 FrontFlow/red (https://www.eng.hokudai.ac.jp/labo/fluid/ssl/download/download.htm) optimized version for SX-Aurora TSUBASA Vector Engine base on 3.1.004b.
 
@@ -7,7 +7,7 @@ FrontFlow/red (https://www.eng.hokudai.ac.jp/labo/fluid/ssl/download/download.ht
 Make the executable "fflowHPC" as follows.
 
 ```
-cd FrontFlowRed-ve/src_main/src/
+cd FrontFlowRed-VE/src_main/src/
 make
 ```
 
